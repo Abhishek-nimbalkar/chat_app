@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style/style.css" />
+
+    <title>Css Ass 2</title>
+  </head>
+  <body>
+    <div id="main">
+      <!-- <h1>Hello</h1> -->
+      <div class="top_nav">
+        <header id="myHeader">
+          <nav>
+            <h3><a href="#laptops">Laptops</a></h3>
+            <h3><a href="#beds">Beds</a></h3>
+          </nav>
+        </header>
+      </div>
+      <div class="bottom">
+        <div class="sidenav">
+          <form action="">
+            <label for="fname">First name:</label><br>
+            <input type="text" id="fname" name="fname"><br><br>
+            <label for="lname">Last name:</label><br>
+            <input type="text" id="lname" name="lname"><br><br>
+            <label for="email">Enter your email:</label><br>
+            <input type="email" id="email" name="email"><br><br><hr><br>
+            
+            <label for="cars">Choose a car:</label>
+            <select id="cars" name="cars">
+              <option value="volvo">Volvo</option>
+              <option value="saab">Saab</option>
+              <option value="fiat">Fiat</option>
+              <option value="audi">Audi</option>
+            </select><br><br><hr>
+            <p>Choose your favorite Web language:</p>
+            <input type="radio" id="html" name="fav_language" value="HTML">
+            <label for="html">HTML</label><br>
+            <input type="radio" id="css" name="fav_language" value="CSS">
+            <label for="css">CSS</label><br>
+            <input type="radio" id="javascript" name="fav_language" value="JavaScript">
+            <label for="javascript">JavaScript</label><br>
+            <br><hr>
+
+            <p>What's Your daily Drive</p>
+            <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
+            <label for="vehicle1"> I have a bike</label><br>
+            <input type="checkbox" id="vehicle2" name="vehicle2" value="Car">
+            <label for="vehicle2"> I have a car</label><br>
+            <input type="checkbox" id="vehicle3" name="vehicle3" value="Boat">
+            <label for="vehicle3"> I have a boat</label><br><hr>
+
+            <p>Please Enter Your B'Date</p>
+            <label for="birthday">Birthday:</label>
+            <input type="date" id="birthday" name="birthday"><br><hr>
+
+            <label for="myfile">Select a file:</label><br><br>
+            <input type="file" id="myfile" name="myfile"><br><hr>
+
+            <p>Enter Your Phone No</p><br>
+            <label for="phone">Enter your phone number:</label><br><br>
+            <input type="tel" id="phone" name="phone" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}">
+
+            <br><br><br><br>
+            <input class="submit" style="height: 50px;width: 180px; border-radius:20px; background-color: burlywood;" type="submit" value="Submit">
+            <br><br><br><br>
+          </form>
+          <!-- <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
+            dignissim eleifend faucibus. Curabitur interdum ligula sed fringilla
+            ultrices. Nunc consequat lorem euismod massa aliquet, nec cursus
+            ligula lobortis. Praesent porttitor porta leo, ut suscipit purus
+            efficitur in. Phasellus non elementum nulla, sed tincidunt sapien.
+            Phasellus aliquet ipsum ut nunc sodales, consectetur accumsan magna
+            pretium. Pellentesque imperdiet pellentesque arcu quis egestas.
+            Aenean ut rutrum eros. Vestibulum dictum vestibulum lacus, et
+            pulvinar nunc pharetra ac. Aliquam porttitor, lorem vel hendrerit
+            fringilla, justo erat efficitur nisl, pharetra feugiat urna libero
+            semper sem. Class aptent taciti sociosqu ad litora torquent per
+            conubia nostra, per inceptos himenaeos. Fusce convallis purus nulla,
+            quis consequat dui suscipit non. Fusce arcu nibh, sollicitudin id
+            ligula eleifend, vulputate maximus lorem. Aliquam nec suscipit enim,
+            in auctor nunc. Nulla vulputate tincidunt iaculis. Cras sed elit
+            sem. Nullam tempus odio sed felis malesuada hendrerit. Fusce vel
+            neque sem. Integer eget rhoncus purus. Pellentesque mi diam,
+            vestibulum vitae enim vel, bibendum iaculis dolor. Etiam viverra
+            erat libero, tincidunt imperdiet nisl facilisis nec. Nunc hendrerit
+            nisi et leo tempor vestibulum. Aenean eleifend diam vel neque
+            tristique scelerisque. Fusce vel venenatis enim. Donec consequat ex
+            quis mi ultrices, nec posuere lectus pellentesque. Morbi vehicula
+            ante nec ex aliquam, faucibus viverra dolor congue. Proin cursus in
+            lorem non feugiat. Donec scelerisque ultricies orci. In imperdiet
+            sapien nisi, eu iaculis mauris pellentesque sed. Fusce dapibus nisl
+            lorem, non consectetur lorem accumsan nec. Sed aliquet justo quis
+            nisi vestibulum ultrices id non mauris. Vivamus aliquam malesuada
+            ultricies. Curabitur vitae blandit nisl. Aenean pharetra mattis
+            varius. Aliquam eget nibh aliquam, mattis arcu id, varius metus.
+            Duis eget magna ac dui volutpat faucibus non at mi. Curabitur
+            suscipit tincidunt risus, eu tristique enim ultrices ac. Mauris
+            auctor nulla ac massa mattis, sit amet accumsan ligula tincidunt.
+            Nunc lobortis, tortor eget facilisis dapibus, nunc quam molestie
+            ligula, semper luctus lectus tellus et eros.
+          </p> -->
+        </div>
+        <div class="cards">
+          <h2>Laptops</h2>
+          <div id="laptops">
+            <div class="card">
+              <!-- <img src="/assets/images/l1.jpeg" alt="IMG1" /> -->
+              <div class="card_name">
+                Laptop1
+              </div>
+              <!-- <p>Laptop 1</p> -->
+            </div>
+            <div class="card">
+              <!-- <img src="/assets/images/l2.jpeg" alt="IMG1" /> -->
+              <div class="card_name">
+                Laptop 2
+              </div>
+            </div>
+            <div class="card">
+              <!-- <img src="/assets/images/l3.jpeg" alt="IMG1" /> -->
+              <div class="card_name">
+                Laptop 3
+              </div>
+            </div>
+            <div class="card">
+              <!-- <img src="/assets/images/l4.jpeg" alt="IMG1" /> -->
+              <div class="card_name">
+                Laptop 4
+              </div>
+            </div>
+            <div class="card">
+              <!-- <img src="/assets/images/l5.jpeg" alt="IMG1" /> -->
+              <div class="card_name">
+                Laptop 5
+              </div>
+            </div>
+          </div>
+          <h2>Beds</h2>
+          <div id="beds">
+            <div class="card">
+              <!-- <img src="/assets/images/bed1.jpeg" alt="IMG1" /> -->
+              <div class="card_name">
+                Bed 1
+              </div>
+              <!-- <p>Bed 1</p> -->
+            </div>
+            <div class="card">
+              <!-- <img src="/assets/images/bed2.jpeg" alt="IMG1" /> -->
+              <div class="card_name">
+                Bed 1
+              </div>
+            </div>
+            <div class="card">
+              <!-- <img src="/assets/images/bed3.jpeg" alt="IMG1" /> -->
+              <div class="card_name">
+                Bed 1
+              </div>
+            </div>
+            <div class="card">
+              <!-- <img src="/assets/images/bed4.jpeg" alt="IMG1" /> -->
+              <div class="card_name">
+                Bed 1
+              </div>
+            </div>
+            <div class="card">
+              <!-- <img src="/assets/images/bed5.jpeg" alt="IMG1" /> -->
+              <div class="card_name">
+                Bed 1
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
