@@ -1,0 +1,38 @@
+[
+    {
+        "firstName": "Ravi",
+        "lastName": "Kumar",
+        "age": 27,
+        "address": 1234
+    },
+    {
+        "firstName": "Amit",
+        "lastName": "Kumar",
+        "age": 22,
+        "address": 12345
+    },
+    {
+        "firstName": "Ritu",
+        "lastName": "Kumari",
+        "age": 26,
+        "address": 12346
+    },
+    {
+        "firstName": "Sakshi",
+        "lastName": "Kumari",
+        "age": 24,
+        "address": 12347
+    },
+    {
+        "firstName": "Mayur",
+        "lastName": "Kumar",
+        "age": 30,
+        "address": 12348
+    },
+    {
+        "firstName": "Abhi",
+        "lastName": "Kumar",
+        "age": 21,
+        "address": 12349
+    }
+]
