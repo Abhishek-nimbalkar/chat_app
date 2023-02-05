@@ -3,7 +3,6 @@ const fs= require('fs');
 let pdata=fs.readFileSync('./Q1/person.json','utf-8');
 let filterP=JSON.parse(pdata).filter((ele)=>{
    
-    
     return ele.age>25;
     
 }).map((ele)=>{
