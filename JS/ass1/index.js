@@ -70,18 +70,29 @@ function vowelsFromStr(volStr){
 
 // Reverse each word of a given sentence
 
-let wordStr="abhishek";
+let wordStr="my name is abhishek";
+let tempWrodStr="";
+let ansWordStr="";
+let WordStrArr=[];
 function wordRev(wordStr){
-    let i=0,j=wordStr.length-1;
-    let temp="";
-    while(i<j){
-        temp = wordStr[i];
-        wordRev[i] = wordRev[j];
-        wordRev[j] = temp;
-        i++;j--;
+    for(let i=wordStr.length-1;i>=0;i--){
+        tempWrodStr=tempWrodStr+wordStr[i];
     }
-    return wordRev;
+    let temp="";
+    for(let i=0;i<=tempWrodStr.length;i++){
+        if(tempWrodStr[i]==' ' || i==tempWrodStr.length){
+            WordStrArr.push(temp);
+            temp="";
+        }
+            
+        temp=temp+tempWrodStr[i];
+    }
+    for(let i=WordStrArr.length-1;i>=0;i--){
+        ansWordStr=ansWordStr+WordStrArr[i];
+    }
+    return ansWordStr;
 }
+// console.log(wordRev(wordStr));
 
 //8. Find the missing number in array
 
@@ -100,7 +111,9 @@ function missNoArr(missArr){
 //9. A vehicle needs 10 times
 let dis;
 function fule(dis){
+    if(dis*10 > 100)
     return dis*10;
+    else return -1;
 }
 
 //10. Decimal to binary
@@ -218,5 +231,43 @@ function randomFourDigit(){
     return Math.floor(Math.random()*10000)+1;
 }
 
+// Find the even duplicate elements in an array of numbers
 
-console.log(randomFourDigit());
+let freqArr=[10, 20, 20, 10, 10, 20, 5, 20,6,6,8,8,9,0,22,22,34,3,46,46,46];
+function dupliAndEven(freqArr){
+    let map=new Map();
+    for(let i=0;i<freqArr.length;i++){
+        if(map.has(freqArr[i]))
+            map.set(freqArr[i],map.get(freqArr[i])+1);
+        else 
+            map.set(freqArr[i],1);
+
+    }
+    let nos=[];
+    map.forEach((value,key)=>{
+        if(key>1 && value%2==0){
+            nos.push(key);
+        }
+    })
+    return nos;
+}
+
+// Find the element having highest frequency in an array of numbers
+
+function highFreq(freqArr){
+    let map= new Map();
+    for(let i=0;i<freqArr.length;i++){
+        if(map.has(freqArr[i]))
+            map.set(freqArr[i],map.get(freqArr[i])+1);
+        else 
+            map.set(freqArr[i],1);
+
+    }
+    let maxF=1;
+    for(let [key,value] of map.entries()){
+        if(value>1) maxF=value;
+    }
+    return maxF;
+}
+
+console.log(highFreq(freqArr));

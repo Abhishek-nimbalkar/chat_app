@@ -11,10 +11,15 @@ let person=async ()=>{
         ele.lastName = ele.lastName.toUpperCase();
         return ele;
     });
+    fun(pdata);
     fs.writeFile("./filterAsuncAwait.json",JSON.stringify(pdata),(err)=>{
         if(err) console.log("Error while writing file");
     })
 
+}
+person();
+function fun(data){
+    console.log(data);
 }
 
 

@@ -35,19 +35,19 @@ Promise.all([p1,p2,p3,p4])
 })
 
 
-Promise.allSettled([p1,p2,p3,p4])
-.then((data)=>{
-    console.log(data);
-}).catch((err)=>console.log(err));
+// Promise.allSettled([p1,p2,p3,p4])
+// .then((data)=>{
+//     console.log(data);
+// }).catch((err)=>console.log(err));
 
 
-Promise.any([p1,p2,p3,p4])
-.then((data)=>{
-    console.log(data);
-}).catch((err)=>console.log(err));
+// Promise.any([p1,p2,p3,p4])
+// .then((data)=>{
+//     console.log(data);
+// }).catch((err)=>console.log(err));
 
 
-Promise.race([p1,p2,p3,p4])
-.then((data)=>{
-    console.log(data);
-}).catch((err)=>console.log(err));
+// Promise.race([p1,p2,p3,p4])
+// .then((data)=>{
+//     console.log(data);
+// }).catch((err)=>console.log(err));
