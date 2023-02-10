@@ -42,10 +42,12 @@ footer{
 input[type="text"]{
     background-color: #ffe363;
     height:50px;
-    width: 80px;
+    width: 120px;
     border: 0;
     border-radius:60px;
     font-size: large;
+    text-align: center;
+
 }
 
 .list{
@@ -55,21 +57,20 @@ input[type="text"]{
     width: 100%;
     height: 70vh;
     background-color: #F3E4DB;
-    flex-direction: rwo;
     flex-wrap: wrap;
     align-content: flex-start;
 
 }
 .p{  
     display: flex;
-    
+    justify-content: flex-end;
     align-items: baseline;
     /* align-items: flex-start; */
     gap: 20px;
     /* height: 30px; */
     height: auto;
     margin: 10px;
-    max-width: 150px;
+    min-width: 100px;
     border-radius: 20px;
     padding: 10px;
     background-color: #ffd501;
