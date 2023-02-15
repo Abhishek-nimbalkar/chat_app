@@ -18,6 +18,34 @@
 // names.forEach(function (s) {
 //   console.log(s.toUppercase());
 
-let obj={
-    "a":1,
+let url:string="https://fakestoreapi.com/products/1";
+
+interface Itype {
+    id:number,
+    title:string,
+    price:number
+    description:string,
+    category:string,
+    image:string,
+    rating:{
+        rate:number,
+        count:number
+    }
 }
+
+const Data = async () =>{
+    
+    let data= await fetch(url)
+    let res =await data.json()
+
+    console.log(res)
+    return res;
+}
+
+
+Data().then((res)=>{
+    console.log(res.id);
+    
+})
+
+
