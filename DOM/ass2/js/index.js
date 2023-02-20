@@ -26,6 +26,7 @@ function validate(){
     let lname=document.getElementsByName("lname")[0];
     let number=document.getElementsByName("number")[0];
     let pincode=document.getElementsByName("pincode")[0];
+    console.log([fname]);
     // let file=document.getElementsByName("file")[0];
     if(fname.value.length===0){
         fname.after(fnameC);
@@ -64,8 +65,8 @@ function validate(){
         
     // }
 
-    else{
-        console.log(fname.value);
-    }
+    // else{
+    //     console.log(fname.value);
+    // }
     
 }

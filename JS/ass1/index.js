@@ -6,6 +6,8 @@ function printEven(){
     }
     return even;
 }
+console.log(printEven());
+
 // 2. create a length converter function
 let km;
 function kmToMiles(km){
