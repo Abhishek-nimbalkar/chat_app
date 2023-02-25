@@ -1,12 +1,14 @@
 
 import logo from "assets/logo/Logo.png"
-import { ContactUsButton,HeaderStyle } from "styles/components/header";
+import { ContactUsButton,HeaderStyle,HeaderLogo } from "styles/components/header";
 
 const Header = () => {
   return (
         <HeaderStyle>
+          <HeaderLogo>
             <img src={logo} alt="IMG" />
-            <ContactUsButton>Contact Us</ContactUsButton>
+          </HeaderLogo>
+          <ContactUsButton>Contact Us</ContactUsButton>
         </HeaderStyle>
   )
 }

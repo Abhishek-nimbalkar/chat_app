@@ -5,8 +5,9 @@ const HeaderStyle = styled.div`
   align-items: center;
   justify-content: center;
   height: 100px;
-  width: 100vw;
+  width: 100%;
   /* background-color: #2c4548; */
+  position: sticky;
 `;
 
 const ContactUsButton=styled.button`
@@ -15,12 +16,13 @@ const ContactUsButton=styled.button`
     width: 175px;
     height: 52.76px;
     border-radius: 30px;
+    border: 0;
 `;
 
-const HeaderLogo=styled.attrs(
-    
-)`
-
+const HeaderLogo=styled.div`
+  display: flex;
+  justify-content: center;
+  width: 80%;
 `;
 
-export { HeaderStyle,ContactUsButton };
+export { HeaderStyle,ContactUsButton,HeaderLogo };
