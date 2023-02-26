@@ -4,10 +4,14 @@ import {
   PageHeadingStyle,
   PageParagraphStyle,
 } from "styles/components/pageHeading";
-import { AboutUsStyle,AboutUsTopHeadingStyle,AboutUsTop1Style,AboutUsTop2Style } from "styles/components/aboutUsStyle";
+
+import { AboutUsStyle,AboutUsTopHeadingStyle,AboutUsTop1Style,AboutUsTop2Style,CardWrapper } from "styles/components/aboutUsStyle";
+import Cards from "components/cards";
 
 const AboutUs = () => {
   return (
+    <>
+    
     <AboutUsStyle>
       <PageHeadingStyle>
         ABOUT <PageHeadingBorderStyle />
@@ -26,9 +30,15 @@ const AboutUs = () => {
       </AboutUsTop2Style>  
         
       </AboutUsTopHeadingStyle>
-      
+      <CardWrapper>
+        <Cards />
+      </CardWrapper>
       
     </AboutUsStyle>
+    
+  
+  </>
+    
   );
 };
 

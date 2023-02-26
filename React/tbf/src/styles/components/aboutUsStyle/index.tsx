@@ -13,12 +13,19 @@ const AboutUsTopHeadingStyle=styled.div`
     align-items: center;
 `;
 const AboutUsTop1Style=styled.div`
-    width: 20%;
+    width: 30%;
     justify-content: center;
     align-items: center;
     margin-left: 8vw;
 `;
 const AboutUsTop2Style=styled.div`
-    width: 80%;
+    width: 70%;
 `;
-export {AboutUsStyle,AboutUsTopHeadingStyle,AboutUsTop1Style,AboutUsTop2Style};
+
+const CardWrapper=styled.div`
+    width: 100%;
+    height: 10vw;
+    margin: 10vw 5vw 10vw;
+`;
+
+export {AboutUsStyle,AboutUsTopHeadingStyle,AboutUsTop1Style,AboutUsTop2Style,CardWrapper};

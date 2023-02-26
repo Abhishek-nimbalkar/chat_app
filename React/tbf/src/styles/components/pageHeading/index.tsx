@@ -17,7 +17,7 @@ const PageHeadingStyle = styled.div`
 const PageHeadingBorderStyle = styled.div`
   border: 1px solid rgba(184, 184, 184, 0.45);
   transform: rotate(0.02deg);
-  width: 90%;
+  width: 85%;
   margin-left: 0.5vw;
 `;
 
@@ -41,6 +41,8 @@ const PageParagraphStyle = styled.div`
   font-size: 16px;
   line-height: 30px;
   /* or 188% */
+
+  
 
   color: #6f8587;
 `;
