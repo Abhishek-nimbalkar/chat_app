@@ -129,8 +129,8 @@ const roadMap = () => {
 
         <RoadMapDiv>
           <RoadMapEmptyDiv />
-          <RoadMapEleR>
-            <RoadMapContentEleR style={{transform: "translate(42px,8px)"}}>
+          <RoadMapEleR  style={{transform:" translate(48px, 8px)"}}>
+            <RoadMapContentEleR>
               <RoadMapContentHeading>Rectification</RoadMapContentHeading>
               <RoadMapContentNumber>04</RoadMapContentNumber>
               <RoadMapContentParagraph>
@@ -159,7 +159,7 @@ const roadMap = () => {
               </RoadMapDivImg>
             </RoadMapImageL>
           </RoadMapEmptyDiv>
-          <RoadMapEleL>
+          <RoadMapEleL style={{transform:" translate(10px, 4px)"}}>
             <RoadMapContent>
               <RoadMapContentHeading>R & D </RoadMapContentHeading>
               <RoadMapContentNumber>05</RoadMapContentNumber>
@@ -178,7 +178,7 @@ const roadMap = () => {
 
         <RoadMapDiv>
           <RoadMapEmptyDiv />
-          <RoadMapEleR>
+          <RoadMapEleR style={{transform:" translate(40px, 1px)"}}>
             <RoadMapContentEleR>
               <RoadMapContentHeading>Regulatory</RoadMapContentHeading>
               <RoadMapContentNumber>06</RoadMapContentNumber>
@@ -209,7 +209,7 @@ const roadMap = () => {
               </RoadMapDivImg>
             </RoadMapImageL>
           </RoadMapEmptyDiv>
-          <RoadMapEleL>
+          <RoadMapEleL style={{transform:"translate(0px,-2px)",borderRadius: '30px 0px 0px 0px',height:"20vw",borderBottom:"none"}} >
             <RoadMapContent>
               <RoadMapContentHeading>Quality Assurance</RoadMapContentHeading>
               <RoadMapContentNumber>07</RoadMapContentNumber>

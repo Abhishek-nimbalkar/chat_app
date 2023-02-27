@@ -8,6 +8,7 @@ const CollabStyle = styled.div`
   align-items: center;
   justify-content: center;
   gap: 5vw;
+  flex-wrap: wrap;
 `;
 const CollabLeftStyle = styled.div`
     display: flex;

@@ -8,6 +8,9 @@ import {
 import Img from "assets/images/collab.png";
 
 const Collab = () => {
+  const ImgStyle={
+    width:"fit-content"
+  }
   return (
     <CollabStyle>
       <CollabLeftStyle>
@@ -19,7 +22,7 @@ const Collab = () => {
         </CollabParagrphStyle>
       </CollabLeftStyle>
       <CollabParagrphStyle>
-        <img src={Img} alt="" />
+        <img style={ImgStyle} src={Img} alt="" />
       </CollabParagrphStyle>
     </CollabStyle>
   );

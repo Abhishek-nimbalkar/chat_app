@@ -6,6 +6,7 @@ const CertificateStyle = styled.div`
   align-items: center;
   justify-content: center;
   gap: 5vw;
+  margin-top: 2vw;
 `;
 const CertificateHeadingStyle = styled.div`
   font-family: "Lexend Deca";
