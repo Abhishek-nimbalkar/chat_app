@@ -1,21 +1,32 @@
+
+import { useForm } from "react-hook-form";
+import { useNavigate } from 'react-router-dom';
+
 import { InputStyle, InputUnderline,InputWrapper,SubmitStyle } from "styles/components/formStyle"
 
 
 const Form = () => {
+  const navigate = useNavigate();
+  const { register, handleSubmit, formState: { errors } } = useForm();
+
+  const onSubmit = (data: any) => {
+    navigate("/thanks",{state:data})
+    // console.log(data);
+  }
   return (
     <>
-        <form action="">
+        <form onSubmit={handleSubmit(onSubmit)} action="#">
           <InputWrapper>
-            <InputStyle type="text" placeholder="Name" />
-                <InputUnderline />
-                <InputStyle type="email" placeholder="Your Email Address" />
-                <InputUnderline />
-                <InputStyle type="text" placeholder="Your Company Name" />
-                <InputUnderline />
-                <InputStyle type="text" placeholder="Describe your needs" />
-                <InputUnderline />
+                <InputStyle {...register("Name", { required: true })} type="text" placeholder="Name" />
+                  <InputUnderline />
+                <InputStyle {...register("email", { required: true })} type="email" placeholder="Your Email Address" />
+                  <InputUnderline />
+                <InputStyle {...register("companyName", { required: true })} type="text" placeholder="Your Company Name" />
+                  <InputUnderline />
+                <InputStyle {...register("needs", { required: true })} type="text" placeholder="Describe your needs" />
+                  <InputUnderline />
           </InputWrapper>
-          <SubmitStyle>Submit</SubmitStyle>
+          <SubmitStyle type="submit">Submit</SubmitStyle>
             
         </form>
     </>
