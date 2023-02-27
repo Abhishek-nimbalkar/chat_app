@@ -8,6 +8,8 @@ import './App.css';
 import Certificates from 'components/certificates';
 import Collab from 'components/collobaration';
 import ContactUs from 'components/contactUs';
+import Footer from 'components/footer';
+import RoadMap from 'components/roadMap';
 
 
 function App() {
@@ -17,9 +19,11 @@ function App() {
       <TopImage />
       <AboutUs />
       <OurProducts />
+      <RoadMap />
       <Certificates />
       <Collab />
       <ContactUs />
+      <Footer />
   </>
   );
 }

@@ -2,12 +2,18 @@ import styled from "styled-components";
 
 const ContactUsStyled = styled.div`
   display: flex;
-`;
+  height:30vw;
+  width:100vw;
+  margin-top:2vw;
+  justify-content:space-evenly;
+  `;
 const ContactUsLeft = styled.div`
   display: flex;
   flex-direction: column;
   align-content: center;
-  max-width: 50vw;
+  margin-left:8vw;
+  min-width: 50vw;
+
 `;
 const ContactUsTitle = styled.div`
   font-family: "Lexend Deca";
@@ -43,8 +49,8 @@ align-items: center;
 color: #2C4548;
 `;
 
-const ConatactUsRight = styled.div`
-  max-width: 50vw;
+const ContactUsRight = styled.div`
+  min-width: 50vw;
 `;
 
-export { ContactUsStyled, ContactUsLeft, ConatactUsRight,ContactUsTitle,ContactUsLink };
+export { ContactUsStyled, ContactUsLeft, ContactUsRight,ContactUsTitle,ContactUsLink };
