@@ -23,6 +23,9 @@ const AboutUsTop2Style=styled.div`
 `;
 
 const CardWrapper=styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 100%;
     height: 30vw;
     margin: 10vw 5vw 5vw;

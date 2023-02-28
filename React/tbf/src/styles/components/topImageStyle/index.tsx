@@ -6,7 +6,7 @@ const TopImageStyle = styled.div`
   background-repeat: no-repeat;
 
   width: 100vw;
-  height: 80vh;
+  height: 90vh;
   background-size: center cover;
   background-attachment: fixed;
 
@@ -48,7 +48,7 @@ const TopImageBelowHeading = styled.div`
   /* align-items: center; */
   text-align: center;
   justify-content: center;
-  letter-spacing: 8px;
+  letter-spacing: 1vw;
   text-transform: uppercase;
 
   color: rgba(0, 0, 0, 0.1);

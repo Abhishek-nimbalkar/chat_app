@@ -17,7 +17,7 @@ const TopImage = () => {
           Fragrance industry.
         </TopImageParagraphStyle>
       </TopImageStyle>
-      <TopImageBelowHeading>
+      <TopImageBelowHeading style={{wordSpacing:"2vw"}}>
         Hemp Flower Essential Oil
       </TopImageBelowHeading>
       

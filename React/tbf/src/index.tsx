@@ -6,17 +6,24 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import ThankYou from 'components/ThankYou';
 
+import store from 'store/store';
+import { Provider } from 'react-redux'
+
+
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <>
+  <Provider store={store}>
     <Router>
         <Routes>
             <Route path='/' element={<App />} />
             <Route path="/thanks" element={<ThankYou />}/>
         </Routes>
     </Router>
+  </Provider>
+    
     </>
   
 );

@@ -30,6 +30,7 @@ import Img4 from "assets/images/R4.png";
 import Img5 from "assets/images/R5.png";
 import Img6 from "assets/images/R6.png";
 import Img7 from "assets/images/R7.png";
+import { PageHeadingBorderStyle, PageHeadingStyle } from "styles/components/pageHeading";
 const roadMap = () => {
 
     const ImgStyle={
@@ -41,10 +42,16 @@ const roadMap = () => {
   return (
     <>
       <RoadMapStyle>
-        <RoadMapHeadingWrapper>
+     
+        <RoadMapHeadingWrapper >
+        
           <RoadMapHeadingWrapperD1 />
-          <RoadMapHeadingWrapperD2>
-            <RoadMapHeadingH>Our Process</RoadMapHeadingH>
+          <RoadMapHeadingWrapperD2 style={{transform:" translate(0, 50px)"}}>
+          <PageHeadingStyle style={{marginLeft:"0"}}>
+          PROCESS
+          <PageHeadingBorderStyle style={{width:"3vw"}} />
+        </PageHeadingStyle>
+            <RoadMapHeadingH style={{marginBottom:"0vw",marginTop:"0"}}>Our Process</RoadMapHeadingH>
             <RoadMapParagraphWrapper>
               The oil is produced at the source using a robust and
               modernsolvent-free extraction system, designed in conjunction with

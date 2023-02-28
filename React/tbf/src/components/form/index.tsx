@@ -1,17 +1,22 @@
 
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
 import { useNavigate } from 'react-router-dom';
 
 import { InputStyle, InputUnderline,InputWrapper,SubmitStyle } from "styles/components/formStyle"
+
 
 
 const Form = () => {
   const navigate = useNavigate();
   const { register, handleSubmit, formState: { errors } } = useForm();
 
+  const dispatch=useDispatch();
   const onSubmit = (data: any) => {
     navigate("/thanks",{state:data})
+    dispatch({type:"Add_Data",payload:data})
     // console.log(data);
+    
   }
   return (
     <>
