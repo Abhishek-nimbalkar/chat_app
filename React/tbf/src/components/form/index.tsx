@@ -1,19 +1,19 @@
 
-import { useForm, SubmitHandler} from "react-hook-form";
+import { useForm} from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from 'react-router-dom';
 
 import { InputStyle, InputUnderline,InputWrapper,SubmitStyle } from "styles/components/formStyle"
 
-import {update, User } from "stateSlice/userDataSlice"
+import {update, Conatact } from "stateSlice/userDataSlice"
 
 const Form = () => {
   const navigate = useNavigate();
 
 
   const dispatch=useDispatch();
-  const { register, handleSubmit, formState: { errors } } = useForm<User>();
-  const onSubmit = (data:User) => {
+  const { register, handleSubmit, formState: { errors } } = useForm<Conatact>();
+  const onSubmit = (data:Conatact) => {
     // navigate("/thanks",{state:data})
     dispatch(update(data))
     console.log("Clicked");

@@ -12,6 +12,7 @@ import { Provider } from 'react-redux'
 
 import { PersistGate } from 'redux-persist/integration/react'
 import { persistStore } from 'redux-persist';
+import LoginPage from 'components/LoginPage';
 
 const persistor = persistStore(store);
 const root = ReactDOM.createRoot(
@@ -23,8 +24,10 @@ root.render(
   <PersistGate loading={null} persistor={persistor}>
     <Router>
         <Routes>
+
             <Route path='/' element={<App />} />
             <Route path="/thanks" element={<ThankYou />}/>
+            <Route path='/LoginPage' element={<LoginPage />} />
         </Routes>
     </Router>
     </PersistGate>
