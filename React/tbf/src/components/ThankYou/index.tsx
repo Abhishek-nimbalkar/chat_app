@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useLocation } from 'react-router-dom';
 import useApi from 'hooks/useApi';
+import { ContactContext } from 'contexts';
 
 const ThankYou = () => {
   const location = useLocation();
@@ -9,6 +10,15 @@ const ThankYou = () => {
   const apiData=(Data.users);
   // console.log(apiData);
   
+  const {contact,setContact} = useContext(ContactContext);
+  console.log(location);
+  
+  
+  
+
+  setContact(userData)
+  
+
   
   
   return (

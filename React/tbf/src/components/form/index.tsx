@@ -6,19 +6,25 @@ import { useNavigate } from 'react-router-dom';
 import { InputStyle, InputUnderline,InputWrapper,SubmitStyle } from "styles/components/formStyle"
 
 import {update, Conatact } from "stateSlice/userDataSlice"
+import { useContext } from "react";
+import { ContactContext } from "contexts";
 
 const Form = () => {
   const navigate = useNavigate();
-
-
   const dispatch=useDispatch();
+
+  // Context Used 
+  
   const { register, handleSubmit, formState: { errors } } = useForm<Conatact>();
   const onSubmit = (data:Conatact) => {
     // navigate("/thanks",{state:data})
-    dispatch(update(data))
+
+    // dispatch(update(data))
     console.log("Clicked");
-    
+        
     // console.log(data);
+
+
     
   }
   return (
