@@ -1,22 +1,24 @@
 import React, { useContext } from 'react'
 import { useLocation } from 'react-router-dom';
 import useApi from 'hooks/useApi';
-import { ContactContext } from 'contexts';
+import { useContactContext, IContact } from 'contexts';
+import { useSelector } from 'react-redux';
 
 const ThankYou = () => {
+  const {contact} = useContext(useContactContext);
+
+
   const location = useLocation();
   const userData=location.state;
   const Data=useApi("https://dummyjson.com/users");
   const apiData=(Data.users);
   // console.log(apiData);
-  
-  const {contact,setContact} = useContext(ContactContext);
-  console.log(location);
-  
-  
+  const contactData:IContact=useSelector((state:any)=>state.Conatacts)
+  // console.log(contactData);
+  // console.log(contact);
   
 
-  setContact(userData)
+  // setContact(userData)
   
 
   

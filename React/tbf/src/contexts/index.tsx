@@ -13,17 +13,20 @@ export interface IContact{
 //     []:IContact=>[]
 // }
 
+export type IContactType=IContact[];
+// interface IContact extends Array<IContact>{}
+
 export interface IContactContext {
-    contact: IContact [],
-    setContact: (contact: IContact[]) => void;
+    contact: IContactType,
+    setContact: (contact:IContactType)=> void;
 }
 
 export const initialStateOfContext: IContactContext={
-    contact: {} as IContact[],
-    setContact:  () => null
+    contact: [] as IContactType,
+    setContact: ()=> null
 }
 
-export const ContactContext=createContext<IContactContext>(initialStateOfContext);
+export const useContactContext=createContext<IContactContext>(initialStateOfContext);
 
 // export const UserContextProvider = UserContext.Provider;
 // export const UserContextConsumer = UserContext.Consumer;

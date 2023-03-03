@@ -7,7 +7,7 @@ import { InputStyle, InputUnderline,InputWrapper,SubmitStyle } from "styles/comp
 
 import {update, Conatact } from "stateSlice/userDataSlice"
 import { useContext } from "react";
-import { ContactContext } from "contexts";
+import { IContact, IContactType, useContactContext } from "contexts";
 
 const Form = () => {
   const navigate = useNavigate();
@@ -16,13 +16,17 @@ const Form = () => {
   // Context Used 
   
   const { register, handleSubmit, formState: { errors } } = useForm<Conatact>();
+  const {contact,setContact} = useContext(useContactContext);
+
   const onSubmit = (data:Conatact) => {
     // navigate("/thanks",{state:data})
 
     // dispatch(update(data))
     console.log("Clicked");
+    setContact([...contact,data])
         
     // console.log(data);
+    navigate("/thanks")
 
 
     

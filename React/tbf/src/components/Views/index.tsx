@@ -12,15 +12,15 @@ import App from "App";
 import { Conatact } from "stateSlice/userDataSlice";
 
 import { useState} from "react";
-import { ContactContext, IContact } from "contexts";
+import { useContactContext, IContact, IContactType } from "contexts";
 
 const persistor = persistStore(store);
 
 const View = () => {
-  const [contact, setContact] = useState<IContact[]>({} as IContact[]);
+  const [contact, setContact] = useState<IContactType>([] as IContactType);
   return (
     <>
-      <ContactContext.Provider value={{contact,setContact}}>
+      <useContactContext.Provider value={{contact,setContact}}>
         <Provider store={store}>
           <PersistGate loading={null} persistor={persistor}>
             <Router>
@@ -39,7 +39,7 @@ const View = () => {
             </Router>
           </PersistGate>
         </Provider>
-      </ContactContext.Provider>
+      </useContactContext.Provider>
     </>
   );
 };
