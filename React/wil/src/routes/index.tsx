@@ -1,11 +1,13 @@
 import Login from "components/LoginPage"
+import LoginPage2 from "components/LoginPage/loginPage2"
 import Product from "components/Product"
 import Users from "components/users"
+import { JsxElement } from "typescript"
 
 
 export interface IRoute{
     path:string,
-    element:JSX.Element,
+    element:any,
     restricted:boolean
 
 }
@@ -17,11 +19,12 @@ export const RoutesT:IRoute[]=[
         restricted:false
     },
     {
-        path:"/product",
+        path:"/products",
         element:<Product />,
         restricted:true
     },
     {
+
         path:"/users",
         element:<Users />,
         restricted:true

@@ -18,11 +18,13 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.43.3",
     "react-multi-carousel": "^2.8.2",
+    "react-query": "^3.39.3",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.8.1",
     "react-scripts": "5.0.1",
     "react-slick": "^0.29.0",
     "react-sticky-header": "^0.2.0",
+    "react-table": "^7.8.0",
     "redux-persist": "^6.0.0",
     "semantic-ui-react": "^2.1.4",
     "slick-carousel": "^1.8.1",
@@ -57,6 +59,7 @@
   },
   "devDependencies": {
     "@types/react-slick": "^0.23.10",
+    "@types/react-table": "^7.7.14",
     "@types/styled-components": "^5.1.26",
     "redux-devtools-extension": "^2.13.9"
   }
