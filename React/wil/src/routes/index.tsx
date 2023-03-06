@@ -1,7 +1,7 @@
 import Login from "components/LoginPage"
 import LoginPage2 from "components/LoginPage/loginPage2"
 import Product from "components/Product"
-import Users from "components/users"
+import Users from "components/Users"
 import { JsxElement } from "typescript"
 
 

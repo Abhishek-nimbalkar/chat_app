@@ -72,6 +72,7 @@ color: #000000;
 const TableDivStyle = styled.div`
 height: 95%;
 width: 100%;
+overflow-y: scroll;
 `;
 
 export {

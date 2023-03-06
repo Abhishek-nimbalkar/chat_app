@@ -2,6 +2,7 @@ import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import {
   ErrorMessageStyle,
+  LoginDivStyle,
   LoginPageStyle,
 } from "style/components/LoginPageStyle";
 
@@ -11,7 +12,7 @@ import { useGet } from "appLayer/useGet";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { addProduct, addUser } from "store/Slice";
-import users from "components/users";
+import users from "components/Users";
 
 const schema = yup.object().shape({
   email: yup.string().email().required(),
@@ -29,7 +30,7 @@ const Login = () => {
  
   const ProductPersitData: any = useSelector((state: any) => state.Products);
   const UserPersitData: any = useSelector((state: any) => state.Users);
-  // console.log(ProductPersitData);
+  console.log("Product Persisted Data ==== ",ProductPersitData);
   const Products:any  = useGet("products").data;
   const Users:any = useGet("users").data;
   console.log("Product Api Data====", Products?.data);
@@ -47,14 +48,12 @@ const Login = () => {
     if(Users!==null){
       dispatch(addUser(Users?.data));
     }
-      
-
-  }, [Users, dispatch]);
+  },[Users, dispatch]);
 
   
 
   
-  console.log("Users Api Data",Users?.data);
+  console.log("Users Api Data =======",Users?.data);
 
   // dispatch(addProduct(Products));
 
@@ -79,6 +78,9 @@ const Login = () => {
   return (
     <>
       <LoginPageStyle>
+        <LoginDivStyle>
+
+
         <h1>Login</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="field">
@@ -113,6 +115,7 @@ const Login = () => {
             Login
           </button>
         </form>
+        </LoginDivStyle>
       </LoginPageStyle>
     </>
   );

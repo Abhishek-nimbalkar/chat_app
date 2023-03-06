@@ -1,9 +1,121 @@
-import React from 'react'
+import { useDispatch, useSelector } from "react-redux";
 
-const Users = () => {
+import { useEffect, useState } from "react";
+import { useGet } from "appLayer/useGet";
+import {
+  LeftConatiner,
+  LogoStyle,
+  MainDivStyle,
+  RightConatiner,
+  ButtonStyle,
+  TopNavStyle,
+  TableHeadingStyle,
+  ContentDivStyle,
+  TableDivStyle,
+} from "style/components/ProductStyle";
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
+
+// const callApi:any=()=>{
+
+//   return {data};
+// }
+
+import Logo from "assets/images/logo.png";
+import i1 from "assets/images/P.png";
+import i2 from "assets/images/u.png";
+import pow from "assets/images/LogoOut.png";
+import { Navigate, useNavigate } from "react-router-dom";
+import { Table } from "semantic-ui-react";
+import React from "react";
+import TableComp from "components/Table";
+import ModelComp from "components/Modal";
+
+const User = () => {
+  //   const dispatch=useDispatch();
+  //  const ProductPersitData:any=useSelector((state:any)=>state.Products);
+
+  //   // useEffect(()=>{
+
+  //   // },[])
+
+  // const {data}=useGet("products");
+  // const Products:any=data?.data;
+  // console.log("Api Data====",Products);
+  // // dispatch((addProduct(Products)))
+
+  //    console.log("Persisted Product data======================",ProductPersitData);
+  // useEffect(()=>{
+
+  // },[])
+  const nav = useNavigate();
+  const logOut = (): void => {
+    // console.log("click");
+    localStorage.removeItem("user");
+    nav("/");
+  };
+
+  const UserDataP = useSelector((state: any) => state.Users[1]);
+  // console.log(UserDataP);
+
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  const navToUsers=()=>nav("/users")
+  const navToProducts=()=>nav("/products")
   return (
-    <div>Users</div>
-  )
-}
+    <>
+      <MainDivStyle>
+        <LeftConatiner>
+          <LogoStyle>
+            <img src={Logo} style={{ width: "100%" }} alt="" />
+            <ButtonStyle onClick={navToProducts}>
+              <img src={i1} alt="" /> Product
+            </ButtonStyle>
+            <ButtonStyle onClick={navToUsers}>
+              <img src={i2} alt="" /> Contact
+            </ButtonStyle>
+          </LogoStyle>
+        </LeftConatiner>
 
-export default Users
+        <RightConatiner>
+          <TopNavStyle>
+            <button onClick={logOut}>
+              <img src={pow} style={{ padding: "3vw" }} alt="" />
+            </button>
+          </TopNavStyle>
+          <ContentDivStyle>
+            <TableHeadingStyle>
+              Product
+              <button type="submit" onClick={handleShow}>
+                Add Product
+              </button>
+            </TableHeadingStyle>
+            <TableDivStyle>
+              <TableComp data={UserDataP} />
+            </TableDivStyle>
+          </ContentDivStyle>
+        </RightConatiner>
+      </MainDivStyle>
+
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Modal heading</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleClose}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </>
+  );
+};
+
+export default User;
