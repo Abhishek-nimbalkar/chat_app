@@ -3,14 +3,14 @@ const fs = require("fs");
 const router = express.Router();
 
 
-const dataPath=(__dirname,"src/Db/Users.json");
+const dataPath=(__dirname,"src/Db/Posts.json");
 
-const getUserData = () => {
+const getPostsData = () => {
     const jsonData = fs.readFileSync(dataPath)
     return JSON.parse(jsonData)    
 }
-const addUser = (data) => {
-    const oldData=getUserData();
+const addPost = (data) => {
+    const oldData=getPostsData();
     const newData=[...oldData,data]
     const stringifyData = JSON.stringify(newData)
     fs.writeFileSync(dataPath, stringifyData)
@@ -18,7 +18,7 @@ const addUser = (data) => {
 
 router.get("/", (req, res) => {
 
-    res.send(getUserData())
+    res.send(getPostsData())
     // fs.readFile(dataPath, 'utf8', (err, data) => {
     //     if (err) {
     //      throw err
@@ -28,35 +28,29 @@ router.get("/", (req, res) => {
 
     //   });
 });
-router.post("/signUp", (req, res) => {
+router.post("/create", (req, res) => {
     // console.log(req.body);
-    if(req.body.name!=null & req.body.password!=null){
-        addUser(req.body);
-        res.send("New User Added")
+    if(req.body.title!=null && req.body.body!=null && req.body.img!=null){
+        addPost(req.body);
+        res.send("New Post is Added")
     }
     else{
-        res.send("Parameters Not Defined Properly ")
+        res.send("The Parametres Are Not Definded Properly ")
     }
+
+router.put("/edit/:title",(req,res)=>{
+    const allPosts=getPostsData();
+    const postToEdit=req.params["title"];
     
 
-  
+})
+
   // console.log(req.body);
 });
 
-const isLoggedIn=(x,y)=>{
-    const Users=getUserData();
-    count =0;
-    Users.forEach((ele)=>{
-        if(ele.name==x && ele.password==y){
-            console.log(x,y);
-            count++;
-        }
-    })
-    if(count!=0) return true;
-    else return false;
-}
 
-router.post("/login",(req,res)=>{
+
+router.put("/edit",(req,res)=>{
     if(isLoggedIn(req.body.name,req.body.password)===true){
         res.send("User Alredy Present");
     }
