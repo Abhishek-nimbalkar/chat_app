@@ -1,1 +1,5 @@
-[{"name":"Abhisehk","password":"Hello 123"},{"name":"Abhissdfehk","password":"Helsdflo 123"},{"name":"Abhisehk2","password":"Hello 1234"}]
+[
+  { "name": "Abhisehk", "password": "Hello 123" },
+  { "name": "Abhissdfehk", "password": "Helsdflo 123" },
+  { "name": "Abhisehk2", "password": "Hello 1234" }
+]

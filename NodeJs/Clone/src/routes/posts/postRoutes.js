@@ -2,6 +2,11 @@ const express = require("express");
 const fs = require("fs");
 const router = express.Router();
 
+const { v4: uuidv4 } = require('uuid');
+
+
+const addPost=require("../../utils/addPost")
+
 
 const dataPath=(__dirname,"src/Db/Posts.json");
 
@@ -9,34 +14,46 @@ const getPostsData = () => {
     const jsonData = fs.readFileSync(dataPath)
     return JSON.parse(jsonData)    
 }
-const addPost = (data) => {
-    const oldData=getPostsData();
-    const newData=[...oldData,data]
-    const stringifyData = JSON.stringify(newData)
-    fs.writeFileSync(dataPath, stringifyData)
-}
+
 
 router.get("/", (req, res) => {
 
-    res.send(getPostsData())
-    // fs.readFile(dataPath, 'utf8', (err, data) => {
-    //     if (err) {
-    //      throw err
-    //     }
-  
-    //     res.send(JSON.parse(data));
-
-    //   });
+    res.send(getPostsData());
 });
 router.post("/create", (req, res) => {
     // console.log(req.body);
-    if(req.body.title!=null && req.body.body!=null && req.body.img!=null){
-        addPost(req.body);
-        res.send("New Post is Added")
+    const {title,body,img}=req.body;
+    const newPost={
+        id:uuidv4(),
+        title:title,
+        body:body,
+        img:img
     }
-    else{
-        res.send("The Parametres Are Not Definded Properly ")
+
+    try{
+        if(getPostsData()[req.headers["userName"]]){
+            getPostsData()[req.headers["userName"]].push(newPost);
+        }
+        else{
+            console.log(req.headers)
+            console.log(getPostsData())
+            getPostsData()[req.headers.username]=[];
+            console.log(getPostsData())
+            getPostsData()[req.headers.username].push(newPost);
+        }
+      
+
+        res.send(201)
+    }catch(err){
+        res.status(500).send({Error:true,message:err?.stack}||"The Post Was Not added Succesfully");
     }
+    // if(req.body.title!=null && req.body.body!=null && req.body.img!=null){
+    //     addPost(req.body);
+    //     res.send("New Post is Added")
+    // }
+    // else{
+    //     res.send("The Parametres Are Not Definded Properly ")
+    // }
 
 router.put("/edit/:title",(req,res)=>{
     const allPosts=getPostsData();
@@ -60,4 +77,4 @@ router.put("/edit",(req,res)=>{
     
 })
 
-module.exports = router;
+ module.exports = router;

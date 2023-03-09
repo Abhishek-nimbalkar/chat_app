@@ -12,7 +12,9 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.18.2",
-    "riddles-cli": "^1.0.0"
+    "jsonwebtoken": "^9.0.0",
+    "riddles-cli": "^1.0.0",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "dotenv": "^16.0.3",
