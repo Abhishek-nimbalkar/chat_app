@@ -17,7 +17,8 @@ const mongoose_1 = __importDefault(require("mongoose"));
 function connect() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            yield mongoose_1.default.connect("mongodb+srv://Abhishek:Abhishek2023@atlascluster.ifyowmc.mongodb.net/?retryWrites=true&w=majority/blog/Users");
+            // await mongoose.connect("mongodb+srv://Abhishek:Abhishek2023@atlascluster.ifyowmc.mongodb.net/?retryWrites=true&w=majority/blogApp");
+            yield mongoose_1.default.connect("mongodb://127.0.0.1:27017/blogApp");
             console.log("Database connected");
         }
         catch (err) {
