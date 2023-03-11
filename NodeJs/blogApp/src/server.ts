@@ -1,7 +1,9 @@
 import express, { Express, Request, Response } from 'express';
 import { connect } from "./db/db";
-import users from "./routes/users"
-import UserRouter from './routes/UserRouter'
+import users from "./routes/users";
+import posts from "./routes/posts";
+
+import UserRouter from './routes/UserRouter';
 
 
 const app: Express = express();
@@ -11,6 +13,7 @@ connect();
 
 app.use(express.json());
 app.use('/users', users);
+app.use("/posts",posts);
 
 app.use("/rahul",UserRouter)
 

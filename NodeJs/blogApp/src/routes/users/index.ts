@@ -1,14 +1,17 @@
-import express, { Errback } from "express";
-import User from "../../models/user";
+import express, { Errback, Request, Response } from "express";
+import Users from "../../models/user";
 
 import { IUserSignUp } from "../../interfaces/userInterface";
-import { generateJwt } from "../../utils/jwtTokenValidation";
+import { generateJwt, verifyToken } from "../../utils/jwtTokenValidation";
 import { IJwtPayload } from "../../interfaces/jwtInterface";
 const router = express.Router();
 
-router.get("/", async (req, res) => {
+router.get("/",verifyToken, async (req:Request, res:Response) => {
+  // const token:any=req.headers.authorization;
+  // const email=await JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString())
+  //   console.log(email.emailId);
     
-    const users = await User.find();
+    const users = await Users.find();
   //   console.log(jwtKey);
 
   res.send(users);
@@ -17,20 +20,24 @@ router.get("/", async (req, res) => {
 router.post("/signUp", async (req, res) => {
   try {
     const { emailId, userName, phone, password } = req.body;
-    const newUserData: IUserSignUp = new User({
+    
+    const userExist = await Users.findOne({ emailId: emailId });
+    // console.log(emailId);
+
+    if (userExist) throw new Error("User Alredy Existed");
+
+    const newUserData: IUserSignUp = new Users({
       emailId: emailId,
       userName: userName,
       phone: phone,
       password: password,
     });
-    const userExist = await User.findOne({ emailId: emailId });
-    // console.log(emailId);
-
-    if (userExist) throw new Error("User Alredy Existed");
-    let newUser = User.create(newUserData);
+    
+    let newUser = Users.create(newUserData);
     //   res.send(newUser);
 
     res.status(201).send("New User Added");
+    
   } catch (err: any) {
     res.status(505).send({ Error: true, message: err?.message });
   }
@@ -38,13 +45,17 @@ router.post("/signUp", async (req, res) => {
 
 router.post("/login", async (req, res) => {
   const { emailId, password } = req.body;
-  const user:IJwtPayload = {
-    userId: emailId
-  };
 
+
+  const userExist = await Users.findOne({ emailId:emailId});
+  // console.log(userExist);
+  
   try {
-    if (!User.findOne({ emailId: emailId }))
+    if (!userExist)
       throw new Error("User Not Found Try to Login ");
+      const user:IJwtPayload = {
+        emailId: emailId
+      };
       const token = generateJwt(user);
       res.json({ token });
   } catch (err:any) {
