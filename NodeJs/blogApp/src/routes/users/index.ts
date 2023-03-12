@@ -1,5 +1,7 @@
 import express, { Errback, Request, Response } from "express";
 import Users from "../../models/user";
+import SignUPController from "../../controllers/users/signUpCont"
+import LoginController from "../../controllers/users/loginCont"
 
 import { IUserSignUp } from "../../interfaces/userInterface";
 import { generateJwt, verifyToken } from "../../utils/jwtTokenValidation";
@@ -17,50 +19,8 @@ router.get("/",verifyToken, async (req:Request, res:Response) => {
   res.send(users);
 });
 
-router.post("/signUp", async (req, res) => {
-  try {
-    const { emailId, userName, phone, password } = req.body;
-    
-    const userExist = await Users.findOne({ emailId: emailId });
-    // console.log(emailId);
+router.post("/signUp",SignUPController);
 
-    if (userExist) throw new Error("User Alredy Existed");
-
-    const newUserData: IUserSignUp = new Users({
-      emailId: emailId,
-      userName: userName,
-      phone: phone,
-      password: password,
-    });
-    
-    let newUser = Users.create(newUserData);
-    //   res.send(newUser);
-
-    res.status(201).send("New User Added");
-    
-  } catch (err: any) {
-    res.status(505).send({ Error: true, message: err?.message });
-  }
-});
-
-router.post("/login", async (req, res) => {
-  const { emailId, password } = req.body;
-
-
-  const userExist = await Users.findOne({ emailId:emailId});
-  // console.log(userExist);
-  
-  try {
-    if (!userExist)
-      throw new Error("User Not Found Try to Login ");
-      const user:IJwtPayload = {
-        emailId: emailId
-      };
-      const token = generateJwt(user);
-      res.json({ token });
-  } catch (err:any) {
-    res.status(500).send({error:true,message:err?.message} || "Problem in Login")
-  }
-});
+router.post("/login",LoginController );
 
 export default router;

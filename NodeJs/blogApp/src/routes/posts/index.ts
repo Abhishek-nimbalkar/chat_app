@@ -1,6 +1,4 @@
 import express, {
-  Errback,
-  ErrorRequestHandler,
   Request,
   Response,
 } from "express";
