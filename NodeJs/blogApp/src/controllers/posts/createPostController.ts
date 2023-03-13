@@ -1,10 +1,11 @@
+import { Request, Response } from "express";
 import { Ipost } from "../../interfaces/postInterface";
 import Posts from "../../models/post"
 
-export default async (req: Request, res: Response) => {
+export default async (req:Request, res: Response) => {
     // console.log(email.emailId);
     try {
-      const token = req.headers?.authorization;
+      const token:any= req.headers.authorization;
       const email = await JSON.parse(
         Buffer.from(token.split(".")[1], "base64").toString()
       );
