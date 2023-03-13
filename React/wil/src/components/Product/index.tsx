@@ -12,6 +12,8 @@ import {
   TableHeadingStyle,
   ContentDivStyle,
   TableDivStyle,
+  LogOutButton,
+  AddProductButton,
 } from "style/components/ProductStyle";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
@@ -69,28 +71,28 @@ const Product = () => {
       <MainDivStyle>
         <LeftConatiner>
           <LogoStyle>
-            <img src={Logo} style={{ width: "100%" }} alt="" />
+            <img src={Logo} style={{ width: "100%"}} alt="" />
             <ButtonStyle onClick={navToProducts}>
-              <img src={i1} alt="" /> Product
+              <img src={i1} alt="" style={{height:"1.3vw" }} /> Product
             </ButtonStyle>
             <ButtonStyle onClick={navToUsers}>
-              <img src={i2} alt="" /> Contact
+              <img src={i2} alt="" style={{height:"1.3vw" }}/> Contact
             </ButtonStyle>
           </LogoStyle>
         </LeftConatiner>
 
         <RightConatiner>
           <TopNavStyle>
-            <button onClick={logOut}>
-              <img src={pow} style={{ padding: "3vw" }} alt="" />
-            </button>
+            <LogOutButton  onClick={logOut}>
+              <img src={pow} style={{height:"2.5vw"}} alt="" />
+            </LogOutButton>
           </TopNavStyle>
           <ContentDivStyle>
             <TableHeadingStyle>
               Product
-              <button type="submit" onClick={handleShow}>
+              <AddProductButton type="submit" onClick={handleShow}>
                 Add Product
-              </button>
+              </AddProductButton>
             </TableHeadingStyle>
             <TableDivStyle>
               <TableComp data={TableDataP}  />

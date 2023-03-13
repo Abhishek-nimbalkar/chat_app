@@ -2,6 +2,12 @@ import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import {
   ErrorMessageStyle,
+  ForgotText,
+  FormButton,
+  FormHeadingDiv,
+  FormInput,
+  FormLogoDiv,
+  FormLowerHeadingDiv,
   LoginDivStyle,
   LoginPageStyle,
 } from "style/components/LoginPageStyle";
@@ -12,7 +18,8 @@ import { useGet } from "appLayer/useGet";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { addProduct, addUser } from "store/Slice";
-import users from "components/Users";
+import img from "assets/images/WITSLogo.png";
+// import users from "components/Users";
 
 const schema = yup.object().shape({
   email: yup.string().email().required(),
@@ -27,33 +34,30 @@ export type User = {
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
- 
+
   const ProductPersitData: any = useSelector((state: any) => state.Products);
   const UserPersitData: any = useSelector((state: any) => state.Users);
-  console.log("Product Persisted Data ==== ",ProductPersitData);
-  const Products:any  = useGet("products").data;
-  const Users:any = useGet("users").data;
-  console.log("Product Api Data====", Products?.data);
+  console.log("Product Persisted Data ==== ", ProductPersitData);
+  const Products: any = useGet("products").data;
+  const Users: any = useGet("users");
+  console.log("Product Api Data====", Products);
   // console.log("Persited Data of Products====================",ProductPersitData);
-  
-  useEffect(() => { 
+
+  useEffect(() => {
     // console.log("UseEffect is Called");
-    if(Products!==null){
-      dispatch(addProduct(Products?.data));
+    if (Products !== null) {
+      dispatch(addProduct(Products));
     }
-  }, [Products, dispatch]);
+  }, [Products,dispatch]);
 
-  useEffect(() => { 
+  useEffect(() => {
     // console.log("UseEffect is Called");
-    if(Users!==null){
-      dispatch(addUser(Users?.data));
+    if (Users !== null) {
+      dispatch(addUser(Users));
     }
-  },[Users, dispatch]);
+  }, [dispatch]);
 
-  
-
-  
-  console.log("Users Api Data =======",Users?.data);
+  console.log("Users Api Data =======", Users?.data);
 
   // dispatch(addProduct(Products));
 
@@ -79,42 +83,52 @@ const Login = () => {
     <>
       <LoginPageStyle>
         <LoginDivStyle>
+          <FormLogoDiv>
+            <img
+              style={{ justifyContent: "flex-start" }}
+              src={img}
+              alt="Logo"
+            />
+          </FormLogoDiv>
+          <FormHeadingDiv>Login With WIL</FormHeadingDiv>
+          <FormLowerHeadingDiv>New User?  <a href="">Create an Account</a></FormLowerHeadingDiv>
 
-
-        <h1>Login</h1>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="field">
-            <label className="label">Email Address</label>
-            <div className="control">
-              <input
-                //   autoComplete="off"
-                {...register("email")}
-                placeholder="Email"
-                type="email"
-                required
-              />
-              <ErrorMessageStyle>{errors.email?.message}</ErrorMessageStyle>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="field">
+              {/* <label className="label">Email Address</label> */}
+              <div className="control">
+                <FormInput
+                  //   autoComplete="off"
+                  {...register("email")}
+                  placeholder="Email"
+                  type="email"
+                  required
+                />
+                <ErrorMessageStyle>{errors.email?.message}</ErrorMessageStyle>
+              </div>
             </div>
-          </div>
-          <div className="field">
-            <label className="label">Password</label>
-            <div className="control">
-              <input
-                {...register("password")}
-                placeholder="Password"
-                type="password"
-                required
-              />
-              <ErrorMessageStyle>{errors.password?.message}</ErrorMessageStyle>
+            <div className="field">
+              {/* <label className="label">Password</label> */}
+              <div className="control">
+                <FormInput
+                  {...register("password")}
+                  placeholder="Password"
+                  type="password"
+                  required
+                />
+                <ErrorMessageStyle>
+                  {errors.password?.message}
+                </ErrorMessageStyle>
+              </div>
             </div>
-          </div>
-          <button
-            type="submit"
-            className="button is-block is-info is-fullwidth"
-          >
-            Login
-          </button>
-        </form>
+            <ForgotText>Forgot Password?</ForgotText>
+            <FormButton
+              type="submit"
+              className="button is-block is-info is-fullwidth"
+            >
+              Login
+            </FormButton>
+          </form>
         </LoginDivStyle>
       </LoginPageStyle>
     </>
