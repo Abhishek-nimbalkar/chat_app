@@ -25,5 +25,5 @@ export const useGet = (props: string): any => {
 
   // const data=async()=>await(instance.get(props));
   
-  return useQuery(props, data);
+  return useQuery(props, ()=>data);
 };

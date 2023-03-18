@@ -42,12 +42,13 @@ const Login = () => {
   // const Products: any = useGet("products");
   // const Users: any = useGet("users");
   const {data,isLoading}=useGet("products");
+    console.log("Product Api Data====", data);
 
-  const [usedata,setData]=useState();
-  useEffect(()=>{
-    setData(data)
-  },[])
-  console.log("Product Api Data====", data);
+  // const [usedata,setData]=useState();
+  // useEffect(()=>{
+  //   setData(data)
+  // },[data, isLoading])
+  
   // console.log("Persited Data of Products====================",ProductPersitData);
 
   // useEffect(() => {
