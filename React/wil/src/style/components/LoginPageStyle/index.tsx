@@ -21,8 +21,8 @@ const LoginDivStyle = styled.div`
   flex-direction: column;
   /* justify-content: center; */
   /* align-items: center; */
-  height: 50vh;
-  width: 40vw;
+  min-height: 30vw;
+  min-width:40vw;
   background: #ffffff;
   border-radius: 10px;
   padding: 3vw;
@@ -30,8 +30,8 @@ const LoginDivStyle = styled.div`
 
 const FormLogoDiv = styled.div`
   display: flex;
-  width: 100%;
-  height: 5.5vw;
+  max-width: 100%;
+  max-height: 5.5vw;
   margin-top: 1vw;
   margin-left: 2vw;
 `;
@@ -66,6 +66,9 @@ const FormInput = styled.input`
   margin-top: 2vw;
   opacity: 0.2;
   border: 1px solid #000000;
+  font-size: 1.8vw;
+  font-weight: bold;
+  
 
   ::placeholder {
     color: rgba(39, 39, 39, 0.4);
@@ -84,7 +87,7 @@ const ForgotText = styled.div`
   font-size: 1.6vw;
   /* identical to box height */
   padding: 1vw;
-  margin-right: 4vw;
+  margin-right: 1vw;
 
   color: #1d2e88;
 `;
@@ -94,7 +97,7 @@ const FormButton = styled.button`
   width: 70%;
   margin-left: 6vw;
   margin-top: 1vw;
-  height: 4vw;
+  min-height: 3.5vw;
   border-radius: 10px;
 
   font-family: "Poppins";

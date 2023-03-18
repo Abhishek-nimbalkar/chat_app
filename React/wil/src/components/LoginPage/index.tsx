@@ -16,9 +16,10 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigate } from "react-router-dom";
 import { useGet } from "appLayer/useGet";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { addProduct, addUser } from "store/Slice";
 import img from "assets/images/WITSLogo.png";
+import { useQuery } from "react-query";
 // import users from "components/Users";
 
 const schema = yup.object().shape({
@@ -35,29 +36,35 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const ProductPersitData: any = useSelector((state: any) => state.Products);
-  const UserPersitData: any = useSelector((state: any) => state.Users);
-  console.log("Product Persisted Data ==== ", ProductPersitData);
-  const Products: any = useGet("products").data;
-  const Users: any = useGet("users");
-  console.log("Product Api Data====", Products);
+  // const ProductPersitData: any = useSelector((state: any) => state.Products);
+  // const UserPersitData: any = useSelector((state: any) => state.Users);
+  // console.log("Product Persisted Data ==== ", ProductPersitData);
+  // const Products: any = useGet("products");
+  // const Users: any = useGet("users");
+  const {data,isLoading}=useGet("products");
+
+  const [usedata,setData]=useState();
+  useEffect(()=>{
+    setData(data)
+  },[])
+  console.log("Product Api Data====", data);
   // console.log("Persited Data of Products====================",ProductPersitData);
 
-  useEffect(() => {
-    // console.log("UseEffect is Called");
-    if (Products !== null) {
-      dispatch(addProduct(Products));
-    }
-  }, [Products,dispatch]);
+  // useEffect(() => {
+  //   // console.log("UseEffect is Called");
+  //   if (Products !== null) {
+  //     dispatch(addProduct(Products));
+  //   }
+  // }, [Products,dispatch]);
 
-  useEffect(() => {
-    // console.log("UseEffect is Called");
-    if (Users !== null) {
-      dispatch(addUser(Users));
-    }
-  }, [dispatch]);
+  // useEffect(() => {
+  //   // console.log("UseEffect is Called");
+  //   if (Users !== null) {
+  //     dispatch(addUser(Users));
+  //   }
+  // }, [Users, dispatch]);
 
-  console.log("Users Api Data =======", Users?.data);
+  // console.log("Users Api Data =======", Users?.data);
 
   // dispatch(addProduct(Products));
 
@@ -85,7 +92,7 @@ const Login = () => {
         <LoginDivStyle>
           <FormLogoDiv>
             <img
-              style={{ justifyContent: "flex-start" }}
+              style={{ justifyContent: "flex-start" ,maxWidth:"35%"}}
               src={img}
               alt="Logo"
             />
@@ -97,7 +104,7 @@ const Login = () => {
             <div className="field">
               {/* <label className="label">Email Address</label> */}
               <div className="control">
-                <FormInput
+                <FormInput 
                   //   autoComplete="off"
                   {...register("email")}
                   placeholder="Email"

@@ -11,17 +11,19 @@ export const useGet = (props: string): any => {
 
   const [data, setData] = useState();
 
-  console.log(props);
+  // console.log(props);
   useEffect(() => {
     const fetchApi = async () => {
       const apiData=await instance.get(props);
       setData(apiData.data);
+      // console.log("UseEffect inside api ",apiData.data);
     };
     fetchApi();
     
-  }, [data, props]);
+    
+  }, [props]);
 
   // const data=async()=>await(instance.get(props));
-
+  
   return useQuery(props, data);
 };
