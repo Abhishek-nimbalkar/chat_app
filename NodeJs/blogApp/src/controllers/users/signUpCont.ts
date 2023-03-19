@@ -20,7 +20,7 @@ export default async (req:Request, res:Response) => {
         password: hashPass,
       });
       
-      let newUser = Users.create(newUserData);
+      const newUser = Users.create(newUserData);
       //   res.send(newUser);
   
       res.status(201).send("New User Added");
