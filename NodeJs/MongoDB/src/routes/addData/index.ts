@@ -1,5 +1,5 @@
 import express from "express";
-import { eqOp, gteOp, gtOp } from "../../utils";
+import { eqOp, gteOp, gtOp, inOp ,ltOp,lteOp,neOp,ninOp,andOp, notOp,norOp} from "../../utils";
 import Mongos from "../../model";
 const router = express.Router();
 
@@ -28,7 +28,15 @@ router.post("/", async (req, res) => {
 router.get("/",async(req,res)=>{
     // eqOp();
     // gtOp();
-    gteOp();
+    // gteOp();
+    // inOp();
+    // ltOp();
+    // lteOp();
+    // neOp();
+    // ninOp();
+    // andOp();
+    // notOp();
+    norOp();
     res.status(200).send({success:true,message:"Function run"})
 })
 
