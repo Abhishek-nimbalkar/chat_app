@@ -42,6 +42,7 @@ export const ninOp=async ()=>{
     
 }
 
+
 //************************************************************* */
 export const andOp=async ()=>{
     const data:any=await Mongos.find({$and:[{qty:{$ne:15}},{qty:{$lte:25}}]})
@@ -55,6 +56,29 @@ export const notOp=async ()=>{
 }
 export const norOp=async ()=>{
     const data:any=await Mongos.find({$nor:[{"item.code":123},{qty:20}]})
+    console.log(data);
+    
+}
+export const orOp=async ()=>{
+    const data:any=await Mongos.find({$or:[{qty:{$eq:25}},{"item.code":123}]})
+    console.log(data);
+    
+}
+
+//********************************************************************* */
+
+export const allOp=async ()=>{
+    const data:any=await Mongos.find({tags:{$all:['B','C']}})
+    console.log(data);
+    
+}
+export const elemMatchOp=async ()=>{
+    const data:any=await Mongos.find({tags:{$elemMatch:{$eq:'C'}}})
+    console.log(data);
+    
+}
+export const sizeOp=async ()=>{
+    const data:any=await Mongos.find({tags:{$size:3}})
     console.log(data);
     
 }
