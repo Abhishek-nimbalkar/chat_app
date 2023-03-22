@@ -2,10 +2,10 @@ import { IUserSignUp } from "interfaces/userInterface";
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
-  emailId: String,
+  emailId: {type:String,required:[true,"Email is Required"]},
   userName: {type:String},
   phone: String,
-  password:{type:String},
+  password:{type:String,required:[true,"password is Required"]},
   imgUrl:String
 });
 

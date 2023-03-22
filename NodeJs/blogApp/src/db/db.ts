@@ -6,7 +6,8 @@ export async function connect() {
     await mongoose.connect("mongodb://127.0.0.1:27017/blogApp")
     console.log("Database connected");
   } catch (err) {
-    console.error(err);
+    // console.error(err);
+    throw new Error ("Db not connected");
   }
 }
 
