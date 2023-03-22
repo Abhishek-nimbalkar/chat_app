@@ -7,7 +7,7 @@ export default async (req:Request, res:Response) => {
     try {
       const { emailId, userName, phone, password } = req.body;
       
-      const userExist = await Users.findOne({ emailId: emailId });
+      const userExist:any = await Users.findOne({ emailId: emailId });
       // console.log(emailId);
   
       if (userExist) throw new Error("User Alredy Existed");
@@ -18,6 +18,7 @@ export default async (req:Request, res:Response) => {
         userName: userName,
         phone: phone,
         password: hashPass,
+        imgUrl:""
       });
       
       const newUser = Users.create(newUserData);
