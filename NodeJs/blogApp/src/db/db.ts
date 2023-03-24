@@ -14,7 +14,8 @@ export async function connect() {
     
     console.log("Database connected");
   } catch (err) {
-    console.error(err);
+    // console.log(err);
+    
     throw new Error("Mongoose connection error");
   }
 }
