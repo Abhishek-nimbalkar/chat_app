@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import bcrypt from "bcrypt"
 import { IJwtPayload } from "../../interfaces/jwtInterface";
-import { generateJwt } from "../../utils/jwtTokenValidation";
+import { generateJwt } from "../../middlewares/jwtTokenValidation";
 import Users from "../../models/user";
 export default async (req: Request, res: Response) => {
   const { emailId, password } = req.body;

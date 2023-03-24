@@ -9,9 +9,11 @@ import likePostController from "../../controllers/posts/likePostCont";
 // import { Ipost } from "interfaces/postInterface";
 import Posts from "../../models/post";
 
-import { verifyToken } from "../../utils/jwtTokenValidation";
+import { verifyToken } from "../../middlewares/jwtTokenValidation";
 
 const router = express.Router();
+
+router.use(verifyToken)
 
 router.get("/", verifyToken, async (req: Request, res: Response) => {
   //   console.log(email.emailId);
@@ -21,13 +23,13 @@ router.get("/", verifyToken, async (req: Request, res: Response) => {
   res.send(posts);
 });
 
-router.post("/create", verifyToken, createPostController);
+router.post("/create", createPostController);
 
-router.patch("/edit/:id", verifyToken,editPostController);
+router.patch("/edit/:id", editPostController);
 //************************* */ For comments *******************************//
 
-router.patch("/addComment/:id",verifyToken,addCommentController)
+router.patch("/addComment/:id",addCommentController)
 
-router.patch("/like/:id",verifyToken,likePostController)
+router.patch("/like/:id",likePostController)
 
 export default router;

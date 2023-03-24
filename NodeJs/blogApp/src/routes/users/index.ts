@@ -4,7 +4,7 @@ import SignUPController from "../../controllers/users/signUpCont"
 import LoginController from "../../controllers/users/loginCont"
 
 import { IUserSignUp } from "../../interfaces/userInterface";
-import { generateJwt, verifyToken } from "../../utils/jwtTokenValidation";
+import { generateJwt, verifyToken } from "../../middlewares/jwtTokenValidation";
 import { IJwtPayload } from "../../interfaces/jwtInterface";
 const router = express.Router();
 

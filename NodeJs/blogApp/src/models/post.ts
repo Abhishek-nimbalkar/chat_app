@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 
 const postSchema = new mongoose.Schema({
     userEmail:String,
-    title:String,
+    title:{type:String,unique:true},
     body:String,
     img:String,
     comments:[{type:Object}],
