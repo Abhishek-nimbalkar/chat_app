@@ -3,12 +3,12 @@ import mongoose from "mongoose";
 const tokenSchema = new mongoose.Schema({
     userId: {
       type: mongoose.Schema.Types.ObjectId,
-      required: true,
+      required: [true,"UserId is required"],
       ref: "Users",
     },
     token: {
       type: String,
-      required: true,
+      required: [true,"Token is required"],
     },
     createdAt: {
       type: Date,
