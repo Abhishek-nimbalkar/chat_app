@@ -10,7 +10,7 @@ export default async(req:Request,res:Response)=>{
     try{
         const post = await Posts.findByIdAndUpdate(id, {$push:{likes:{emailId}}}, { new: true });
         
-        res.status(201).send(`You Have liked Post === ${id} `)
+        res.status(200).send({success:true,message:"You Have liked Post === "+id})
         
     }catch(err:any){
         res.status(500).send({error:true,message:err?.message} || "Something get wrong ");

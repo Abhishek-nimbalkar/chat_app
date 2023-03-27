@@ -6,7 +6,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const jwtKey: any = process.env.JWT_KEY;
-const JWT_EXPIRATION_TIME = "10m";
+const JWT_EXPIRATION_TIME = "1h";
 
 export const generateJwt = (payload: IJwtPayload): string => {
   return jwt.sign(payload, jwtKey, { expiresIn: JWT_EXPIRATION_TIME });

@@ -7,7 +7,7 @@ import addImg from "./routes/image";
 import UserRouter from './routes/UserRouter';
 
 
-const app: Express = express();
+export const app: Express = express();
 const port = 5000;
 
 connect();

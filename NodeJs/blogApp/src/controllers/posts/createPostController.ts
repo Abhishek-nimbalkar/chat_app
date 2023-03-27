@@ -25,14 +25,16 @@ export default async (req:Request, res: Response) => {
       const samePost = await Posts.findOne({ title: title });
       // console.log(emailId);
   
-      if (samePost)
-        throw new Error(
-          "Post Allready Existed You Can either delete or Edit it "
-        );
+      if (samePost){
+        return res.status(403).send({error:true,message:"Post Allready Existed You Can either delete or Edit it"})
+      }
+        // throw new Error(
+        //   " "
+        // );
       let newPost = Posts.create(newPostData);
       //   res.send(newUser);
   
-      res.status(201).send("New Post Added");
+      res.status(201).send({success:true,message:"New Post Added"});
     } catch (err: any) {
       res.status(505).send({ Error: true, message: err?.message });
     }

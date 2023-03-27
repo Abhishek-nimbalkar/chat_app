@@ -13,8 +13,10 @@ export default  async (req: Request, res: Response) => {
     // const verify=await Posts.findById(id).exec();
     // if(verify?.userEmail!==emailId) throw new Error ("Post Dont Exist ")
     try {
+      const postExist=await Posts.findById(id);
+      if(!postExist) return res.status(404).send({error:true,message:"Post Don't Exsist"})
       const post = await Posts.findByIdAndUpdate(id, postData, { new: true });
-      if (!post) throw new Error ("There is Some Error While Editing Post "); 
+      res.status(200).send({success:true,message:"Post Updated Successfully"}) 
     } catch (err: any) {
       res
         .status(500)
@@ -23,5 +25,5 @@ export default  async (req: Request, res: Response) => {
         );
     }
   
-    res.send(emailId);
+    // res.send(emailId);
   }

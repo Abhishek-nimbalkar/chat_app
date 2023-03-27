@@ -10,7 +10,7 @@ export default async (req:Request, res:Response) => {
       const userExist:any = await Users.findOne({ emailId: emailId });
       // console.log(emailId);
   
-      if (userExist) throw new Error("User Alredy Existed");
+      if (userExist) return res.status(403).send({error:true,message:"User Alredy Exist"})
       const saltRounds = 5;
       const hashPass=await bcrypt.hash(password, saltRounds);
       const newUserData: IUserSignUp = new Users({

@@ -8,11 +8,12 @@ export default async(req:Request,res:Response)=>{
       Buffer.from(token.split(".")[1], "base64").toString()
     );
     const emailId: string = email.emailId;
+    if(!comment) return res.status(404).send({error:true,message:"Body is not Present"})
     try{
         const post = await Posts.findByIdAndUpdate(postId, {$push:{comments:{emailId:emailId,comment:comment}}}, { new: true });
-        console.log(post);
+        // console.log(post);
         
-        res.status(201).send(`You Have Added Comment on postID ====  ${postId} `)
+        res.status(201).send({success:true,message:"You Have Added Comment on postID ==== "+postId})
     }catch(err:any){
         res.status(500).send({error:true,message:err?.message} || "Something get wrong ");
     }

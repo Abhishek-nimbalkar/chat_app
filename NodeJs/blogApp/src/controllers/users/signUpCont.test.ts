@@ -11,12 +11,18 @@ const should =chai.should();
 chai.use(chaiAsPromised);
 chai.use(chaiHttp);
 
-const reqBody = {
-    "emailId": "Abhishek1@gmail.com",
-    "userName": "Abhishek1",
-    "phone": "123456789",
-    "password":"Abhishek1234"
+const Body = {
+    emailId: faker.internet.email(),
+    userName: faker.internet.userName(),
+    phone: faker.phone.number(),
+    password:faker.internet.password(),
 };
+const reqBody={
+  emailId:Body.emailId,
+  userName:Body.userName,
+  phone:Body.phone,
+  password:Body.password,
+}
 
 describe("User SignUp Route", () => {
   before(async () => {
@@ -25,33 +31,32 @@ describe("User SignUp Route", () => {
   // beforeEach(async () => {
   //   await Users.deleteMany({});
   // });
-  it.only(" #POST users/login Should return token ",  (done) => {
-    
+  it(" #POST users/login Should create new User ",  (done) => {
     chai.request(app)
     .post("/users/signUp")
     .send(reqBody)
     .end((err,res)=>{
         res.should.have.status(201);
         res.body.should.be.a('object');
-        res.body.should.have.property('token').to.be.a("string")
+        res.body.should.have.property('message').equal("New User Added")
     done();
     })
   });
 
-//   it(" #POST users/login User Dont Exist ",  (done) => {
+  it(" #POST users/singUp User Alerdy Exist ",  (done) => {
 
-//     chai.request(app)
-//     .post("/users/signUp")
-//     .send(reqBody)
-//     .end((err,res)=>{
-//         res.should.have.status(409);
-//         res.body.should.be.a('object');
-//         res.body.should.have.property('error').equal(true);
-//         res.body.should.have.property("message").equal("User Not found Try to SignUp first")
-//     done();
+    chai.request(app)
+    .post("/users/signUp")
+    .send(reqBody)
+    .end((err,res)=>{
+        res.should.have.status(403);
+        res.body.should.be.a('object');
+        res.body.should.have.property('error').equal(true);
+        res.body.should.have.property("message").equal("User Alredy Exist")
+    done();
 
-//     })
-//   });
+    })
+  });
   
   
 });
