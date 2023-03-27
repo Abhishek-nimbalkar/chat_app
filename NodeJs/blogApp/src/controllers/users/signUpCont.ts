@@ -24,7 +24,7 @@ export default async (req:Request, res:Response) => {
       const newUser = Users.create(newUserData);
       //   res.send(newUser);
   
-      res.status(201).send("New User Added");
+      res.status(201).send({success:true,message:"New User Added"});
       
     } catch (err: any) {
       res.status(505).send({ Error: true, message: err?.message });

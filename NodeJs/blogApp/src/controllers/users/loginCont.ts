@@ -9,27 +9,28 @@ export default async (req: Request, res: Response) => {
   const userExist = await Users.findOne({ emailId: emailId });
   
   // console.log(userExist);
+  if (!userExist){
+    return res.status(409).send({error:true,message:"User Not found Try to SignUp first"})
+  }
 
   try {
     //  throw new Error("User Not Found Try to Login ");
-    
-    if (userExist){
         // const dbpass=Users.findOne({})
-        const dbPass:any=userExist.password;
+        const dbPass:any=userExist?.password;
         
-        const cmp = await bcrypt.compare(req.body.password,dbPass);
+        const cmp = await bcrypt.compare(password,dbPass);
       if (cmp) {
         const user: IJwtPayload = {
             emailId: emailId,
           };
           const token = generateJwt(user);
-          res.json({ token });
+          res.status(200).json({ token });
       } else {
-        res.send("Wrong username or password.");
+        return res.status(401).send({error:true,message:"Wrong username or password."});
       }
-    } else {
-      res.status(402).send("Wrong username or password.");
-    }
+    // } else {
+    //   res.status(402).send("Wrong username or password.");
+    // }
   } catch (err: any) {
     res.status(500).send({ error: true, message: err?.message } || "Problem in Login");
   }
