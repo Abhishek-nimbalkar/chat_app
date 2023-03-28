@@ -3,16 +3,15 @@ import { resolve } from "path";
 import Users from "../../models/user";
 
 import { dataUri, multerUploads } from "../../middlewares/multer";
-import { cloudinaryConfig } from "../../config/cloudinaryConfig";
+// import { cloudinaryConfig } from "../../config/cloudinaryConfig";
 import cloudinaryUpload from "../../utils/CloudinaryUpload";
 
 const router = express.Router();
 
-cloudinaryConfig;
+// cloudinaryConfig();
 router.post(
   "/",
   multerUploads,
-  cloudinaryConfig,
   async (req: Request, res: Response) => {
     // console.log('req.body :', dataUri(req).content);
     if (!req.file) throw new Error("file don't exist ");
@@ -45,7 +44,7 @@ router.post(
     } catch (error: any) {
       console.log(error);
 
-      res.status(409).send({ error: true, msg: error?.message });
+      res.status(409).send({ error: true, message: error?.message });
     }
   }
 );

@@ -5,10 +5,14 @@ import posts from "./routes/posts";
 import forgot from "./routes/forgotPass";
 import addImg from "./routes/image";
 import UserRouter from './routes/UserRouter';
+import { cloudinaryConfig } from './config/cloudinaryConfig';
 
 
 export const app: Express = express();
 const port = 5000;
+
+//Config Coudinary 
+cloudinaryConfig();
 
 connect();
 

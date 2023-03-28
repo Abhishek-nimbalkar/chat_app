@@ -25,7 +25,7 @@ describe("Post Model",()=>{
             likes:undefined
         }
         const post=new Posts(postData);
-        post.save();
+        await post.save();
         const savedPost = await Posts.findOne({ title: postData.title });
         expect(savedPost?.userEmail).to.equal(postData.userEmail);
         expect(savedPost?.title).to.equal(postData.title);
@@ -58,7 +58,7 @@ describe("Post Model",()=>{
             likes:undefined
         }
         const post=new Posts(postData)
-        post.save();
+        await post.save();
         const post2=new Posts({
             userEmail:faker.internet.email(),
             title:postData.title,
@@ -80,7 +80,7 @@ describe("Post Model",()=>{
             likes:undefined
         }
         const post=new Posts(postData);
-        await expect(post.validate()).to.be.rejectedWith("Posts validation failed: title: Body should be there");
+        await expect(post.validate()).to.be.rejectedWith("Posts validation failed: body: Body Should be there");
     })
     it("IMG Url should be Present",async()=>{
         const postData={

@@ -1,10 +1,11 @@
 import { beforeEach, describe, before} from "mocha";
+import mongoose from "mongoose";
 import chai, { expect } from "chai";
 import { faker } from "@faker-js/faker";
 import chaiAsPromised from "chai-as-promised";
 import Tokens from "./token";
 import { connect } from "../db/db";
-import mongoose from "mongoose";
+
 
 chai.use(chaiAsPromised);
 
@@ -23,10 +24,11 @@ describe("Token Model",()=>{
             token:faker.random.alphaNumeric(50)
         }
         const Token=new Tokens(tokenD);
-        Token.save();
+        await Token.save();
         const savedToken = await Tokens.findOne({ userId:tokenD.userId});
-        expect(savedToken?.userId).to.eql(tokenD.userId);
+        
         expect(savedToken?.token).to.equal(tokenD.token);
+        expect(savedToken?.userId).to.eql(tokenD.userId);
            
     })
     it("User Id should be there ",async()=>{
