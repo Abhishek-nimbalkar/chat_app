@@ -6,7 +6,7 @@ import io,{Socket} from "socket.io-client";
 import Home from './components/Home/index';
 import ChatPage from './components/Chat';
 
- const socket=io("http://localhost:5000");
+ const socket:Socket=io("http://192.168.10.110:5000");
 
 function App() {
   return (

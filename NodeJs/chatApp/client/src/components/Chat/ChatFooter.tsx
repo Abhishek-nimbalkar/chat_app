@@ -4,7 +4,7 @@ import {Socket} from "socket.io-client";
 const ChatFooter = ({socket}:any) => {
   const [message, setMessage] = useState('');
 
-  const handleSendMessage = (e:any) => {
+  const handleSendMessage = (e:React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // console.log({ userName: localStorage.getItem('userName'), message });
     if (message.trim() && localStorage.getItem('userName')) {
