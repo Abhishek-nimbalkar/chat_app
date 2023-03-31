@@ -3,7 +3,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 
 import io,{Socket} from "socket.io-client";
-import Home from 'components/Home/index';
+import Home from './components/Home/index';
+import ChatPage from './components/Chat';
 
  const socket=io("http://localhost:5000");
 
@@ -12,7 +13,7 @@ function App() {
     <Router>
       <Routes>
         <Route path='/' element={<Home socket={socket} />} />
-        {/* <Route path="/chat" element={<ChatPage socket={socket} />} /> */}
+        <Route path="/chat" element={<ChatPage socket={socket} />} />
       </Routes>
     </Router>
     
