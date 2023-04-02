@@ -19,6 +19,7 @@ const SocketIO=new Server(httpServer,{
     }
 })
 let users:IUser[]=[];
+let Users:any={};
 SocketIO.on('connection',(socket)=>{
     console.log(`🌪: ${socket.id} user just connected!`);
 
@@ -26,18 +27,31 @@ SocketIO.on('connection',(socket)=>{
         SocketIO.emit('messageResponse', data);
         
     })
-    socket.on("newUser",(data)=>{
+    socket.on("newUser",(data:IUser)=>{
+        let Id=data.socketID;
+        let Name=data.userName;
+        Users[Id]=Name;
+
+
+        // Object.assign(Users, {key:value});
         users.push(data);
+        console.log(Users);
+        
+        SocketIO.emit("newUserAdd",data.userName)
         SocketIO.emit('newUserResponse', users);
     })
     socket.on('disconnect', () => {
       console.log('🔥: A user disconnected');
       users = users.filter((user:IUser) => user.socketID !== socket.id);
-      SocketIO.emit('newUserResponse', users);console.log(socket.id);
-      SocketIO.emit("leftUser",socket.id)
+      SocketIO.emit("leftUser",Users[socket.id]);
+      delete Users[socket.id];
+    //   console.log(Users);
       
-      socket.disconnect();
-
+      SocketIO.emit('newUserResponse', users);
+    //   console.log(socket.id);
+      
+      
+    socket.disconnect();
     });
     
 })

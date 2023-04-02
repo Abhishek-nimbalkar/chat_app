@@ -2,7 +2,8 @@ import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ISocket } from "../../interfaces";
-import { notify } from "../Chat";
+import { newUserNotify } from "../Chat";
+// import { LogInNotify } from "../Chat";
 
 
 const Home = ({ socket }:ISocket) => {
@@ -14,6 +15,7 @@ const Home = ({ socket }:ISocket) => {
     localStorage.setItem("userName", userName);
     // console.log(e.target);
     socket.emit('newUser', { userName, socketID: socket.id });
+    // newUserNotify(userName);
     nav("/chat");
   };
   return (
@@ -31,7 +33,8 @@ const Home = ({ socket }:ISocket) => {
           value={userName}
           onChange={(e) => setUserName(e.target.value)}
         />
-        <button className="home__cta" onClick={notify}>
+        <button className="home__cta" >
+        {/* <button className="home__cta" > */}
           SIGN IN
         </button>
       </form>

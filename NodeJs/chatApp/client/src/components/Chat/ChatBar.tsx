@@ -1,18 +1,36 @@
 import React, { useEffect, useState } from 'react';
-import { Socket } from 'socket.io-client';
-import { notify } from '.';
+import { leftUserNotify, newUserNotify } from '.';
+
+// import { notify } from '.';
 import { ISocket, IUser } from '../../interfaces';
 
 const ChatBar = ({socket}:ISocket) => {
 
   const [users, setUsers] = useState<IUser[]>([]);
-  socket.on("leftUser",(data)=>{
-    notify
-  })
+  // useEffect(()=>{
+  //     socket.on("leftUser",(data)=>{
+  //   notify()
+  // })
+  // },[])
+  const lastUsersLength=users.length;
+  useEffect(()=>{
+    socket.on("newUserAdd",(data)=>{
+      newUserNotify(data);
+    })
+    socket.on("leftUser",(data)=>{
+      leftUserNotify(data);
+    })
+  },[socket])
+  useEffect(() => {  
+    socket.on('newUserResponse', (data:IUser[]) =>{ 
+      setUsers(data);
 
-  useEffect(() => {
-    socket.on('newUserResponse', (data:IUser[]) => setUsers(data));
-  }, [socket, users]);
+    });  
+    // if(lastUsersLength<users.length){
+    //   leftUserNotify("xyz")
+    // }
+    
+  }, [lastUsersLength, socket, users]);
   return (
     <div className="chat__sidebar">
       <h2>Open Chat</h2>

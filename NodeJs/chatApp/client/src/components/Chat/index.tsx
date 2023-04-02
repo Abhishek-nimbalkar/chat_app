@@ -2,17 +2,32 @@ import React, { useEffect, useState } from "react";
 import ChatBar from "./ChatBar";
 import ChatBody from "./ChatBody";
 import ChatFooter from "./ChatFooter";
-import { Socket } from "socket.io-client";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { IMessage, ISocket } from "../../interfaces";
 
-export const notify = () => {
+export const newUserNotify = (user:string) => {
   // console.log("Click");
   
   // console.log("Hello");
   
-  toast.success("You Successfully log in ", {
+  toast.success(user+"Has Joined the Chat ", {
+    position: "top-right",
+    autoClose: 2000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "light",
+  });
+};
+export const leftUserNotify = (user:string) => {
+  // console.log("Click");
+  
+  // console.log("Hello");
+  
+  toast.success(user+"Has Left the Chat ", {
     position: "top-right",
     autoClose: 2000,
     hideProgressBar: false,
@@ -37,9 +52,9 @@ const ChatPage = ({ socket }:ISocket) => {
   
   return (
     <>
-      <ToastContainer
+      {/* <ToastContainer
         position="top-right"
-        autoClose={5000}
+        autoClose={2000}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick
@@ -48,7 +63,7 @@ const ChatPage = ({ socket }:ISocket) => {
         draggable
         pauseOnHover
         theme="light"
-      />
+      /> */}
       {/* Same as */}
       <ToastContainer />
       <div className="chat">
