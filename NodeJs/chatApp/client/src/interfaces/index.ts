@@ -29,3 +29,8 @@ export interface IUser{
   userName:string,
   socketID:string
 }
+// export type IUseRef = DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>
+
+export interface IUseRef{
+  current:HTMLDivElement|undefined|null
+}

@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
 import {Socket} from "socket.io-client";
 
-const ChatFooter = ({socket}:any) => {
+const ChatFooter = ({socket,setTypingCheck}:any) => {
   const [message, setMessage] = useState('');
+
+  const handleTyping=()=>{
+    socket.emit('typing',localStorage.getItem('userName'));
+    socket.emit('isTyping',true)
+  }
 
   const handleSendMessage = (e:React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -26,6 +31,10 @@ const ChatFooter = ({socket}:any) => {
           className="message"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
+          onKeyDown={handleTyping}
+          onKeyUp={()=>{
+            socket.emit('isTyping',false)
+          }}
         />
         <button className="sendBtn">SEND</button>
       </form>

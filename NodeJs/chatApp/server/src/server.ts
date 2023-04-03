@@ -7,7 +7,7 @@ import { IUser } from "interfaces";
 const Port=5000 || process.env.PORT;
 const app=express();
 // app.use(express.json());
-app.use(cors())
+app.use(cors());
 
 
 
@@ -27,6 +27,10 @@ SocketIO.on('connection',(socket)=>{
         SocketIO.emit('messageResponse', data);
         
     })
+
+    socket.on('typing',(data)=>socket.broadcast.emit('typingResponse',data));
+    socket.on('isTyping',(data)=>socket.broadcast.emit('isTypingResponse',data))
+
     socket.on("newUser",(data:IUser)=>{
         let Id=data.socketID;
         let Name=data.userName;
@@ -35,7 +39,7 @@ SocketIO.on('connection',(socket)=>{
 
         // Object.assign(Users, {key:value});
         users.push(data);
-        console.log(Users);
+        // console.log(Users);
         
         SocketIO.emit("newUserAdd",data.userName)
         SocketIO.emit('newUserResponse', users);

@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { IMessage } from "../../interfaces";
+import { IMessage, IUseRef } from "../../interfaces";
 
 
 
-const ChatBody = ( {messages}: {messages:IMessage[]}) => {
+const ChatBody = ( {messages, lastMessageRef,typingStatus,typingCheck}: {messages:IMessage[],lastMessageRef:IUseRef,typingStatus:string,typingCheck:boolean}) => {
   const navigate = useNavigate();
 
   const handleLeaveChat = () => {
@@ -45,8 +45,9 @@ const ChatBody = ( {messages}: {messages:IMessage[]}) => {
 
         {/*This is triggered when a user is typing*/}
         <div className="message__status">
-          <p>Someone is typing...</p>
+          <p  style={{opacity:typingCheck?1:0,transition:"all 0.1s ease-in-out"}} >{typingStatus} is Typing </p>
         </div>
+        <div ref={lastMessageRef as React.RefObject<HTMLDivElement>} /> 
       </div>
     </>
   );
