@@ -3,8 +3,9 @@ import {
   HeaderWrapper,
   HeaderWrapperLeft,
   HeaderWrapperRight,
+  SignINButton,
   SignUPButton,
-} from "style/components/PostsStyle";
+} from "style/components/PostHeaderStyle";
 
 const PostHeader = () => {
   return (
@@ -16,8 +17,9 @@ const PostHeader = () => {
           </svg>
         </HeaderWrapperLeft>
         <HeaderWrapperRight>
-          <button>Sign UP</button>
+          <SignINButton>Sign In</SignINButton>
           <SignUPButton>Get Started</SignUPButton>
+          
         </HeaderWrapperRight>
       </HeaderWrapper>
     </>

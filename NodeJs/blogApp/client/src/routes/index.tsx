@@ -8,17 +8,17 @@ import SignUp from "views/SignUpPage";
 
 const RoutesA:IRoutes[]=[
     {
-        path:"login",
+        path:"/login",
         element:<Login />,
         restricted:false
     },
     {
-        path:"SignUp",
+        path:"/SignUp",
         element:<SignUp />,
         restricted:false
     },
     {
-        path:"posts",
+        path:"/",
         element:<Posts />,
         restricted:true
     },

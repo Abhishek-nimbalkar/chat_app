@@ -5,5 +5,9 @@ interface IRoutes{
     element:ReactElement,
     restricted:boolean,
 }
+interface IUseForm {
+    example: string,
+    exampleRequired: string,
+  };
 
-export type {IRoutes}
+export type {IRoutes,IUseForm}

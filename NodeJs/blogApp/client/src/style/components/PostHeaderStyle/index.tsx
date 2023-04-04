@@ -29,17 +29,29 @@ const HeaderWrapperRight = styled.div`
   width: 20vw;
   padding-right: 2vw;
   justify-content: space-evenly;
-  column-gap: 2vw;
+  align-items: center;
+  align-self: center;
   align-items: center;
 `;
 const SignUPButton = styled.button`
   background-color: black;
   color: #f6f6f6;
-  min-width: 8vw;
+  font-size: 1.2vw;
+  font-family: 'Delicious Handrawn', cursive;
+  min-width: 12vw;
   height: 3.5vw;
   border-radius: 2vw;
   margin: 0;
   padding: 0 2vw;
+  cursor:pointer;
+`;
+const SignINButton = styled.a`
+  background-color: none;
+  font-family: 'Delicious Handrawn', cursive;
+  color: #292929;
+  min-width: 5vw;
+  font-size: 1.5vw;
+  cursor:pointer;
 `;
 
 const PostsContainer = styled.div`
@@ -54,5 +66,6 @@ export {
   PostsContainer,
   HeaderWrapperLeft,
   HeaderWrapperRight,
-  SignUPButton
+  SignUPButton,
+  SignINButton
 };

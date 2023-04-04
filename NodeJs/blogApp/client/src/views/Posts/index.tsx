@@ -1,21 +1,35 @@
-import Api from 'Api'
-import PostHeader from 'components'
-import React from 'react'
-import { HeaderWrapper, PostBody, PostsContainer } from 'style/components/PostsStyle'
+import Api from "Api";
+import PostComponent from "components/Post";
+import PostBanner from "components/PostBanner";
+import PostHeader from "components/PostHeader";
+import React from "react";
+import {
+  HeaderWrapper,
+  PostBody,
+  PostsContainer,
+} from "style/components/PostHeaderStyle";
 
 const Posts = () => {
   // Api.get("/posts").then((data)=>{
-  //   console.log(data);  
+  //   console.log(data);
   // })
   return (
     <>
-    <PostBody>
-      <PostHeader />
-      <PostsContainer>Hello</PostsContainer>
-    </PostBody>
-      
+      <PostBody>
+        <PostHeader />
+        <PostBanner />
+        <PostsContainer>
+          <PostComponent />
+          <PostComponent />
+          <PostComponent />
+          <PostComponent />
+          <PostComponent />
+          <PostComponent />
+          <PostComponent />
+        </PostsContainer>
+      </PostBody>
     </>
-  )
-}
+  );
+};
 
-export default Posts
+export default Posts;
