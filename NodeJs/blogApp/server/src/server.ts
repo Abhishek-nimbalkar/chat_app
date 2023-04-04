@@ -6,6 +6,7 @@ import forgot from "./routes/forgotPass";
 import addImg from "./routes/image";
 import UserRouter from './routes/UserRouter';
 import { cloudinaryConfig } from './config/cloudinaryConfig';
+import cors from "cors"
 
 
 export const app: Express = express();
@@ -15,7 +16,9 @@ const port = 5000;
 cloudinaryConfig();
 
 connect();
-
+app.use(cors({
+  origin:"*"
+}))
 app.use(express.json());
 app.use('/users', users);
 app.use("/posts",posts);

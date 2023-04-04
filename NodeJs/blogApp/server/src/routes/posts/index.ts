@@ -13,9 +13,9 @@ import { verifyToken } from "../../middlewares/jwtTokenValidation";
 
 const router = express.Router();
 
-router.use(verifyToken)
+// router.use(verifyToken)
 
-router.get("/", verifyToken, async (req: Request, res: Response) => {
+router.get("/", async (req: Request, res: Response) => {
   //   console.log(email.emailId);
 
   const posts = await Posts.find();
@@ -23,13 +23,13 @@ router.get("/", verifyToken, async (req: Request, res: Response) => {
   res.send(posts);
 });
 
-router.post("/create", createPostController);
+router.post("/create",verifyToken, createPostController);
 
-router.patch("/edit/:id", editPostController);
+router.patch("/edit/:id",verifyToken, editPostController);
 //************************* */ For comments *******************************//
 
-router.patch("/addComment/:id",addCommentController)
+router.patch("/addComment/:id",verifyToken,addCommentController);
 
-router.patch("/like/:id",likePostController)
+router.patch("/like/:id",verifyToken,likePostController);
 
 export default router;

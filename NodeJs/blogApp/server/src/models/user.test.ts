@@ -3,7 +3,7 @@ import { describe } from "mocha";
 import chai,{expect} from 'chai'
 import { faker } from '@faker-js/faker';
 import chaiAsPromised from 'chai-as-promised';
-import Users from "../models/user"
+import Users from "./user"
 
 chai.use(chaiAsPromised);
 
