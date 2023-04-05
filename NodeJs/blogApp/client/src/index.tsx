@@ -1,7 +1,6 @@
 import React, { ReactNode } from 'react';
 import ReactDOM from 'react-dom/client';
 
-import App from './views/LoginPage';
 import { BrowserRouter as Router, Routes,Route} from 'react-router-dom';
 import {RoutesA} from "routes"
 

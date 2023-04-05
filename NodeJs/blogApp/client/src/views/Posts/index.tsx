@@ -1,4 +1,4 @@
-import Api from "Api";
+import Api from "api";
 import PostComponent from "components/Post";
 import PostBanner from "components/PostBanner";
 import PostHeader from "components/PostHeader";
@@ -27,9 +27,10 @@ const Posts = () => {
     <>
       <PostBody>
         <PostHeader />
+        <PostComponent />
         {/* <PostBanner />
         <PostsContainer>
-          <PostComponent />
+          
           <PostComponent />
           <PostComponent />
           <PostComponent />
