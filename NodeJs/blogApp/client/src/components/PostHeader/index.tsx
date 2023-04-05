@@ -7,7 +7,41 @@ import {
   SignUPButton,
 } from "style/components/PostHeaderStyle";
 
+import ReactDOM from 'react-dom';
+import Modal from 'react-modal';
+import SignInModal from "components/Modal/SignInModal";
+import PostComponent from "components/Post";
+import SignUpModal from "components/Modal/SignUpModal";
+
+const customStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+  },
+};
+
 const PostHeader = () => {
+
+  // let subtitle:any;
+  const [modalIsOpen, setIsOpen] = React.useState("");
+
+  function openModal(action:string) {
+    setIsOpen(action);
+  }
+
+  function afterOpenModal() {
+    // references are now sync'd and can be accessed.
+    // subtitle.style.color = '#f00';
+
+  }
+
+  function closeModal() {
+    setIsOpen("");
+  }
   return (
     <>
       <HeaderWrapper>
@@ -17,13 +51,28 @@ const PostHeader = () => {
           </svg>
         </HeaderWrapperLeft>
         <HeaderWrapperRight>
-          <SignINButton>Sign In</SignINButton>
-          <SignUPButton>Get Started</SignUPButton>
+          <SignINButton onClick={()=>{
+            openModal("signin")
+          }}>Sign In</SignINButton>
+          <SignUPButton onClick={()=>{
+            openModal("signup")
+          }}>Get Started</SignUPButton>
           
         </HeaderWrapperRight>
       </HeaderWrapper>
+      <Modal
+        isOpen={modalIsOpen?.length>1}
+        onAfterOpen={afterOpenModal}
+        onRequestClose={closeModal}
+        style={customStyles}
+        contentLabel="Example Modal"
+      >
+       {modalIsOpen==="signin"?(<SignInModal />):(<SignUpModal />)} 
+      </Modal>
     </>
   );
 };
 
 export default PostHeader;
+const modal: HTMLElement = document.getElementById('modal') as HTMLElement;
+Modal.setAppElement(modal)

@@ -211,3 +211,8 @@ body{
             transform: rotate(2deg);
   }
 }
+
+.ReactModal__Content--after-open{
+  border: 0 ;
+  border-radius: 5vw !important;
+}

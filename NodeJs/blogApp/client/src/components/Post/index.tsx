@@ -5,7 +5,7 @@ import {
   PostComponetStyle,
   PostDescription,
   PostTitle,
-} from "style/components/PostComponent/inde";
+} from "style/components/PostComponent";
 
 const PostComponent = () => {
   return (
