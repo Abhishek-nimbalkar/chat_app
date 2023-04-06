@@ -11,7 +11,7 @@ const ModalContainerWrapper = styled.div`
 const ModalContainer = styled.div`
   display: flex;
   height: auto;
-  width: 50vw;
+  width: 40vw;
   justify-content: center;
   background: white;
   /* align-items: center; */

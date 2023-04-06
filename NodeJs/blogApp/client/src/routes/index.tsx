@@ -15,7 +15,7 @@ const RoutesA: IRoutes[] = [
     path: "/create-blog",
     element: <CreateBlog />,
     restricted: true,
-  },
+  }
 ];
 
 export { RoutesA };

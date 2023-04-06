@@ -55,9 +55,11 @@ const SignINButton = styled.a`
 `;
 
 const PostsContainer = styled.div`
-  /* display: flex; */
-  height: 5000px;
-  width: 100%;
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  width: 40vw;
+  margin-left: 15vw;
 `;
 
 export {

@@ -8,20 +8,23 @@ import {
   PostTitle,
 } from "style/components/PostComponent";
 
-const img ="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg";
+const imgUrl:string ="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg";
 
-const PostComponent = () => {
+const PostComponent = ({title,body,img}:{title:string,body:string,img:string}) => {
   return (
     <>
       <PostComponetStyle>
-        <PostComponentLeft>
-          <PostTitle href="https://google.com">TikTok videos underscore the gap in expertise </PostTitle>
+        <PostComponentLeft href={img}>
+          <PostTitle>
+            {title}
+          </PostTitle>
           <PostDescription>
-            ever since the 1500s, when an unknown printer took a galley of
-            type and scrambled it to make a type specimen book....
+            {body}
           </PostDescription>
         </PostComponentLeft>
-        <PostComponentRight><Img src={img} alt="Img" /></PostComponentRight>
+        <PostComponentRight>
+          <Img src={imgUrl} alt="Img" />
+        </PostComponentRight>
       </PostComponetStyle>
     </>
   );
