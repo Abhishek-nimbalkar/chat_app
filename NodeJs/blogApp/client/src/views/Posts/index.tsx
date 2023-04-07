@@ -4,13 +4,11 @@ import PostComponent from "components/Post";
 import PostHeader from "components/PostHeader";
 import useGetData from "customHooks";
 import { ApiData } from "interfaces";
+import { useEffect } from "react";
 // import { useEffect, useState } from "react";
 // import { json } from "stream/consumers";
 
-import {
-  PostBody,
-  PostsContainer,
-} from "style/components/PostHeaderStyle";
+import { PostBody, PostsContainer } from "style/components/PostHeaderStyle";
 // import { JsxElement } from "typescript";
 
 const click = () => {
@@ -21,22 +19,23 @@ const Posts = () => {
   // Api.get("/posts").then((data)=>{
   //   console.log(data);
   // })
-const {data,isLoading}=useGetData("https://jsonplaceholder.typicode.com/posts");
-console.log(data);
+    const { data, isLoading } = useGetData("posts");
 
+
+  console.log(data?.data);
 
   return (
     <>
       <PostBody>
         <PostHeader />
         <PostsContainer>
-          {data?.map((ele:ApiData,key:any)=>(
+          {data?.data?.map((ele: ApiData, key: any) => (
             <PostComponent
-            key={key}
-            title={ele.title}
-            body={ele.body}
-            img={"https://google.com"}
-             />
+              key={key}
+              title={ele.title}
+              body={ele.body}
+              img={"https://google.com"}
+            />
           ))}
           {/* <PostComponent />
           <PostComponent />

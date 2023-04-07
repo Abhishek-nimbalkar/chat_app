@@ -1,24 +1,23 @@
 // import { ApiData } from "interfaces";
 // import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { ApiData } from "interfaces";
 import { useQuery } from "react-query";
 
+const apiClient = axios.create({
+  baseURL: "https://jsonplaceholder.typicode.com/",
+  headers: {
+    "Content-type": "application/json",
+  },
+});
+
 const useGetData = (url: string) => {
-//   const [data, setData] = useState<Array<ApiData>>();
-//   useEffect(()=>{
-  const fun = async() => {
-    return await fetch(url)
-      .then((res) => res.json())
-      .then((json) => {
-        // console.log(json);
-        // console.log("Api Hit");
-
-        // setData(json);
-
-        // return json
-      });
+  //   const [data, setData] = useState<Array<ApiData>>();
+  //   useEffect(()=>{
+  const fun = async (): Promise<any> => {
+    return await apiClient.get(url);
   };
-//   },[url])
-  return useQuery<any, Error>("posts", fun);
+  return useQuery<any, Error>("blog", fun);
 };
 
 export default useGetData;

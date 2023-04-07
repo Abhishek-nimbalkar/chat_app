@@ -6,10 +6,12 @@ import createPostController from "../../controllers/posts/createPostController";
 import editPostController from "../../controllers/posts/editPostCont";
 import addCommentController from '../../controllers/posts/addcommentCont';
 import likePostController from "../../controllers/posts/likePostCont";
+import getPostController from "../../controllers/posts/getPostController";
 // import { Ipost } from "interfaces/postInterface";
 import Posts from "../../models/post";
 
 import { verifyToken } from "../../middlewares/jwtTokenValidation";
+
 
 const router = express.Router();
 
@@ -22,6 +24,8 @@ router.get("/", async (req: Request, res: Response) => {
   //   console.log(jwtKey);
   res.send(posts);
 });
+
+router.get("/getPost/:title",verifyToken,getPostController);
 
 router.post("/create",verifyToken, createPostController);
 
