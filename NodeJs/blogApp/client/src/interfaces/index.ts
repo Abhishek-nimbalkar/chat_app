@@ -16,11 +16,11 @@ interface ISignUpForm{
   phoneNumber:string,
   userName:string
 }
- interface ApiData{
+ interface IApiData{
   userId:string,
   id:number,
   title:string,
   body:string
 }
 
-export type {IRoutes,ISignInForm,ISignUpForm,ApiData}
+export type {IRoutes,ISignInForm,ISignUpForm,IApiData}
