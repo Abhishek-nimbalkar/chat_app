@@ -13,11 +13,11 @@ router.post("/", async (req: Request, res: Response) => {
   const user = await Users.findOne({ emailId: email });
 
   if (!user) {
-    res.status(400).send("User don't Exist ")
+    return res.status(400).send("User don't Exist ")
   }
   const token = await Tokens.findOne({ userId: user?._id });
   if (token) {
-    await token.deleteOne();
+    await Tokens.deleteOne({ userId: user?._id });
   }
   const resetToken = crypto.randomBytes(32).toString("hex");
 
@@ -28,7 +28,7 @@ router.post("/", async (req: Request, res: Response) => {
   })
   Tokens.create(newToken);
   sendEmail(email,resetToken);
-  res.status(201).send({success:true,message:"Token send created and send to your email."})
+  return res.status(201).send({success:true,message:"Token send created and send to your email."})
 
   // const link = `${clientURL}/passwordReset?token=${resetToken}&id=${user._id}`;
   // sendEmail(
