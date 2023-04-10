@@ -7,6 +7,8 @@ import useGetData from "customHooks";
 import { IApiData } from "interfaces";
 import { useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { ToastContainer } from "react-toastify";
+
 // import { useEffect, useState } from "react";
 // import { json } from "stream/consumers";
 
@@ -22,34 +24,43 @@ const Posts = () => {
   //   console.log(data);
   // })
   const { data, isLoading } = useGetData("posts");
-  const postData:Array<IApiData>=data?.data;
+  const postData: Array<IApiData> = data?.data;
   // console.log(data?.data);
   console.log(isLoading);
   const style = {
     height: 30,
     border: "1px solid green",
     margin: 6,
-    padding: 8
+    padding: 8,
   };
-  const initialState={
-    
-  }
-  const[state,setState]=useState({items: Array.from({ length: 25 })})
+  const initialState = {};
+  const [state, setState] = useState({ items: Array.from({ length: 25 }) });
   const fetchMoreData = () => {
     // a fake async api call like which sends
     // 20 more records in 1.5 secs
 
     setTimeout(() => {
       setState({
-        items:state.items.concat(Array.from({ length: 20 }))
+        items: state.items.concat(Array.from({ length: 20 })),
       });
     }, 1500);
   };
 
-
   return (
     <>
       <PostBody>
+        <ToastContainer
+          position="top-right"
+          autoClose={2000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
         <PostHeader />
         <InfiniteScroll
           dataLength={state.items.length}
@@ -57,7 +68,7 @@ const Posts = () => {
           hasMore={true}
           loader={<h4>Loading...</h4>}
         >
-          {state.items.map((i:any, index:any) => (
+          {state.items.map((i: any, index: any) => (
             <div style={style} key={index}>
               div - #{index}
             </div>

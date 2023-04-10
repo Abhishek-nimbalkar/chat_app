@@ -1,5 +1,6 @@
 import SignInForm from "components/SignInForm";
 import InputForm from "components/SignInForm";
+import { ToastContainer } from "react-toastify";
 import {
   ModalContainer,
   ModalContainerWrapper,
@@ -15,9 +16,10 @@ const SignInModal = () => {
   // };
   return (
     // <ModalContainerWrapper>
-      <ModalContainer>
-          <SignInForm />
-      </ModalContainer>
+
+    <ModalContainer>
+      <SignInForm />
+    </ModalContainer>
     // </ModalContainerWrapper>
   );
 };

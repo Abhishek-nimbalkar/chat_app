@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { RoutesA } from "routes";
 import { QueryClient, QueryClientProvider } from "react-query";
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const queryClient = new QueryClient();

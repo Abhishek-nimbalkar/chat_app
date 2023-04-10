@@ -1,42 +1,45 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   HeaderWrapper,
   HeaderWrapperLeft,
   HeaderWrapperRight,
   SignINButton,
   SignUPButton,
+  WriteButton,
 } from "style/components/PostHeaderStyle";
 
-import ReactDOM from 'react-dom';
-import Modal from 'react-modal';
+import ReactDOM from "react-dom";
+import Modal from "react-modal";
 import SignInModal from "components/Modal/SignInModal";
 import PostComponent from "components/Post";
 import SignUpModal from "components/Modal/SignUpModal";
+import { ToastContainer } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const customStyles = {
   content: {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)',
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
   },
 };
 
 const PostHeader = () => {
-
   // let subtitle:any;
-  const [modalIsOpen, setIsOpen] = React.useState("");
+  const nav = useNavigate();
 
-  function openModal(action:string) {
+  const [modalIsOpen, setIsOpen] = useState("");
+
+  function openModal(action: string) {
     setIsOpen(action);
   }
 
   function afterOpenModal() {
     // references are now sync'd and can be accessed.
     // subtitle.style.color = '#f00';
-
   }
 
   function closeModal() {
@@ -51,28 +54,43 @@ const PostHeader = () => {
           </svg>
         </HeaderWrapperLeft>
         <HeaderWrapperRight>
-          <SignINButton onClick={()=>{
-            openModal("signin")
-          }}>Sign In</SignINButton>
-          <SignUPButton onClick={()=>{
-            openModal("signup")
-          }}>Get Started</SignUPButton>
-          
+          <SignINButton
+            onClick={() => {
+              openModal("signin");
+            }}
+          >
+            Sign In
+          </SignINButton>
+          <SignUPButton
+            onClick={() => {
+              openModal("signup");
+            }}
+          >
+            Get Started
+          </SignUPButton>
+          <WriteButton
+            onClick={() => {
+              nav("/create-blog");
+            }}
+          >
+            Write
+          </WriteButton>
         </HeaderWrapperRight>
       </HeaderWrapper>
+
       <Modal
-        isOpen={modalIsOpen?.length>1}
+        isOpen={modalIsOpen?.length > 1}
         onAfterOpen={afterOpenModal}
         onRequestClose={closeModal}
         style={customStyles}
         contentLabel="Example Modal"
       >
-       {modalIsOpen==="signin"?(<SignInModal />):(<SignUpModal />)} 
+        {modalIsOpen === "signin" ? <SignInModal /> : <SignUpModal />}
       </Modal>
     </>
   );
 };
 
 export default PostHeader;
-const modal: HTMLElement = document.getElementById('modal') as HTMLElement;
-Modal.setAppElement(modal)
+const modal: HTMLElement = document.getElementById("modal") as HTMLElement;
+Modal.setAppElement(modal);

@@ -24,7 +24,7 @@ export default async (req: Request, res: Response) => {
             emailId: emailId,
           };
           const token = generateJwt(user);
-          res.status(200).json({ token });
+          res.status(200).send({success:true, token:token });
       } else {
         return res.status(401).send({error:true,message:"Wrong username or password."});
       }
