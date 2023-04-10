@@ -1,9 +1,6 @@
-import React from 'react'
+import { Navigate } from "react-router-dom";
 
-const index = () => {
-  return (
-    <div>index</div>
-  )
-}
 
-export default index
+export const Private=(props:any)=>(
+    localStorage.getItem("token")? props.component: <Navigate to="/" />
+) 

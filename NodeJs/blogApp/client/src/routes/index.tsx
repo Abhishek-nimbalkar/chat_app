@@ -9,7 +9,7 @@ const RoutesA: IRoutes[] = [
   {
     path: "/",
     element: <Posts />,
-    restricted: true,
+    restricted: false,
   },
   {
     path: "/create-blog",

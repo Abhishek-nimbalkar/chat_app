@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   HeaderWrapper,
   HeaderWrapperLeft,
   HeaderWrapperRight,
+  LogOutButton,
   SignINButton,
   SignUPButton,
   WriteButton,
@@ -15,6 +16,7 @@ import PostComponent from "components/Post";
 import SignUpModal from "components/Modal/SignUpModal";
 import { ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { modalState } from "App";
 
 const customStyles = {
   content: {
@@ -31,20 +33,14 @@ const PostHeader = () => {
   // let subtitle:any;
   const nav = useNavigate();
 
-  const [modalIsOpen, setIsOpen] = useState("");
+  const modalFun = useContext(modalState);
+  // console.log(modalFun);
 
-  function openModal(action: string) {
-    setIsOpen(action);
-  }
+  // function afterOpenModal() {
+  //   // references are now sync'd and can be accessed.
+  //   // subtitle.style.color = '#f00';
+  // }
 
-  function afterOpenModal() {
-    // references are now sync'd and can be accessed.
-    // subtitle.style.color = '#f00';
-  }
-
-  function closeModal() {
-    setIsOpen("");
-  }
   return (
     <>
       <HeaderWrapper>
@@ -54,38 +50,54 @@ const PostHeader = () => {
           </svg>
         </HeaderWrapperLeft>
         <HeaderWrapperRight>
-          <SignINButton
-            onClick={() => {
-              openModal("signin");
-            }}
-          >
-            Sign In
-          </SignINButton>
-          <SignUPButton
-            onClick={() => {
-              openModal("signup");
-            }}
-          >
-            Get Started
-          </SignUPButton>
-          <WriteButton
-            onClick={() => {
-              nav("/create-blog");
-            }}
-          >
-            Write
-          </WriteButton>
+          {!localStorage.getItem("token") ? (
+            <>
+              <SignINButton
+                onClick={() => {
+                  modalFun.openModal("signin");
+                }}
+              >
+                Sign In
+              </SignINButton>
+              <SignUPButton
+                onClick={() => {
+                  modalFun.openModal("signup");
+                }}
+              >
+                Get Started
+              </SignUPButton>
+            </>
+          ) : (
+            <>
+              <WriteButton
+                onClick={() => {
+                  nav("/create-blog");
+                }}
+              >
+                <i className="fa-solid fa-pen-to-square"></i>
+                Write
+              </WriteButton>
+              <LogOutButton
+                onClick={() => {
+                  localStorage.removeItem("token");
+                  window.location.reload();
+                }}
+              >
+                Log Out
+              </LogOutButton>
+            </>
+          )}
         </HeaderWrapperRight>
       </HeaderWrapper>
 
       <Modal
-        isOpen={modalIsOpen?.length > 1}
-        onAfterOpen={afterOpenModal}
-        onRequestClose={closeModal}
+        isOpen={modalFun.modalIsOpen?.length > 1}
+        // onAfterOpen={afterOpenModal}
+        onRequestClose={modalFun.closeModal}
         style={customStyles}
         contentLabel="Example Modal"
       >
-        {modalIsOpen === "signin" ? <SignInModal /> : <SignUpModal />}
+        {modalFun.modalIsOpen === "signin" ? <SignInModal /> : <SignUpModal />}
       </Modal>
     </>
   );

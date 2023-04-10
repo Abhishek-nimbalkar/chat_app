@@ -10,9 +10,11 @@ import {
 } from "style/components/FormStyle/SignInFormStyle";
 import { ModalSubmitButton } from "style/components/ModalStyle";
 import { BannerLeftConatinerButton } from "style/components/PostBannerStyle";
-import postData from "customHooks/postData";
+import postData from "utils/postData";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { modalState } from "App";
 // import usePostData from "customHooks/postData";
 
 const SignInForm = () => {
@@ -26,6 +28,7 @@ const SignInForm = () => {
     resolver: yupResolver(YupSchema),
   });
   const nav=useNavigate();
+  const modalFun = useContext(modalState);
 
 
   const onSubmitHandler: SubmitHandler<ISignInForm> = async(data: any) => {
@@ -37,6 +40,8 @@ const SignInForm = () => {
     const dataRes=await postData("/users/login", { emailId, password })
     if(dataRes.success){
       localStorage.setItem("token",dataRes.token);
+      modalFun.closeModal();
+
     } 
     // reset();
   };

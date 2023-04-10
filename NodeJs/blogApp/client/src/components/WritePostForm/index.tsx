@@ -50,17 +50,6 @@ function CreateBlogForm() {
       <ContentInput {...register('content', { required: true })} />
       {errors.content && <span>This field is required</span>}
 
-      {/* Map over inputCount to create multiple tag input fields */}
-      {/* {[...Array(inputCount)].map((_, index) => (
-        <React.Fragment key={index}>
-          <Label>Tag {index + 1}</Label>
-          <input type="text" {...register(`tags[${index}]`)} />
-        </React.Fragment>
-      ))} */}
-
-      {/* Button to add more tag input fields */}
-      {/* <button type="button" onClick={handleAddInput}>Add Tag</button> */}
-
       {/* Image upload input field */}
       <Label>Image</Label>
       <FileInput type="file" onChange={handleImageChange} />

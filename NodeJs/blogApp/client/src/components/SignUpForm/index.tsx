@@ -1,18 +1,34 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import { modalState } from "App";
 import { ISignUpForm } from "interfaces";
+import { useContext } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { YupSchema } from "schema";
 import { ErrorPara, Form, Heading, Input } from "style/components/FormStyle/SignInFormStyle";
 import { ModalSubmitButton } from "style/components/ModalStyle";
 import { BannerLeftConatinerButton } from "style/components/PostBannerStyle";
+import postData from "utils/postData";
+
+
+
 
 const SignUpForm = () => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm<ISignUpForm>({
         resolver: yupResolver(YupSchema),
       });
-      const onSubmitHandler:SubmitHandler<ISignUpForm> = (data:ISignUpForm) => {
-        console.log({ data });
-        reset();
+      const modalFun = useContext(modalState);
+      const onSubmitHandler:SubmitHandler<ISignUpForm> = async(data:ISignUpForm) => {
+        
+        
+        const{email,password,phoneNumber,userName}=data;
+        // console.log({email,password,phoneNumber,userName} );
+        const emailId=email;
+        const phone=phoneNumber;
+        const dataRes=await postData("/users/signUp", {emailId,userName,phone,password});
+        console.log(dataRes);
+        modalFun.closeModal();
+        
+        // reset();
       };
   return (
     <Form onSubmit={handleSubmit(onSubmitHandler)}>

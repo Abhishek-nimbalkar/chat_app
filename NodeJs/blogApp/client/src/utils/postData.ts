@@ -11,6 +11,7 @@ const postData = async (url: string, data: any) => {
     .catch((error) => {
       console.log(error.response.data.message);
       toast.error(error.response.data.message);
+      
       return error.response;
     });
 };

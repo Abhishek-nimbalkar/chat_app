@@ -55,7 +55,26 @@ const SignINButton = styled.a`
 `;
 const WriteButton = styled.div`
   font-family: "Delicious Handrawn", cursive;
-  color: #d5fa07;
+  font-size: 28px;
+  width: 100px;
+  /* margin-left: 100px; */
+  color: #f45b7c;
+  cursor: pointer;
+`;
+const LogOutButton = styled.div`
+  display: flex;
+  background-color: black;
+  color: #f6f6f6;
+  font-size: 25px;
+  justify-content: center;
+  align-items: center;
+  font-family: "Delicious Handrawn", cursive;
+  min-width: 80px;
+  height: 40px;
+  border-radius: 25px;
+  margin: 0;
+  padding: 0 2vw;
+  cursor: pointer;
 `;
 
 const PostsContainer = styled.div`
@@ -74,5 +93,6 @@ export {
   HeaderWrapperRight,
   SignUPButton,
   SignINButton,
-  WriteButton
+  WriteButton,
+  LogOutButton,
 };

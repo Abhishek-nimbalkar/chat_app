@@ -18,11 +18,13 @@ const CreateBlogContainerStyle = styled.div`
 `;
 const Label = styled.div`
   font-size: 2vw;
-  margin: 0.5vw 0;
+  /* margin: 0.2vw 0; */
   font-family: "Lobster", cursive;
 `;
 const TitleInput = styled.input`
   display: flex;
+  font-size: 30px;
+  padding-left: 20px;
   border-radius: 0.8vw;
   border: 0;
   height: 3vw;
@@ -31,7 +33,10 @@ const TitleInput = styled.input`
 const ContentInput = styled.textarea`
   display: flex;
   border: 0;
+  font-size: 20px;
+  padding:10px;
   border-radius: 1vw;
+
   height: 20vw;
   width: 70vw;
 `;
@@ -66,5 +71,5 @@ export {
   ContentInput,
   FileInput,
   Img,
-  PublishButton
+  PublishButton,
 };
