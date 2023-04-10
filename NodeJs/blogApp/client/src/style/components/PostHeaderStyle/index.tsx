@@ -55,8 +55,8 @@ const SignINButton = styled.a`
 `;
 const WriteButton = styled.div`
   font-family: "Delicious Handrawn", cursive;
-  font-size: 28px;
-  width: 100px;
+  font-size: 25px;
+  width: 80px;
   /* margin-left: 100px; */
   color: #f45b7c;
   cursor: pointer;
@@ -65,11 +65,11 @@ const LogOutButton = styled.div`
   display: flex;
   background-color: black;
   color: #f6f6f6;
-  font-size: 25px;
+  font-size: 20px;
   justify-content: center;
   align-items: center;
   font-family: "Delicious Handrawn", cursive;
-  min-width: 80px;
+  min-width: 60px;
   height: 40px;
   border-radius: 25px;
   margin: 0;

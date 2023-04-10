@@ -2,6 +2,7 @@ import multer from "multer";
 import DatauriParser from "datauri/parser";
 import path from "path";
 import { Request } from "express";
+import { log } from "console";
 
 // import { Request } from 'express';
 
@@ -10,6 +11,7 @@ const storage = multer.memoryStorage();
 const multerUploads = multer({ storage }).single("image");
 
 const dataUri = (req: any) => {
+  
   const extName = path.extname(req.file.originalname).toString();
   
   if(extName !== ".png" && extName !== ".jpg"){

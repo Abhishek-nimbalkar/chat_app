@@ -40,6 +40,7 @@ const SignInForm = () => {
     const dataRes=await postData("/users/login", { emailId, password })
     if(dataRes.success){
       localStorage.setItem("token",dataRes.token);
+      toast.success("You Have LogIn Successfully")
       modalFun.closeModal();
 
     } 

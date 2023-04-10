@@ -3,7 +3,11 @@ import { promises } from "fs";
 import { toast } from "react-toastify";
 
 const postData = async (url: string, data: any) => {
-  return await Api.post(url, data)
+  return await Api.post(url, data,{
+    headers: {
+      'Content-Type': 'application/json',
+      "Authorization" : localStorage.getItem("token")
+    }})
     .then((response) => {
         console.log(response.data);
       return response.data;

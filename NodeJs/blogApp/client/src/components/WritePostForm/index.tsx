@@ -1,6 +1,9 @@
+import { log } from 'console';
 import React, { FormEvent, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { ContentInput, FileInput, Img, Label, PublishButton, TitleInput } from 'style/components/FormStyle/CreateBlogStyle';
+import postData from 'utils/postData';
+import postImg from 'utils/postImgs';
 
 function CreateBlogForm() {
   // initialize useForm hook and destructure properties
@@ -13,8 +16,18 @@ function CreateBlogForm() {
   const watchImages = watch('images', []);
 
   // function to handle form submission
-  function onSubmit(data:any) {
+  const  onSubmit=async(data:any)=> {
     console.log(data);
+    const {title,content,images}=data;
+    const img=images[0];
+    let formData=new FormData();
+    formData.append("email","Abhishek2@gmail.com");
+    formData.append("image",img);
+    // const dataRes=await postData("/posts/create",{title,content});
+    const imgRes=await postImg("/addImg",formData)
+    console.log(imgRes);
+    
+    
     
   }
 
