@@ -2,10 +2,7 @@ import Api from "api";
 import { toast } from "react-toastify";
 
 const postImg = async (url: string, data: any) => {
-  return await Api.post(url, data,{
-    headers: {
-      'Content-Type': 'multipart/form-data'
-    }})
+  return await Api.post(url, data)
     .then((response) => {
         console.log(response);
       return response;

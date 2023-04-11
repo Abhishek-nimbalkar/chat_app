@@ -2,7 +2,7 @@ import express, { Request, Response } from "express";
 import { resolve } from "path";
 import Users from "../../models/user";
 
-import { dataUri, multerUploads } from "../../middlewares/multer";
+import { dataUri, multerMiddleWare, multerUploads } from "../../middlewares/multer";
 // import { cloudinaryConfig } from "../../config/cloudinaryConfig";
 import cloudinaryUpload from "../../utils/CloudinaryUpload";
 
@@ -11,32 +11,47 @@ const router = express.Router();
 // cloudinaryConfig();
 router.post(
   "/",
-  multerUploads,
+  multerMiddleWare,
   async (req: Request, res: Response) => {
     // console.log('req.body :', dataUri(req).content);
-    if (!req.file) throw new Error("file don't exist ");
+    // console.log("Request ===========",req);
+    
+    // console.log("Request file =======",req.files);
+
+    if (!req.files){
+      return res.status(400).send({error:true,message:"File Don't Exist"})
+    }
     try {
-      const file = dataUri(req).content;
-      const response = cloudinaryUpload(file);
+      const files:string[]|any= dataUri(req);
+      const urls=files.map(async(file:any)=>{
+        const response=await cloudinaryUpload(file.content)
+      });
+      console.log(urls);
+      
+      // const file=files[0];
+      // console.log(urls);
+      
+
+      // const response=cloudinaryUpload(file);
       // let urlImg;
       const { email } = req.body;
       // console.log(email);
 
-      response
-        .then(async (data: any) => {
-          //   console.log(data);
-          console.log(data.url);
-          //    urlImg=data.url;
-          //   return data.url;
-          await Users.updateOne(
-            { emailId: email },
-            { $set: { imgUrl: data.url } }
-          );
-        })
-        .catch((err: any) => {
-          console.log(err);
-          //   return err;
-        });
+      // response
+      //   .then(async (data: any) => {
+      //     //   console.log(data);
+      //     console.log(data.url);
+      //     //    urlImg=data.url;
+      //     //   return data.url;
+      //     await Users.updateOne(
+      //       { emailId: email },
+      //       { $set: { imgUrl: data.url } }
+      //     );
+      //   })
+      //   .catch((err: any) => {
+      //     console.log(err);
+      //     //   return err;
+      //   });
 
       res
         .status(201)
