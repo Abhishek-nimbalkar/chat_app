@@ -9,7 +9,7 @@ import { request } from "http";
 
 const parser = new DatauriParser();
 const storage = multer.memoryStorage();
-const multerUploads = multer({ storage }).array("image",3);
+const multerUploads = multer({ storage }).single("image");
 const multerMiddleWare = (req: Request, res: Response,next:NextFunction) => {
   let reque:any;  
   multerUploads(req,res,(err)=>{

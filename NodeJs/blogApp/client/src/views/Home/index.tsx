@@ -19,7 +19,7 @@ const click = () => {
   console.log("hello");
 };
 
-const Posts = () => {
+const Home= () => {
   // Api.get("/posts").then((data)=>{
   //   console.log(data);
   // })
@@ -95,4 +95,4 @@ const Posts = () => {
   );
 };
 
-export default Posts;
+export default Home;
