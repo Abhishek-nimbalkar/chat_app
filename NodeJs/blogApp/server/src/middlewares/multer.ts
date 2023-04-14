@@ -11,7 +11,6 @@ const parser = new DatauriParser();
 const storage = multer.memoryStorage();
 const multerUploads = multer({ storage }).single("image");
 const multerMiddleWare = (req: Request, res: Response,next:NextFunction) => {
-  let reque:any;  
   multerUploads(req,res,(err)=>{
     if(err instanceof multer.MulterError){
       return res.status(500).send({error:true,message:err.message})
@@ -25,20 +24,20 @@ const multerMiddleWare = (req: Request, res: Response,next:NextFunction) => {
   // next(req);
 };
 
-const dataUri = (req: any) => {
+const dataUri = (req:any) => {
   // console.log(req);
 
-  const extName = path.extname(req.files[0].originalname).toString();
+  const extName:string = path.extname(req.file.originalname).toString();
 
   if (extName !== ".png" && extName !== ".jpg" && extName !== ".jpeg") {
     throw new Error("File chosen is not picture");
   }
-  const file64 =req.files.map((i:any)=>{
-    return parser.format(extName,i.buffer)
-  })
+  // const file64 =req.files.map((i:any)=>{
+  //   return parser.format(extName,i.buffer)
+  // })
   // console.log(file64.length);
   
-  // const file64 = parser.format(extName, req.file.buffer);
+  const file64 = parser.format(extName, req.file.buffer);
   // console.log(req.file);
   return file64;
 };

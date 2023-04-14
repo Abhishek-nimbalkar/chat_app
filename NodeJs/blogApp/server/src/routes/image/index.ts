@@ -19,34 +19,34 @@ router.post("/", multerMiddleWare, async (req: Request, res: Response) => {
 
   // console.log("Request file =======",req.files);
 
-  if (!req.files) {
+  if (!req.file) {
     return res.status(400).send({ error: true, message: "File Don't Exist" });
   }
   try {
     const file = dataUri(req);
 
-    const response = cloudinaryUpload(file);
+    const response = await cloudinaryUpload(file.content);
     // let urlImg;
-    const { email } = req.body;
+    // const { email } = req.body;
     // console.log(email);
 
-    response
-      .then(async (data: any) => {
-        //   console.log(data);
-        console.log(data.url);
-        //    urlImg=data.url;
-        //   return data.url;
-        await Users.updateOne(
-          { emailId: email },
-          { $set: { imgUrl: data.url } }
-        );
-      })
-      .catch((err: any) => {
-        console.log(err);
-        //   return err;
-      });
+    // response
+    //   .then(async (data: any) => {
+    //     //   console.log(data);
+    //     console.log(data.url);
+    //     //    urlImg=data.url;
+    //     //   return data.url;
+    //     // await Users.updateOne(
+    //     //   { emailId: email },
+    //     //   { $set: { imgUrl: data.url } }
+    //     // );
+    //   })
+    //   .catch((err: any) => {
+    //     console.log(err);
+    //     //   return err;
+    //   });
 
-    res.status(201).send({ success: true, msg: "Image uploaded Successfully" });
+    res.status(201).send({ success: true, msg: "Image uploaded Successfully",url:response.url });
   } catch (error: any) {
     console.log(error);
 

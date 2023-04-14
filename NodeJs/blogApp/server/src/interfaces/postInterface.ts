@@ -2,7 +2,7 @@ export interface Ipost{
     userEmail?:string,
     title?:string,
     body?:string,
-    img?:string,
+    images?:Array<string>,
     comments?:Array<object>,
     likes?:Array<object>
 }

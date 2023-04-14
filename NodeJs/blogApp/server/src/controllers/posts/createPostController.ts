@@ -11,13 +11,13 @@ export default async (req:Request, res: Response) => {
       );
       const emailId: string = email.emailId;
   
-      const { title,body,img } = req.body;
+      const { title,body,images } = req.body;
   
       const newPostData: Ipost = new Posts({
         userEmail: emailId,
         title: title,
         body: body,
-        img: img,
+        img: images,
         comments:undefined,
         likes:undefined
   

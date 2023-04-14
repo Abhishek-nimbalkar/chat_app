@@ -26,61 +26,68 @@ function CreateBlogForm() {
   } = useForm();
 
   // initialize state for number of input fields
-  const [inputCount, setInputCount] = useState(1);
-  const [imgFiles, setImgFiles] = useState<any>([]);
+  const [watchImages, setValueImage] = useState<any>([]);
+  const [imgFileUrl, setImgFileUrl] = useState<any>([]);
 
   // get value of 'images' input field using watch function
-  const watchImages = watch("images", []);
+  const Images = watch("images", []);
+  // console.log("Imgaes in Watch ", Images);
+  // console.log("imgFileUrls are ", imgFileUrl);
+
+  const nav = useNavigate();
 
 
-  const nav=useNavigate();
-  // function to handle form submission
+  // function to handle form submission ******%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
   const onSubmit = async (data: any) => {
     // console.log(data);
     const { title, content, images } = data;
-    // const img = imgFiles[0];
-    
-    // console.log(img);
 
-    
-    // console.log('Images_Current_State', imgFiles)
-    let formData = new FormData();
-    formData.append("email", "Abhishek2@gmail.com");
-    for(let i in imgFiles){
-      formData.append("image",i)
-    }
+    const PostResponse=await postData("/posts/create",data);
+
+    console.log(PostResponse);
+
+
+    // console.log('Images_Current_State', imgFileUrl)
+    // let formData = new FormData();
+    // formData.append("email", "Abhishek2@gmail.com");
+    // formData.append("image",images)
     // formData.append("image", img);
-    // console.log('Form Data',formData)
-    const imgRes = await postImg("/addImg", formData);
-    toast.success(imgRes.data.msg);
-    toast.success("Post created Successfully")
-    nav("/")
+
+    // const imgRes = await postImg("/addImg", formData);
+    // toast.success(imgRes.data.msg);
+    // toast.success("Post created Successfully")
+    // nav("/")
 
     // console.log(imgRes);
-    
   };
 
   // function to handle image upload and display
-  function handleImageChange(event: any) {
+  const handleImageChange = async (event: any) => {
     // get uploaded file
     const file = event.target.files[0];
     // console.log("file", file);
-    setImgFiles([...imgFiles,file]);
+
+    let formData = new FormData();
+    // formData.append("email", "Abhishek2@gmail.com");
+    formData.append("image", file);
+    const imgRes = await postImg("/addImg", formData);
+    // console.log("Img |Response ",imgRes);
+    setImgFileUrl([...imgFileUrl, imgRes?.data.url]);
 
     // create FileReader object and read uploaded file
     const reader = new FileReader();
     reader.readAsDataURL(file);
 
     // when file is read, update 'images' value with uploaded image
-    reader.onload = () => {
-      setValue("images", [...watchImages, reader.result]);
-    };
-  }
+    reader.onload = async () => {
+      setValueImage([...watchImages, reader.result]);
 
-  // function to add more input fields dynamically
-  function handleAddInput() {
-    setInputCount(inputCount + 1);
-  }
+      setValue("images", [...imgFileUrl, imgRes?.data.url]);
+    };
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
