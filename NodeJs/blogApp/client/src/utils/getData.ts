@@ -1,7 +1,10 @@
+import Api from "api";
 
 
-const getData = () => {
-  return false;
+const getData = async (skip:number) => {
+  
+  return await Api.get(`posts/${skip}`);
+
 }
 
 export default getData

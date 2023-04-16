@@ -17,11 +17,12 @@ export default async (req:Request, res: Response) => {
         userEmail: emailId,
         title: title,
         body: body,
-        img: images,
+        images: images,
         comments:undefined,
         likes:undefined
   
       });
+      
       const samePost = await Posts.findOne({ title: title });
       // console.log(emailId);
   

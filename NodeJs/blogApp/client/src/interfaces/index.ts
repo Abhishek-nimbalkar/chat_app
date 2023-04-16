@@ -18,9 +18,10 @@ interface ISignUpForm{
 }
  interface IApiData{
   userId:string,
-  id:number,
+  _id:any,
   title:string,
-  body:string
+  body:string,
+  images:[string]
 }
 
 export type {IRoutes,ISignInForm,ISignUpForm,IApiData}

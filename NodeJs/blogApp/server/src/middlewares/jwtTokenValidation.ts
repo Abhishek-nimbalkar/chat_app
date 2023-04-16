@@ -24,7 +24,7 @@ export const verifyToken = (req:Request, res:Response, next:NextFunction) => {
   // const userToken = authHeader?.split(' ')[1];
   // console.log(token);
   if (!userToken) {
-    return res.status(403).send("A token is required for authentication");
+    return res.status(403).send({error:true,message:"A token is required for authentication"});
   }
   try {
     const decoded = jwt.verify(userToken, jwtKey);
@@ -32,7 +32,7 @@ export const verifyToken = (req:Request, res:Response, next:NextFunction) => {
     // req.user = decoded;
     // console.log(req.user.name);
   } catch (err) {
-    return res.status(401).send("Invalid Token");
+    return res.status(401).send({error:true,message:"Invalid Token"});
   }
   return next();
 };

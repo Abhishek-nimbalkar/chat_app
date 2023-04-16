@@ -2,9 +2,13 @@ import Api from "api";
 import { toast } from "react-toastify";
 
 const postImg = async (url: string, data: any) => {
-  return await Api.post(url, data)
+  return await Api.post(url, data,{
+    headers: {
+      Authorization:localStorage.getItem("token")
+    }
+  })
     .then((response) => {
-        console.log(response);
+        // console.log(response);
       return response;
     })
     .catch((error) => {

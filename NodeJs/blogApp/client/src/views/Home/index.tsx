@@ -1,11 +1,12 @@
 import Api from "api";
 import Loader from "components/Loader";
 import PostComponent from "components/Post";
+import PostBanner from "components/PostBanner";
 // import PostBanner from "components/PostBanner";
 import PostHeader from "components/PostHeader";
 import useGetData from "customHooks";
 import { IApiData } from "interfaces";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { ToastContainer } from "react-toastify";
 
@@ -13,55 +14,79 @@ import { ToastContainer } from "react-toastify";
 // import { json } from "stream/consumers";
 
 import { PostBody, PostsContainer } from "style/components/PostHeaderStyle";
+import getData from "utils/getData";
 // import { JsxElement } from "typescript";
 
 const click = () => {
   console.log("hello");
 };
 
-const Home= () => {
-  // Api.get("/posts").then((data)=>{
-  //   console.log(data);
-  // })
-  const { data, isLoading } = useGetData("posts");
-  const postData: Array<IApiData> = data?.data;
-  // console.log(data?.data);
-  console.log(isLoading);
-  const style = {
-    height: 30,
-    border: "1px solid green",
-    margin: 6,
-    padding: 8,
-  };
-  const initialState = {};
-  const [state, setState] = useState({ items: Array.from({ length: 25 }) });
-  const fetchMoreData = () => {
+const Home = () => {
+  const [state, setState] = useState<Array<IApiData>>([]);
+  const [skip, setSkip] = useState<number>(0);
+  useEffect(() => {
+    getData(skip).then((data) => {
+      setState(data?.data);
+
+      // console.log(data?.data);
+    });
+  }, []);
+
+  console.log("State ===========", state);
+
+  // const { data, isLoading } = useGetData("posts/5");
+  // const postData: Array<IApiData> = data?.data;
+  // console.log(postData);
+  // console.log(isLoading);
+
+  const fetchMoreData = async () => {
     // a fake async api call like which sends
     // 20 more records in 1.5 secs
+    setSkip(skip + 5);
+    getData(skip).then((data) => {
+      setTimeout(() => {
+        console.log("data form get ==============", data?.data);
 
-    setTimeout(() => {
-      setState({
-        items: state.items.concat(Array.from({ length: 20 })),
-      });
-    }, 1500);
+        setState(state.concat(data?.data));
+      }, 1500);
+    });
+
+    // setTimeout(() => {
+
+    //   setState({
+    //     [...postData,postData],
+    //   });
+    // }, 1500);
   };
+
+  console.log("size.length", state.length);
+  const handlePostClick=()=>{
+
+  }
 
   return (
     <>
       <PostBody>
-        
         <PostHeader />
+        <PostBanner />
         <InfiniteScroll
-          dataLength={state.items.length}
+          dataLength={state.length}
           next={fetchMoreData}
           hasMore={true}
-          loader={<h4>Loading...</h4>}
+          loader={<Loader />}
         >
-          {state.items.map((i: any, index: any) => (
-            <div style={style} key={index}>
-              div - #{index}
-            </div>
-          ))}
+          <PostsContainer>
+            {state?.map((ele: IApiData, key: any) => (
+              <PostComponent
+                key={key}
+                title={ele.title}
+                body={ele.body}
+                img={ele.images[0]}
+                id={ele._id}
+                
+              />
+            ))}
+          </PostsContainer>
         </InfiniteScroll>
 
         {/* <Loader /> */}

@@ -44,28 +44,19 @@ function CreateBlogForm() {
   const onSubmit = async (data: any) => {
     // console.log(data);
     const { title, content, images } = data;
+    const body=content;
+    console.log(data);
+    
 
-    const PostResponse=await postData("/posts/create",data);
+    const PostResponse=await postData("/posts/create",{title,body,images});
 
-    console.log(PostResponse);
+    // console.log(PostResponse);
+    nav("/");
 
-
-    // console.log('Images_Current_State', imgFileUrl)
-    // let formData = new FormData();
-    // formData.append("email", "Abhishek2@gmail.com");
-    // formData.append("image",images)
-    // formData.append("image", img);
-
-    // const imgRes = await postImg("/addImg", formData);
-    // toast.success(imgRes.data.msg);
-    // toast.success("Post created Successfully")
-    // nav("/")
-
-    // console.log(imgRes);
   };
 
   // function to handle image upload and display
-  const handleImageChange = async (event: any) => {
+  const handleImageChange:any = async (event: any) => {
     // get uploaded file
     const file = event.target.files[0];
     // console.log("file", file);
@@ -74,6 +65,13 @@ function CreateBlogForm() {
     // formData.append("email", "Abhishek2@gmail.com");
     formData.append("image", file);
     const imgRes = await postImg("/addImg", formData);
+    console.log('imgRes', imgRes)
+
+    if(imgRes.status===403 || imgRes.status===401){
+      toast.error(imgRes.data.message);
+      localStorage.removeItem("token");
+      window.location.reload();
+    }
     // console.log("Img |Response ",imgRes);
     setImgFileUrl([...imgFileUrl, imgRes?.data.url]);
 

@@ -6,6 +6,7 @@ import Users from "../../models/user";
 export default async (req:Request, res:Response) => {
     try {
       const { emailId, userName, phone, password } = req.body;
+      const emailIdLowerCase=emailId.toLowerCase();
       
       const userExist:any = await Users.findOne({ emailId: emailId });
       // console.log(emailId);
@@ -14,7 +15,7 @@ export default async (req:Request, res:Response) => {
       const saltRounds = 5;
       const hashPass=await bcrypt.hash(password, saltRounds);
       const newUserData: IUserSignUp = new Users({
-        emailId: emailId,
+        emailId: emailIdLowerCase,
         userName: userName,
         phone: phone,
         password: hashPass,

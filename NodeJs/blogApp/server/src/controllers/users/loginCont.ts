@@ -5,8 +5,11 @@ import { generateJwt } from "../../middlewares/jwtTokenValidation";
 import Users from "../../models/user";
 export default async (req: Request, res: Response) => {
   const { emailId, password } = req.body;
+  const emailIdLowerCase=emailId.toLowerCase();
+  // console.log(emailIdLowerCase);
+  
 
-  const userExist = await Users.findOne({ emailId: emailId });
+  const userExist = await Users.findOne({ emailId: emailIdLowerCase });
   
   // console.log(userExist);
   if (!userExist){
@@ -21,7 +24,7 @@ export default async (req: Request, res: Response) => {
         const cmp = await bcrypt.compare(password,dbPass);
       if (cmp) {
         const user: IJwtPayload = {
-            emailId: emailId,
+            emailId: emailIdLowerCase,
           };
           const token = generateJwt(user);
           res.status(200).send({success:true, token:token });

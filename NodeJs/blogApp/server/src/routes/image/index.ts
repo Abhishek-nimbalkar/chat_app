@@ -9,11 +9,12 @@ import {
 } from "../../middlewares/multer";
 // import { cloudinaryConfig } from "../../config/cloudinaryConfig";
 import cloudinaryUpload from "../../utils/CloudinaryUpload";
+import { verifyToken } from "../../middlewares/jwtTokenValidation";
 
 const router = express.Router();
 
 // cloudinaryConfig();
-router.post("/", multerMiddleWare, async (req: Request, res: Response) => {
+router.post("/", multerMiddleWare,verifyToken, async (req: Request, res: Response) => {
   // console.log('req.body :', dataUri(req).content);
   // console.log("Request ===========",req);
 

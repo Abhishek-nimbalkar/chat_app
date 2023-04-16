@@ -19,7 +19,7 @@ const multerMiddleWare = (req: Request, res: Response,next:NextFunction) => {
     }
     // console.log(req.files);
     
-    return next()
+    next()
   })
   // next(req);
 };

@@ -13,9 +13,9 @@ const Loader = () => {
     <LoaderContainer>
       <FadeLoader
         color="#d68c36"
-        height={20}
+        height={15}
         margin={10}
-        radius={50}
+        radius={5}
         speedMultiplier={1.5}
         width={2}
       />

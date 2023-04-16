@@ -17,10 +17,11 @@ const router = express.Router();
 
 // router.use(verifyToken)
 
-router.get("/", async (req: Request, res: Response) => {
+router.get("/:skipValue", async (req: Request, res: Response) => {
   //   console.log(email.emailId);
+  const skip_no=Number(req.params.skipValue);
 
-  const posts = await Posts.find();
+  const posts = await Posts.find().sort({_id:-1}).skip(skip_no).limit(5);
   //   console.log(jwtKey);
   res.send(posts);
 });

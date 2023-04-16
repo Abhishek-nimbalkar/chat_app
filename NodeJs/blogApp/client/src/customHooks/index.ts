@@ -5,7 +5,8 @@ import { IApiData } from "interfaces";
 import { useQuery } from "react-query";
 
 const apiClient = axios.create({
-  baseURL: "https://jsonplaceholder.typicode.com/",
+  // baseURL: "https://jsonplaceholder.typicode.com/",
+  baseURL:"http://localhost:5000/",
   headers: {
     "Content-type": "application/json",
   },

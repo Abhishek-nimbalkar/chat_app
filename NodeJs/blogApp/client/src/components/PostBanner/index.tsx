@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   BannerContainer,
   BannerLeftConatiner,
@@ -8,8 +8,10 @@ import {
   BannerRightConatiner,
 } from "style/components/PostBannerStyle";
 import SvgComponent from "components/Svgs";
+import { modalState } from "App";
 
 const PostBanner = () => {
+  const modalFun = useContext(modalState);
   return (
     <>
       <BannerContainer>
@@ -18,7 +20,13 @@ const PostBanner = () => {
           <BannerLeftContainerDescription>
             Discover stories, thinking, and expertise from writers on any topic.
           </BannerLeftContainerDescription>
-          <BannerLeftConatinerButton>Start Reading</BannerLeftConatinerButton>
+          <BannerLeftConatinerButton
+            onClick={() => {
+              modalFun.openModal("signup");
+            }}
+          >
+            Start Reading
+          </BannerLeftConatinerButton>
         </BannerLeftConatiner>
         <BannerRightConatiner>
           <SvgComponent />

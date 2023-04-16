@@ -2,10 +2,13 @@ import styled from "styled-components";
 
 const CreateBlogConatinerWrapperStyle = styled.div`
   display: flex;
+  /* justify-content: center; */
+  align-items: center;
   flex-direction: column;
   background-color: #e5f5f0;
-  height: 100vh;
+  min-height: 100vh;
   width: 100%;
+  padding: 0 0 10vh;
 `;
 const CreateBlogContainerStyle = styled.div`
   display: flex;
@@ -14,7 +17,7 @@ const CreateBlogContainerStyle = styled.div`
   justify-content: center;
   height: 100%;
   max-width: 80vw;
-  padding: 2vw 10vw;
+  margin: 10vh 0 0;
 `;
 const Label = styled.div`
   font-size: 2vw;

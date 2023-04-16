@@ -5,7 +5,7 @@ const LoaderContainer = styled.div`
   justify-content: center;
   align-items:center;
   width: 100%;
-  height:70vh;
+  height:20vh;
 `;
 
 export { LoaderContainer };

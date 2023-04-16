@@ -4,7 +4,7 @@ import users from "./routes/users";
 import posts from "./routes/posts";
 import forgot from "./routes/forgotPass";
 import addImg from "./routes/image";
-import UserRouter from './routes/UserRouter';
+// import UserRouter from './routes/UserRouter';
 import { cloudinaryConfig } from './config/cloudinaryConfig';
 import cors from "cors"
 
