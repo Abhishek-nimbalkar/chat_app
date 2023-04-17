@@ -6,27 +6,23 @@ import createPostController from "../../controllers/posts/createPostController";
 import editPostController from "../../controllers/posts/editPostCont";
 import addCommentController from '../../controllers/posts/addcommentCont';
 import likePostController from "../../controllers/posts/likePostCont";
-import getPostController from "../../controllers/posts/getPostController";
+import getPostController from "../../controllers/singlePost/getSinglePostController";
 // import { Ipost } from "interfaces/postInterface";
 import Posts from "../../models/post";
 
 import { verifyToken } from "../../middlewares/jwtTokenValidation";
+
+import getPostsController from "../../controllers/posts/getPostsController";
+import getSinglePostController from "../../controllers/singlePost/getSinglePostController";
 
 
 const router = express.Router();
 
 // router.use(verifyToken)
 
-router.get("/:skipValue", async (req: Request, res: Response) => {
-  //   console.log(email.emailId);
-  const skip_no=Number(req.params.skipValue);
+router.get("/:skipValue",getPostsController);
 
-  const posts = await Posts.find().sort({_id:-1}).skip(skip_no).limit(5);
-  //   console.log(jwtKey);
-  res.send(posts);
-});
-
-router.get("/getPost/:title",verifyToken,getPostController);
+router.get("/getPost/:id",getSinglePostController);
 
 router.post("/create",verifyToken, createPostController);
 

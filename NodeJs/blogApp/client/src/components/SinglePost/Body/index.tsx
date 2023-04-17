@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BigHead } from "@bigheads/core";
-import { faker } from '@faker-js/faker';
+import { faker } from "@faker-js/faker";
 import {
   TitleContainer,
   PostBodyLeftConatiner,
@@ -14,9 +14,53 @@ import {
   UserName,
   PostImg,
 } from "style/components/SinglePostStyle/PostBodyStyle";
-const url="https://w0.peakpx.com/wallpaper/638/643/HD-wallpaper-babasaheb-ambedkar-painting-babasaheb-ambedkar-painting-art-work-constitution-doctor.jpg";
 
-const SinglePostBody = () => {
+import getUser from "utils/getUser";
+// const urlImg =
+//   "https://w0.peakpx.com/wallpaper/638/643/HD-wallpaper-babasaheb-ambedkar-painting-babasaheb-ambedkar-painting-art-work-constitution-doctor.jpg";
+
+const SinglePostBody = ({
+  _id,
+  userEmail,
+  title,
+  body,
+  comments,
+  images,
+  likes,
+}: {
+  _id: any;
+  title: string;
+  body: string;
+  comments: [any];
+  images: [string];
+  likes: string;
+  userEmail: string;
+}) => {
+  // console.log(userEmail);
+  const [userName, setUserName] = useState<any>();
+  useEffect(() => {
+    getUser("users/getUser/" + userEmail).then((data) => {
+      setUserName(data.user);
+      // console.log(data);
+    });
+  }, []);
+  // console.log(body);
+  const arr = body?.split(".");
+  // console.log(array[0]);
+
+  const newArray = (arr: any, chunkSize: number) => {
+    const res = [];
+    for (let i = 0; i < arr.length; i += chunkSize) {
+      const chunk = arr.slice(i, i + chunkSize);
+      res.push(chunk);
+    }
+    return res;
+  };
+  const newBody = newArray(arr, 20);
+  // console.log(newBody.toString());
+
+  // console.log('data', data)
+
   return (
     <>
       <PostBodyWrapper>
@@ -47,18 +91,30 @@ const SinglePostBody = () => {
                   skinTone="light"
                 />
               </UserAvatar>
-              <UserName>{faker.internet.userName()}</UserName>
+              <UserName>{userName?.userName}</UserName>
             </UserNameContainer>
-            <TitleContainer>{faker.lorem.sentence()}{faker.lorem.sentence()}</TitleContainer>
+            <TitleContainer>{title}</TitleContainer>
             <ImgContainer>
-              <PostImg
-                src={url}
-              alt={"Image"}
-              />
+              <PostImg src={images[0]} alt={"Image"} />
             </ImgContainer>
-            <DescriptionConatiner>{faker.lorem.paragraphs()}{}{faker.lorem.paragraphs()}</DescriptionConatiner>
-            <DescriptionConatiner>{faker.lorem.paragraphs()}{}{faker.lorem.paragraphs()}</DescriptionConatiner>
-            <DescriptionConatiner>{faker.lorem.paragraphs()}{}{faker.lorem.paragraphs()}</DescriptionConatiner>
+            {newBody.map((ele: any, key: number) => {
+              return <DescriptionConatiner>{ele.toString()}</DescriptionConatiner>;
+            })}
+            {/* <DescriptionConatiner>
+              {faker.lorem.paragraphs()}
+              {}
+              {faker.lorem.paragraphs()}
+            </DescriptionConatiner> */}
+            {/* <DescriptionConatiner>
+              {faker.lorem.paragraphs()}
+              {}
+              {faker.lorem.paragraphs()}
+            </DescriptionConatiner>
+            <DescriptionConatiner>
+              {faker.lorem.paragraphs()}
+              {}
+              {faker.lorem.paragraphs()}
+            </DescriptionConatiner> */}
           </PostBodyLeftConatiner>
         </PostBodyLeftWrapper>
         <PostBodyRightWrapper>bye</PostBodyRightWrapper>

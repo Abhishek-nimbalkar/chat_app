@@ -4,7 +4,7 @@ import PostComponent from "components/Post";
 import PostBanner from "components/PostBanner";
 // import PostBanner from "components/PostBanner";
 import PostHeader from "components/PostHeader";
-import useGetData from "customHooks";
+import useGetData from "hooks";
 import { IApiData } from "interfaces";
 import { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -17,9 +17,6 @@ import { PostBody, PostsContainer } from "style/components/PostHeaderStyle";
 import getData from "utils/getData";
 // import { JsxElement } from "typescript";
 
-const click = () => {
-  console.log("hello");
-};
 
 const Home = () => {
   const [state, setState] = useState<Array<IApiData>>([]);
@@ -27,22 +24,27 @@ const Home = () => {
   useEffect(() => {
     getData(skip).then((data) => {
       setState(data?.data);
-
+      setSkip(skip + 5);
       // console.log(data?.data);
     });
   }, []);
 
-  console.log("State ===========", state);
+  console.log("State before=======", state);
 
+ 
   // const { data, isLoading } = useGetData("posts/5");
   // const postData: Array<IApiData> = data?.data;
   // console.log(postData);
   // console.log(isLoading);
-
+  // useEffect(()=>{
+  //   fetchMoreData()
+  // },[])
+  
   const fetchMoreData = async () => {
     // a fake async api call like which sends
     // 20 more records in 1.5 secs
     setSkip(skip + 5);
+    console.log('skip ========', skip)
     getData(skip).then((data) => {
       setTimeout(() => {
         console.log("data form get ==============", data?.data);
@@ -51,24 +53,19 @@ const Home = () => {
       }, 1500);
     });
 
-    // setTimeout(() => {
+    // console.log("State After ===========", state);
 
-    //   setState({
-    //     [...postData,postData],
-    //   });
-    // }, 1500);
+    console.log("size.length", state.length);
+
   };
 
-  console.log("size.length", state.length);
-  const handlePostClick=()=>{
-
-  }
+ 
 
   return (
     <>
       <PostBody>
         <PostHeader />
-        <PostBanner />
+        {/* <PostBanner /> */}
         <InfiniteScroll
           dataLength={state.length}
           next={fetchMoreData}

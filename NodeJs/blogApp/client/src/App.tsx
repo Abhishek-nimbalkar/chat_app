@@ -8,7 +8,11 @@ import { Private } from "routes/private";
 
 export const modalState = createContext({modalIsOpen:"",openModal:(action: string)=>{},closeModal:()=>{}});
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({defaultOptions:{
+  queries:{
+    refetchOnWindowFocus:false
+  }
+}});
 
 const App = () => {
   const [modalIsOpen, setIsOpen] = useState("");

@@ -15,7 +15,7 @@ const PostComponent = ({title,body,img,id}:{title:string,body:string,img:string,
   return (
     <>
       <PostComponetStyle>
-        <PostComponentLeft href={`post/${id}`}>
+        <PostComponentLeft href={`post/${id}`} target={"_blank"}>
           <PostTitle>
             {title}
           </PostTitle>
