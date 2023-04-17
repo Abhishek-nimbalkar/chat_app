@@ -45,7 +45,7 @@ function CreateBlogForm() {
     // console.log(data);
     const { title, content, images } = data;
     const body=content;
-    console.log(data);
+    // console.log(data);
     
 
     const PostResponse=await postData("/posts/create",{title,body,images});

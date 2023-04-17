@@ -15,7 +15,7 @@ const PostBodyLeftConatiner = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-  width: 40vw;
+  width: 45vw;
   padding: 0 0 50px;
 `;
 const UserAvatar = styled.div`
@@ -54,24 +54,28 @@ const ImgContainer = styled.div`
   width: 80%;
   object-fit: cover;
   max-height: 60vh;
-  margin: 1vw 0 2vw;
+  margin: 2vw 0 2vw;
 `;
 const DescriptionConatiner = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: "Anuphan", sans-serif;
   /* border: 2px solid blue; */
+  text-align: justify;
   width: 90%;
   font-size: 16px;
-  margin: 0 0 1vw;
+  margin: 0 0 3vw;
 `;
 
 const PostBodyRightWrapper = styled.div`
   display: flex;
   min-width: 40vw;
 `;
-const PostImg=styled.img`
-height: 100%;
+const PostImg = styled.img`
+  height: 100%;
+  margin-bottom: 2vw;
+  border-radius: 1vw;
 `;
 
 export {
@@ -85,5 +89,5 @@ export {
   UserNameContainer,
   UserAvatar,
   UserName,
-  PostImg
+  PostImg,
 };

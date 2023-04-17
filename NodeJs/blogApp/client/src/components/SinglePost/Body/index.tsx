@@ -60,6 +60,11 @@ const SinglePostBody = ({
   // console.log(newBody.toString());
 
   // console.log('data', data)
+  let i = 0;
+  const upDateI = () => {
+    i++;
+    return i;
+  };
 
   return (
     <>
@@ -98,23 +103,18 @@ const SinglePostBody = ({
               <PostImg src={images[0]} alt={"Image"} />
             </ImgContainer>
             {newBody.map((ele: any, key: number) => {
-              return <DescriptionConatiner>{ele.toString()}</DescriptionConatiner>;
+              if (key % 2 === 0 && key !== 0 && key <= images.length + 1) {
+                let i = upDateI();
+                return [
+                  <PostImg src={images[i]} alt={"Hello"} />,
+                  <DescriptionConatiner>{ele.toString()}</DescriptionConatiner>,
+                ];
+              } else {
+                return (
+                  <DescriptionConatiner>{ele.toString()}</DescriptionConatiner>
+                );
+              }
             })}
-            {/* <DescriptionConatiner>
-              {faker.lorem.paragraphs()}
-              {}
-              {faker.lorem.paragraphs()}
-            </DescriptionConatiner> */}
-            {/* <DescriptionConatiner>
-              {faker.lorem.paragraphs()}
-              {}
-              {faker.lorem.paragraphs()}
-            </DescriptionConatiner>
-            <DescriptionConatiner>
-              {faker.lorem.paragraphs()}
-              {}
-              {faker.lorem.paragraphs()}
-            </DescriptionConatiner> */}
           </PostBodyLeftConatiner>
         </PostBodyLeftWrapper>
         <PostBodyRightWrapper>bye</PostBodyRightWrapper>

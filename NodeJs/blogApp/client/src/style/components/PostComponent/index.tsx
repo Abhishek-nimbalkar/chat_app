@@ -63,11 +63,11 @@ const PostComponentRight = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
+
   /* min-width: 15vw; */
 `;
 const Img = styled.img`
-  /* height: 100%;
-  width: 100%; */
+ /* max-height: 250px; */
   width: 100%;
   object-fit: contain;
   border-radius: 1vw;

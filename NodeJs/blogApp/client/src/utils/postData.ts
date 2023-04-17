@@ -9,7 +9,9 @@ const postData = async (url: string, data: any) => {
       "Authorization" : localStorage.getItem("token")
     }})
     .then((response) => {
-        // console.log(response.data);
+    // console.log(response.data);
+    toast.success(response.data.message)
+
       return response.data;
     })
     .catch((error) => {

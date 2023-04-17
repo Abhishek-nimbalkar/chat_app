@@ -11,7 +11,7 @@ import getSinglePostData from "../../utils/getPost";
 
 const Post = () => {
   // const [postData, setPostData] = useState();
-  console.log("first");
+  // console.log("first");
   const location = useLocation();
   const url = location.pathname;
   const urlArray = url.split("/");

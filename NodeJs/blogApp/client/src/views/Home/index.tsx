@@ -29,7 +29,7 @@ const Home = () => {
     });
   }, []);
 
-  console.log("State before=======", state);
+  // console.log("State before=======", state);
 
  
   // const { data, isLoading } = useGetData("posts/5");
@@ -44,10 +44,10 @@ const Home = () => {
     // a fake async api call like which sends
     // 20 more records in 1.5 secs
     setSkip(skip + 5);
-    console.log('skip ========', skip)
+    // console.log('skip ========', skip)
     getData(skip).then((data) => {
       setTimeout(() => {
-        console.log("data form get ==============", data?.data);
+        // console.log("data form get ==============", data?.data);
 
         setState(state.concat(data?.data));
       }, 1500);
@@ -55,7 +55,7 @@ const Home = () => {
 
     // console.log("State After ===========", state);
 
-    console.log("size.length", state.length);
+    // console.log("size.length", state.length);
 
   };
 
