@@ -1,3 +1,4 @@
+import CommentAndLike from "components/CommentAndLike";
 import Loader from "components/Loader";
 import SinglePostBody from "components/SinglePost/Body";
 import SinglePostHeader from "components/SinglePost/Header";
@@ -32,6 +33,7 @@ const postData:any=data?.data?.post;
       {isLoading ? (
         <Loader />
       ) : (
+        <>
         <SinglePostBody
           _id={objId}
           userEmail={postData?.userEmail}
@@ -41,6 +43,8 @@ const postData:any=data?.data?.post;
           comments={postData?.comments}
           likes={postData?.likes}
         />
+
+        </>
       )}
     </>
   );

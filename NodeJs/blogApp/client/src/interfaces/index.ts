@@ -10,6 +10,12 @@ interface ISignInForm {
     email: string,
     password: string,
   };
+interface IForgot{
+  email:string
+}
+interface IForgotPass{
+  password:string
+}
 interface ISignUpForm{
   email:string,
   password:string,
@@ -24,4 +30,4 @@ interface ISignUpForm{
   images:[string]
 }
 
-export type {IRoutes,ISignInForm,ISignUpForm,IApiData}
+export type {IRoutes,ISignInForm,ISignUpForm,IApiData,IForgot,IForgotPass}

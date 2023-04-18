@@ -12,7 +12,7 @@ import { ModalSubmitButton } from "style/components/ModalStyle";
 import { BannerLeftConatinerButton } from "style/components/PostBannerStyle";
 import postData from "utils/postData";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { modalState } from "App";
 // import usePostData from "customHooks/postData";
@@ -46,6 +46,7 @@ const SignInForm = () => {
     } 
     // reset();
   };
+
   return (
     <Form onSubmit={handleSubmit(onSubmitHandler)}>
       <Heading>Welcome back.</Heading>
@@ -63,6 +64,7 @@ const SignInForm = () => {
       />
       <ErrorPara>{errors.password?.message}</ErrorPara>
       <br />
+      <Link to={"/forgotPassword"} >Frogot Passwrod</Link>
 
       <ModalSubmitButton type="submit">Sign in</ModalSubmitButton>
     </Form>

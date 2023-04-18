@@ -84,6 +84,18 @@ const PostsContainer = styled.div`
   width: 40vw;
   margin-left: 15vw;
 `;
+const PostsWrapper=styled.div`
+display: flex;
+`;
+const PostsRightConatainer=styled.div`
+display: flex;
+margin: 5vw;
+/* justify-content: center;
+align-items: center; */
+width: 30vw;
+height: 100vw;
+`;
+
 
 export {
   HeaderWrapper,
@@ -95,4 +107,6 @@ export {
   SignINButton,
   WriteButton,
   LogOutButton,
+  PostsWrapper,
+  PostsRightConatainer
 };

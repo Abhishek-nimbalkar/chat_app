@@ -2,20 +2,20 @@ import styled from "styled-components";
 
 const PostBodyWrapper = styled.div`
   display: flex;
-
+  position: relative;
   min-height: 90vh;
   min-width: 100%;
 `;
 const PostBodyLeftWrapper = styled.div`
   display: flex;
   justify-content: center;
-  min-width: 60vw;
+  min-width: 70vw;
 `;
 const PostBodyLeftConatiner = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-  width: 45vw;
+  width: 55vw;
   padding: 0 0 50px;
 `;
 const UserAvatar = styled.div`

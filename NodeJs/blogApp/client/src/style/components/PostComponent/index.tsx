@@ -14,7 +14,7 @@ const PostComponentLeft = styled.a`
   flex-direction: column;
   width: 100%;
   min-width: 25vw;
-  text-decoration: none;
+  text-decoration: none !important;
   /* border: 2px solid red; */
   color: #000000;
   /* padding-left: 1vw; */

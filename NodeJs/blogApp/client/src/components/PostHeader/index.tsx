@@ -18,6 +18,8 @@ import { ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { modalState } from "App";
 
+import Loader from "components/Loader";
+
 const customStyles = {
   content: {
     top: "50%",
@@ -97,7 +99,9 @@ const PostHeader = () => {
         style={customStyles}
         contentLabel="Example Modal"
       >
-        {modalFun.modalIsOpen === "signin" ? <SignInModal /> : <SignUpModal />}
+        {
+        modalFun.modalIsOpen === "signin" ? <SignInModal /> : <SignUpModal />
+        }
       </Modal>
     </>
   );

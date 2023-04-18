@@ -13,10 +13,14 @@ import { ToastContainer } from "react-toastify";
 // import { useEffect, useState } from "react";
 // import { json } from "stream/consumers";
 
-import { PostBody, PostsContainer } from "style/components/PostHeaderStyle";
+import {
+  PostBody,
+  PostsContainer,
+  PostsRightConatainer,
+  PostsWrapper,
+} from "style/components/PostHeaderStyle";
 import getData from "utils/getData";
 // import { JsxElement } from "typescript";
-
 
 const Home = () => {
   const [state, setState] = useState<Array<IApiData>>([]);
@@ -31,7 +35,6 @@ const Home = () => {
 
   // console.log("State before=======", state);
 
- 
   // const { data, isLoading } = useGetData("posts/5");
   // const postData: Array<IApiData> = data?.data;
   // console.log(postData);
@@ -39,7 +42,7 @@ const Home = () => {
   // useEffect(()=>{
   //   fetchMoreData()
   // },[])
-  
+
   const fetchMoreData = async () => {
     // a fake async api call like which sends
     // 20 more records in 1.5 secs
@@ -56,62 +59,34 @@ const Home = () => {
     // console.log("State After ===========", state);
 
     // console.log("size.length", state.length);
-
   };
-
- 
 
   return (
     <>
       <PostBody>
         <PostHeader />
-        {/* <PostBanner /> */}
-        <InfiniteScroll
-          dataLength={state.length}
-          next={fetchMoreData}
-          hasMore={true}
-          loader={<Loader />}
-        >
-          <PostsContainer>
-            {state?.map((ele: IApiData, key: any) => (
-              <PostComponent
-                key={key}
-                title={ele.title}
-                body={ele.body}
-                img={ele.images[0]}
-                id={ele._id}
-                
-              />
-            ))}
-          </PostsContainer>
-        </InfiniteScroll>
-
-        {/* <Loader /> */}
-        {/* {isLoading ? (
-          <Loader />
-        ) : (
-          <PostsContainer>
-            {postData?.map((ele: IApiData, key: any) => (
-              <PostComponent
-                key={key}
-                title={ele.title}
-                body={ele.body}
-                img={"https://google.com"}
-              />
-            ))}
-          </PostsContainer>
-        )} */}
-
-        {/* <PostBanner />
-        <PostsContainer>
-          
-          <PostComponent />
-          <PostComponent />
-          <PostComponent />
-          <PostComponent />
-          <PostComponent />
-          <PostComponent />
-        </PostsContainer> */}
+        <PostBanner />
+        <PostsWrapper>
+          <InfiniteScroll
+            dataLength={state.length}
+            next={fetchMoreData}
+            hasMore={true}
+            loader={<Loader />}
+          >
+            <PostsContainer>
+              {state?.map((ele: IApiData, key: any) => (
+                <PostComponent
+                  key={key}
+                  title={ele.title}
+                  body={ele.body}
+                  img={ele.images[0]}
+                  id={ele._id}
+                />
+              ))}
+            </PostsContainer>
+          </InfiniteScroll>
+          <PostsRightConatainer></PostsRightConatainer>
+        </PostsWrapper>
       </PostBody>
     </>
   );

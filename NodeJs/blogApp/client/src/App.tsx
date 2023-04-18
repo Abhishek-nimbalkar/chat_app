@@ -7,7 +7,7 @@ import { ThemeContext } from "styled-components";
 import { Private } from "routes/private";
 
 export const modalState = createContext({modalIsOpen:"",openModal:(action: string)=>{},closeModal:()=>{}});
-
+export const modalState2 = createContext({modalIsOpen:"",openModal:(action: string)=>{},closeModal:()=>{}});
 const queryClient = new QueryClient({defaultOptions:{
   queries:{
     refetchOnWindowFocus:false

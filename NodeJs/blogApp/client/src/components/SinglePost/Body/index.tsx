@@ -16,6 +16,7 @@ import {
 } from "style/components/SinglePostStyle/PostBodyStyle";
 
 import getUser from "utils/getUser";
+import CommentAndLike from "components/CommentAndLike";
 // const urlImg =
 //   "https://w0.peakpx.com/wallpaper/638/643/HD-wallpaper-babasaheb-ambedkar-painting-babasaheb-ambedkar-painting-art-work-constitution-doctor.jpg";
 
@@ -106,18 +107,19 @@ const SinglePostBody = ({
               if (key % 2 === 0 && key !== 0 && key <= images.length + 1) {
                 let i = upDateI();
                 return [
-                  <PostImg src={images[i]} alt={"Hello"} />,
-                  <DescriptionConatiner>{ele.toString()}</DescriptionConatiner>,
+                  <PostImg key={key} src={images[i]} alt={"Hello"} />,
+                  <DescriptionConatiner key={key+1}>{ele.toString()}</DescriptionConatiner>,
                 ];
               } else {
                 return (
-                  <DescriptionConatiner>{ele.toString()}</DescriptionConatiner>
+                  <DescriptionConatiner key={key}>{ele.toString()}</DescriptionConatiner>
                 );
               }
             })}
           </PostBodyLeftConatiner>
         </PostBodyLeftWrapper>
         <PostBodyRightWrapper>bye</PostBodyRightWrapper>
+        <CommentAndLike comments={comments} likes={likes} />
       </PostBodyWrapper>
     </>
   );
