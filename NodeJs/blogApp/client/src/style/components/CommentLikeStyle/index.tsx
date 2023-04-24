@@ -3,11 +3,11 @@ import styled from "styled-components";
 const ChatContainer = styled.div`
   position: fixed;
   display: flex;
-  top: 90vh;
+  bottom: 5vh;
   left: 45vw;
-  height: 40px;
-  width: 200px;
-  border: 2px solid red;
+  height: 35px;
+  width: 180px;
+  /* border: 2px solid red; */
   border-radius: 25px;
   background-color: #ffffff;
   justify-content: center;

@@ -17,10 +17,12 @@ const Input = styled.input`
   height: 2.5vw;
   width: 15vw;
   padding-left:20px;
+  outline: none;
   ::placeholder {
   color: #72028b;
   font-size: 1vw;
   padding-left: 1vw;
+
 }
 `;
 

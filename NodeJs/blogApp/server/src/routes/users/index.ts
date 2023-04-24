@@ -9,7 +9,7 @@ import { IJwtPayload } from "../../interfaces/jwtInterface";
 import getUserController from "../../controllers/users/getUserController";
 const router = express.Router();
 
-router.get("/", verifyToken, async (req: Request, res: Response) => {
+router.get("/",async (req: Request, res: Response) => {
   // const token:any=req.headers.authorization;
   // const email=await JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString())
   //   console.log(email.emailId);

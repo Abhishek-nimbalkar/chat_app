@@ -10,6 +10,7 @@ const PostHeaderWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid;
+  z-index: 2;
 `;
 const PostHeadLeft = styled.div`
   display: flex;
@@ -24,6 +25,8 @@ const PostHeadSearchBar = styled.input`
   min-width: 100px;
   height: 30px;
   border-radius: 20px;
+  text-decoration: none;
+  outline: none;
   /* color:#000000; */
 `;
 const PostHeadRight = styled.div`

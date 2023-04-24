@@ -1,6 +1,5 @@
-
-
 import { IRoutes } from "interfaces";
+import Chat from "views/Chat";
 import CreateBlog from "views/CreateBlog";
 import ForgotPassword from "views/ForgotPassword";
 import Home from "views/Home";
@@ -19,20 +18,21 @@ const RoutesA: IRoutes[] = [
     restricted: true,
   },
   {
-    path:"/post/:id",
-    element:<Post />,
-    restricted:true,
+    path: "/post/:id",
+    element: <Post />,
+    restricted: true,
   },
   {
-    path:"/forgotPassword",
-    element:<ForgotPassword/>,
-    restricted:false
+    path: "/forgotPassword",
+    element: <ForgotPassword />,
+    restricted: false,
   },
   {
-    path:"/forgot/reset",
-    element:<ResetPassword/>,
-    restricted:false
-  }
+    path: "/forgot/reset",
+    element: <ResetPassword />,
+    restricted: false,
+  },
+  { path: "/chat", element: <Chat />, restricted: true },
 ];
 
 export { RoutesA };

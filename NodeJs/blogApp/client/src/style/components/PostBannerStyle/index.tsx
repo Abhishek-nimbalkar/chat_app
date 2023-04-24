@@ -30,8 +30,8 @@ const BannerLeftConatinerButton = styled.button`
   color: #f6f6f6;
   font-size: 1.2vw;
   font-family: 'Delicious Handrawn', cursive;
-  min-width: 15vw;
-  height: 3.5vw;
+  /* min-width: 15vw; */
+  min-height: 2.5vw;
   border-radius: 2vw;
   margin-top: 2vw;
   padding: 0 2vw;

@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { LogOutButton, WriteButton } from "style/components/PostHeaderStyle";
 import {
   PostHeaderWrapper,
@@ -10,11 +11,15 @@ import {
 } from "style/components/SinglePostStyle/PostHeaderStyle";
 
 const SinglePostHeader = () => {
+  const nav=useNavigate();
+  const handleClick=()=>{
+    nav("/")
+  }
   return (
     <>
       <PostHeaderWrapper>
         <PostHeadLeft>
-          <PostHeadSvg>
+          <PostHeadSvg onClick={handleClick}>
             <svg viewBox="0 0 1043.63 592.71">
               <g data-name="Layer 2">
                 <g data-name="Layer 1">

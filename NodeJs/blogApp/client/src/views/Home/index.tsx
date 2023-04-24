@@ -64,8 +64,10 @@ const Home = () => {
   return (
     <>
       <PostBody>
-        <PostHeader />
-        <PostBanner />
+        <PostHeader />{
+          (localStorage.getItem("token"))?null:<PostBanner/>
+        }
+        
         <PostsWrapper>
           <InfiniteScroll
             dataLength={state.length}
