@@ -14,8 +14,33 @@ const io = new Server(httpServer, {
   },
 });
 
-io.on("connection", (socket) => {
+//MiddleWare
+io.use((socket: any, next) => {
+  const userName = socket.handshake.auth.userName;
+  if (!userName) {
+    return next(new Error("invalid userName"));
+  }
+  socket.userName = userName;
+  next();
+});
+
+io.on("connection", (socket: any) => {
   console.log(`🌪: ${socket.id} user just connected!`);
+
+  const users: any = [];
+  for (let [id, socket] of io.of("/").sockets as any) {
+    users.push({
+      userID: id,
+      username: socket?.userName,
+    });
+  }
+  socket.emit("users", users);
+
+  // notify existing users
+  socket.broadcast.emit("user connected", {
+    userID: socket.id,
+    username: socket.username,
+  });
 
   socket.on("disconnect", () => {
     console.log("🔥: A user disconnected");
