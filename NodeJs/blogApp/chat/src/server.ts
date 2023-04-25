@@ -15,6 +15,7 @@ const io = new Server(httpServer, {
 });
 
 //MiddleWare
+//On the server-side, we register a middleware which checks the username and allows the connection
 io.use((socket: any, next) => {
   const userName = socket.handshake.auth.userName;
   if (!userName) {
@@ -23,15 +24,19 @@ io.use((socket: any, next) => {
   socket.userName = userName;
   next();
 });
-
+// On Connection
 io.on("connection", (socket: any) => {
   console.log(`🌪: ${socket.id} user just connected!`);
 
   const users: any = [];
   for (let [id, socket] of io.of("/").sockets as any) {
+    console.log('for loop in server',socket.id)
     users.push({
       userID: id,
-      username: socket?.userName,
+      userName: socket.userName,
+      messages: [],
+      connected: null,
+      hasNewMessages: null,
     });
   }
   socket.emit("users", users);
@@ -39,7 +44,18 @@ io.on("connection", (socket: any) => {
   // notify existing users
   socket.broadcast.emit("user connected", {
     userID: socket.id,
-    username: socket.username,
+    username: socket.userName,
+  });
+  // Private message send to perticular message
+  socket.on("private message", ({ message, to }: any) => {
+    console.log("to ", to);
+    const fromId = socket.id;
+
+    socket.to(to).emit("private message", {
+      message,
+      from: fromId,
+    });
+    console.log("message send by", socket.id);
   });
 
   socket.on("disconnect", () => {

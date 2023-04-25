@@ -2,11 +2,20 @@ import styled from "styled-components";
 
 const ChatWrapper = styled.div`
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
   height: 90vh;
   width: 100%;
 `;
-const ChatUsers=styled.div`
+const ChatLeft = styled.div`
+  display: flex;
+  height: 100%;
+  width: 20%;
+  object-fit: cover;
 `;
-export {ChatWrapper}
+const ChatRight = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+`;
+export { ChatWrapper,ChatLeft, ChatRight };

@@ -2,33 +2,33 @@ import { ReactElement } from "react";
 import { Socket } from "socket.io-client";
 import { JsxElement } from "typescript";
 
-interface IRoutes{
-    path:string,
-    element:ReactElement,
-    restricted:boolean,
+interface IRoutes {
+  path: string;
+  element: ReactElement;
+  restricted: boolean;
 }
 interface ISignInForm {
-    email: string,
-    password: string,
-  };
-interface IForgot{
-  email:string
+  email: string;
+  password: string;
 }
-interface IForgotPass{
-  password:string
+interface IForgot {
+  email: string;
 }
-interface ISignUpForm{
-  email:string,
-  password:string,
-  phoneNumber:string,
-  userName:string
+interface IForgotPass {
+  password: string;
 }
- interface IApiData{
-  userId:string,
-  _id:any,
-  title:string,
-  body:string,
-  images:[string]
+interface ISignUpForm {
+  email: string;
+  password: string;
+  phoneNumber: string;
+  userName: string;
+}
+interface IApiData {
+  userId: string;
+  _id: any;
+  title: string;
+  body: string;
+  images: [string];
 }
 
 export interface IServerToClientEvents {
@@ -46,23 +46,38 @@ export interface IInterServerEvents {
 }
 
 export interface ISocket {
- socket:Socket
+  socket: Socket;
 }
 
-export interface IMessage{
-        text: string,
-        name: string,
-        id: string,
-        socketID: string,
+export interface IMessage {
+  text: string;
+  name: string;
+  id: string;
+  socketID: string;
 }
-export interface IUser{
-  userName:string,
-  socketID:string
+export interface IUser {
+  userName: string;
+  socketID: string;
 }
 // export type IUseRef = DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>
 
-export interface IUseRef{
-  current:HTMLDivElement|undefined|null
+export interface IUseRef {
+  current: HTMLDivElement | undefined | null;
+}
+export interface IChatUser {
+  connected: boolean;
+  hasNewMessages: boolean;
+  messages: Array<any>;
+  self: boolean;
+  userID: string;
+  userName: string;
 }
 
-export type {IRoutes,ISignInForm,ISignUpForm,IApiData,IForgot,IForgotPass}
+export type {
+  IRoutes,
+  ISignInForm,
+  ISignUpForm,
+  IApiData,
+  IForgot,
+  IForgotPass,
+};

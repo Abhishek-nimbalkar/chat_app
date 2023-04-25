@@ -1,9 +1,10 @@
+import { ISocket } from "interfaces";
 import React, { useEffect } from "react";
 
 
 
 
-const ChatBody = () => {
+const ChatBody = ({socket}:ISocket) => {
 
 
   const handleLeaveChat = () => {
