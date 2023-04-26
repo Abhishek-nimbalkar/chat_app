@@ -24,12 +24,15 @@ const ChatFooter = ({ socket, users, userSelected }: { socket:Socket, users:any,
       console.log("userSelected====", userSelected);
       console.log("users array in Chat Footer", users);
 
-      const toUsers = users?.filter((ele: any) => {
-        return ele.userName?.trim() === userSelected?.trim();
-        // setToUser(ele)
-      });
-      const toUser = toUsers[0];
-      console.log("toUser ===", toUser.userID.trim());
+      // const toUsers = users?.filter((ele: any) => {
+      //   return ele.userName?.trim() === userSelected?.trim();
+      //   // setToUser(ele)
+      // });
+
+      const toUser = users[userSelected.trim()];
+      // console.log("toUser=====",toUser);
+      
+      console.log("toUser id===", toUser.userID.trim());
       socket.emit("private message", {
         message,
         to: toUser.userID,

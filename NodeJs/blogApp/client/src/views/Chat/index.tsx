@@ -34,78 +34,91 @@ const Chat = () => {
   }, []);
 
   // console.log(userName);
-  if (userName) {
-    socket.auth = { userName };
-    socket.connect();
-  }
+  useEffect(() => {
+    if (userName) {
+      socket.auth = { userName };
+      socket.connect();
+    }
+  }, [userName]);
 
   // socket.on("connect_error", (err) => {
   //   if (err.message === "invalid username") {
   //     setAlredy(false);
   //   }
   // });
-
-  socket.on("users", (users) => {
-    users.forEach((user: any) => {
-      user.self = user.userID === socket.id;
-      // initReactiveProperties(user);
-    });
-
-    socket.on("user connected", (user) => {
-      // initReactiveProperties(user);
-      users.push(user);
-    });
-    // to listen any event
-    socket.onAny((event, ...args) => {
-      console.log(event, args);
-    });
-
-    setUsers(users);
-    console.log("users from server", users);
-  });
-  socket.on("connect", () => {
-    users?.forEach((user: any) => {
-      if (user.self) {
-        user.connected = true;
+  useEffect(() => {
+    socket.on("users", (users) => {
+      // console.log('users.length emited by server', users)
+      for (let i in users) {
+        users[i].self = users[i].userID === socket.id;
       }
-    });
-  });
+      setUsers(users);
 
-  socket.on("disconnect", () => {
-    users?.forEach((user: any) => {
-      if (user.self) {
-        user.connected = false;
-      }
+      socket.on("user connected", (user) => {
+        // initReactiveProperties(user);
+        users[user.userName] = {
+          userID: user.userID,
+          userName: user.userName,
+          messages: [],
+          connected: null,
+          hasNewMessages: null,
+        };
+      });
+      // to listen any event
+      socket.onAny((event, ...args) => {
+        console.log(event, args);
+      });
+
+      console.log("users from server", users);
     });
-  });
-  socket.on("private message", ({ message, from }) => {
-    // users.forEach((user: any) => {
-    //   if (user.userID.trim() === from.trim()) {
-    //     user.message.push({ message, fromSelf: false });
-    //     if (user.userName !== userSelected) {
-    //       user.hasNewMessages = true;
-    //     }
-    //     return;
-    //   }
-    // });
-    console.log("users are before",users);
-    
-    for (let i = 0; i < users?.length; i++) {
-      const user: any = users[i];
-      if (user?.userID?.trim() === from?.trim()) {
-        user.messages.push({
-          message,
-          fromSelf: false,
-        });
-        if (user.userName !== userSelected) {
-          user.hasNewMessages = true;
+    socket.on("connect", () => {
+      for (let i in users) {
+        if (users[i].self) {
+          users[i].connected = true;
         }
-        console.log(user);
-
-        break;
       }
-    }
-  });
+    });
+
+    socket.on("disconnect", () => {
+      for (let i in users) {
+        if (users[i].self) {
+          users[i].connected = false;
+        }
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    socket.on("private message", ({ message, from }) => {
+      // console.log(message, from);
+
+      // console.log("USERS ", users);
+
+      // console.log('from', from)
+
+      if (users) {
+        for (let i in users) {
+          // console.log("users in private for loop", users[i]);
+          // console.log("users ID", users[i].userName, "from ID", from);
+
+          if (users[i].userID === from) {
+            users[i].messages.push({
+              message,
+              fromSelf: false,
+            });
+            if (users[i].userName !== userSelected) {
+              users[i].hasNewMessages = true;
+            }
+
+            break;
+          }
+        }
+        console.log("users after updating message", users);
+      }
+
+      // console.log("users are after", users);
+    });
+  }, [userSelected, users]);
 
   return (
     <>
@@ -115,7 +128,7 @@ const Chat = () => {
         </ChatLeft>
 
         <ChatRight>
-          <ChatBody socket={socket} />
+          <ChatBody socket={socket} userSelected={userSelected} />
           <ChatFooter
             socket={socket}
             userSelected={userSelected}

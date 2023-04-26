@@ -1,23 +1,15 @@
 import { ISocket } from "interfaces";
 import React, { useEffect } from "react";
 
-
-
-
-const ChatBody = ({socket}:ISocket) => {
-
-
-  const handleLeaveChat = () => {
-    
-  };
-
+const ChatBody = ({ socket, userSelected }: any) => {
+  const handleLeaveChat = () => {};
 
   return (
     <>
-
       {/*This shows messages sent from you*/}
       <div className="message__container">
-      {/* {messages.map((message) =>
+        <h3>{userSelected}</h3>
+        {/* {messages.map((message) =>
           message.name === localStorage.getItem('userName') ? (
             <div className="message__chats" key={message.id}>
               <p className="sender__name">You</p>

@@ -28,23 +28,26 @@ io.use((socket: any, next) => {
 io.on("connection", (socket: any) => {
   console.log(`🌪: ${socket.id} user just connected!`);
 
-  const users: any = [];
+  const users: any = {};
   for (let [id, socket] of io.of("/").sockets as any) {
     console.log('for loop in server',socket.id)
-    users.push({
+    const user=socket.userName;
+    users[user]={
       userID: id,
       userName: socket.userName,
       messages: [],
       connected: null,
       hasNewMessages: null,
-    });
+    }
   }
+  // console.log(users);
+  
   socket.emit("users", users);
 
   // notify existing users
   socket.broadcast.emit("user connected", {
     userID: socket.id,
-    username: socket.userName,
+    userName: socket.userName,
   });
   // Private message send to perticular message
   socket.on("private message", ({ message, to }: any) => {
