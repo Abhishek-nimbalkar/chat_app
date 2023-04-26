@@ -36,8 +36,8 @@ io.on("connection", (socket: any) => {
       userID: id,
       userName: socket.userName,
       messages: [],
-      connected: null,
-      hasNewMessages: null,
+      connected: false,
+      hasNewMessages: false,
     }
   }
   // console.log(users);

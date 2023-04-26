@@ -15,6 +15,7 @@ const Chat = () => {
   const [users, setUsers] = useState<any>();
   const [userName, setUserName] = useState<any>();
   const [userSelected, setSelectUser] = useState<string>();
+  const[messageEvent,setMessageEvent]=useState<boolean>(false);
   // socket.on("connect_error", (err) => {
   //   if (err.message === "invalid username") {
   //     setAlredy(false);
@@ -60,12 +61,13 @@ const Chat = () => {
           userID: user.userID,
           userName: user.userName,
           messages: [],
-          connected: null,
-          hasNewMessages: null,
+          connected: false,
+          hasNewMessages: false,
         };
       });
       // to listen any event
       socket.onAny((event, ...args) => {
+        setMessageEvent(true)
         console.log(event, args);
       });
 
@@ -112,23 +114,25 @@ const Chat = () => {
 
             break;
           }
+          console.log("for loop of users in index.tsx");
+          
         }
         console.log("users after updating message", users);
       }
 
       // console.log("users are after", users);
     });
-  }, [userSelected, users]);
+  }, [users]);
 
   return (
     <>
       <ChatWrapper>
         <ChatLeft>
-          <ChatBar socket={socket} setSelectUser={setSelectUser} />
+          <ChatBar socket={socket} setSelectUser={setSelectUser} onlineUsers={users} messageEvent={messageEvent} setMessageEvent={setMessageEvent}/>
         </ChatLeft>
 
         <ChatRight>
-          <ChatBody socket={socket} userSelected={userSelected} />
+          <ChatBody socket={socket} userSelected={userSelected} users={users} />
           <ChatFooter
             socket={socket}
             userSelected={userSelected}

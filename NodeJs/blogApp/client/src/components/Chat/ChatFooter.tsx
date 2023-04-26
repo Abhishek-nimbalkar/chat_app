@@ -32,7 +32,7 @@ const ChatFooter = ({ socket, users, userSelected }: { socket:Socket, users:any,
       const toUser = users[userSelected.trim()];
       // console.log("toUser=====",toUser);
       
-      console.log("toUser id===", toUser.userID.trim());
+      console.log("toUser id===", toUser?.userID.trim());
       socket.emit("private message", {
         message,
         to: toUser.userID,
