@@ -6,8 +6,9 @@ const ChatBar = ({
   socket,
   setSelectUser,
   onlineUsers,
-  messageEvent,
-  setMessageEvent,
+  connect,
+  setConnect,
+
 }: any) => {
   const [users, setUser] = useState<Array<any>>([]);
 
@@ -16,10 +17,10 @@ const ChatBar = ({
       setUser(data);
     });
     console.log("Api callled in ChatBar");
-  }, []);
-useEffect(()=>{
+    setConnect(false)
 
-},[onlineUsers])
+  }, [connect, setConnect]);
+
 console.log("current online Users",onlineUsers);
 
 

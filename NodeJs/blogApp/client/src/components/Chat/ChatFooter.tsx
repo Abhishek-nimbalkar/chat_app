@@ -2,7 +2,7 @@ import { IChatUser, ISocket } from "interfaces";
 import React, { useState } from "react";
 import { Socket } from "socket.io-client";
 
-const ChatFooter = ({ socket, users, userSelected }: { socket:Socket, users:any, userSelected:any }) => {
+const ChatFooter = ({ socket, users, userSelected,messageEvent,setMessageEvent }: { socket:Socket, users:any, userSelected:any,messageEvent:any,setMessageEvent:any }) => {
   const [message, setMessage] = useState("");
 
   // console.log("userSelected", userSelected);
@@ -42,6 +42,7 @@ const ChatFooter = ({ socket, users, userSelected }: { socket:Socket, users:any,
         fromSelf: true,
       });
     }
+    setMessageEvent(true)
     setMessage("");
   };
   return (

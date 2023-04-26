@@ -1,7 +1,7 @@
 import { ISocket } from "interfaces";
 import React, { useEffect, useState } from "react";
 
-const ChatBody = ({ socket, userSelected, users }: any) => {
+const ChatBody = ({ socket, userSelected, users,messageEvent,setMessageEvent}: any) => {
   // const handleLeaveChat = () => {};
   const [messages, setMessages] = useState<any>();
   useEffect(() => {
@@ -14,7 +14,10 @@ const ChatBody = ({ socket, userSelected, users }: any) => {
 
       // console.log(messages,userSelected);
     }
-  },[userSelected, users]);
+    // console.log('messageEvent before', messageEvent)
+    setMessageEvent(false)
+    // console.log('messageEvent after', messageEvent)
+  },[userSelected, users, messageEvent, setMessageEvent]);
 
   return (
     <>

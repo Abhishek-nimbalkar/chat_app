@@ -15,7 +15,8 @@ const Chat = () => {
   const [users, setUsers] = useState<any>();
   const [userName, setUserName] = useState<any>();
   const [userSelected, setSelectUser] = useState<string>();
-  const[messageEvent,setMessageEvent]=useState<boolean>(false);
+  const [messageEvent, setMessageEvent] = useState<boolean>(false);
+  const [connect, setConnect] = useState<boolean>();
   // socket.on("connect_error", (err) => {
   //   if (err.message === "invalid username") {
   //     setAlredy(false);
@@ -64,40 +65,48 @@ const Chat = () => {
           connected: false,
           hasNewMessages: false,
         };
+        setConnect(true);
       });
+
       // to listen any event
       socket.onAny((event, ...args) => {
-        setMessageEvent(true)
         console.log(event, args);
       });
 
       console.log("users from server", users);
     });
-    socket.on("connect", () => {
-      for (let i in users) {
-        if (users[i].self) {
-          users[i].connected = true;
-        }
-      }
-    });
-
-    socket.on("disconnect", () => {
-      for (let i in users) {
-        if (users[i].self) {
-          users[i].connected = false;
-        }
-      }
-    });
+    
+    
   }, []);
+
+  // useEffect(()=>{
+  //   socket.on("connect", () => {
+  //     for (let i in users) {
+  //       if (users[i].self) {
+  //         users[i].connected = true;
+  //       }
+  //     }
+  //   });
+  
+  //   socket.on("disconnect", () => {
+  
+  //     for (let i in users) {
+  //       if (users[i].self) {         
+  //         users[i].connected = false;
+  //       }
+  //     }
+  //   });
+  // },[users])
+  
 
   useEffect(() => {
     socket.on("private message", ({ message, from }) => {
+      setMessageEvent(true);
       // console.log(message, from);
 
       // console.log("USERS ", users);
 
       // console.log('from', from)
-
       if (users) {
         for (let i in users) {
           // console.log("users in private for loop", users[i]);
@@ -115,7 +124,6 @@ const Chat = () => {
             break;
           }
           console.log("for loop of users in index.tsx");
-          
         }
         console.log("users after updating message", users);
       }
@@ -128,15 +136,32 @@ const Chat = () => {
     <>
       <ChatWrapper>
         <ChatLeft>
-          <ChatBar socket={socket} setSelectUser={setSelectUser} onlineUsers={users} messageEvent={messageEvent} setMessageEvent={setMessageEvent}/>
+          <ChatBar
+            socket={socket}
+            setSelectUser={setSelectUser}
+            onlineUsers={users}
+            messageEvent={messageEvent}
+            setMessageEvent={setMessageEvent}
+            connect={connect}
+            setConnect={setConnect}
+
+          />
         </ChatLeft>
 
         <ChatRight>
-          <ChatBody socket={socket} userSelected={userSelected} users={users} />
+          <ChatBody
+            socket={socket}
+            userSelected={userSelected}
+            users={users}
+            messageEvent={messageEvent}
+            setMessageEvent={setMessageEvent}
+          />
           <ChatFooter
             socket={socket}
             userSelected={userSelected}
             users={users}
+            messageEvent={messageEvent}
+            setMessageEvent={setMessageEvent}
           />
         </ChatRight>
       </ChatWrapper>

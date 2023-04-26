@@ -17,6 +17,17 @@ const io = new Server(httpServer, {
 //MiddleWare
 //On the server-side, we register a middleware which checks the username and allows the connection
 io.use((socket: any, next) => {
+  const sessionID = socket.handshake.auth.sessionID;
+  if (sessionID) {
+    const session = sessionStorage.findSession(sessionID);
+    if (session) {
+      socket.sessionID = sessionID;
+      socket.userID = session.userID;
+      socket.username = session.username;
+      return next();
+    }
+  }
+
   const userName = socket.handshake.auth.userName;
   if (!userName) {
     return next(new Error("invalid userName"));
@@ -24,24 +35,25 @@ io.use((socket: any, next) => {
   socket.userName = userName;
   next();
 });
+
 // On Connection
 io.on("connection", (socket: any) => {
   console.log(`🌪: ${socket.id} user just connected!`);
 
   const users: any = {};
   for (let [id, socket] of io.of("/").sockets as any) {
-    console.log('for loop in server',socket.id)
-    const user=socket.userName;
-    users[user]={
+    console.log("for loop in server", socket.id);
+    const user = socket.userName;
+    users[user] = {
       userID: id,
       userName: socket.userName,
       messages: [],
       connected: false,
       hasNewMessages: false,
-    }
+    };
   }
   // console.log(users);
-  
+
   socket.emit("users", users);
 
   // notify existing users
