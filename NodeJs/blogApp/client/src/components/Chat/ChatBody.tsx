@@ -24,19 +24,19 @@ const ChatBody = ({ socket, userSelected, users,messageEvent,setMessageEvent}: a
       {/*This shows messages sent from you*/}
       <div className="message__container">
         <h3>{userSelected}</h3>
-        {messages?.map((message: any) =>
+        {messages?.map((message: any,key:number) =>
           message.fromSelf ? (
-            <div className="message__chats" key={message.id}>
+            <div className="message__chats" key={key}>
               <p className="sender__name">You</p>
               <div className="message__sender">
-                <p>{message.message}</p>
+                <p >{message.message}</p>
               </div>
             </div>
           ) : (
-            <div className="message__chats" key={message.id}>
+            <div className="message__chats" key={key}>
               <p>{userSelected}</p>
               <div className="message__recipient">
-                <p>{message.message}</p>
+                <p key={key}>{message.message}</p>
               </div>
             </div>
           )

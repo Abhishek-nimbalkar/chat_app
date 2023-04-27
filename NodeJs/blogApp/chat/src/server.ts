@@ -2,6 +2,7 @@ import express, { Request, Response } from "express";
 import { createServer } from "http";
 import { Server } from "socket.io";
 import cors from "cors";
+import {middlewareController} from "./controller/middlewareCont"
 
 const app = express();
 
@@ -16,25 +17,7 @@ const io = new Server(httpServer, {
 
 //MiddleWare
 //On the server-side, we register a middleware which checks the username and allows the connection
-io.use((socket: any, next) => {
-  const sessionID = socket.handshake.auth.sessionID;
-  if (sessionID) {
-    const session = sessionStorage.findSession(sessionID);
-    if (session) {
-      socket.sessionID = sessionID;
-      socket.userID = session.userID;
-      socket.username = session.username;
-      return next();
-    }
-  }
-
-  const userName = socket.handshake.auth.userName;
-  if (!userName) {
-    return next(new Error("invalid userName"));
-  }
-  socket.userName = userName;
-  next();
-});
+io.use(middlewareController);
 
 // On Connection
 io.on("connection", (socket: any) => {

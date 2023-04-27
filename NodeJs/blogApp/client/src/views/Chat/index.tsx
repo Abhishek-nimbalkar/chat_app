@@ -8,7 +8,7 @@ import ChatBody from "components/Chat/ChatBody";
 import jwt_decode from "jwt-decode";
 import ChatFooter from "components/Chat/ChatFooter";
 
-const socket: Socket = io("http://localhost:5001", { autoConnect: false });
+const socket: any = io("http://localhost:5001", { autoConnect: false });
 
 const Chat = () => {
   // const [usernameAlreadySelected, setAlredy] = useState(true);
@@ -17,6 +17,7 @@ const Chat = () => {
   const [userSelected, setSelectUser] = useState<string>();
   const [messageEvent, setMessageEvent] = useState<boolean>(false);
   const [connect, setConnect] = useState<boolean>();
+  const [disconnect, setDisconnect] = useState<boolean>(false);
   // socket.on("connect_error", (err) => {
   //   if (err.message === "invalid username") {
   //     setAlredy(false);
@@ -24,12 +25,13 @@ const Chat = () => {
   // });
 
   const token: any = localStorage.getItem("token");
-  var decoded: any = jwt_decode(token);
+  const decoded: any = jwt_decode(token);
 
   useEffect(() => {
     getUser("/users/getUser/" + decoded?.emailId).then((data) => {
       setUserName(data.user.userName);
     });
+
     return () => {
       socket.off("connect_error");
     };
@@ -41,6 +43,7 @@ const Chat = () => {
       socket.auth = { userName };
       socket.connect();
     }
+
   }, [userName]);
 
   // socket.on("connect_error", (err) => {
@@ -48,36 +51,49 @@ const Chat = () => {
   //     setAlredy(false);
   //   }
   // });
+  const initReactiveProperties = (user: any) => {
+    user.connected = true;
+    user.messages = [];
+    user.hasNewMessages = false;
+  };
   useEffect(() => {
-    socket.on("users", (users) => {
+    socket.on("users", (users:any) => {
       // console.log('users.length emited by server', users)
       for (let i in users) {
         users[i].self = users[i].userID === socket.id;
+        initReactiveProperties(users[i]);
       }
       setUsers(users);
 
-      socket.on("user connected", (user) => {
-        // initReactiveProperties(user);
-        users[user.userName] = {
-          userID: user.userID,
-          userName: user.userName,
-          messages: [],
-          connected: false,
-          hasNewMessages: false,
-        };
+      socket.on("user connected", (user:any) => {
+        initReactiveProperties(user);
+        // console.log('User On Connect', user)
+
+        users[user.userName] = user;
+        //   userID: user.userID,
+        //   userName: user.userName,
+        //   messages: [],
+        //   connected: true,
+        //   hasNewMessages: false,
+        // };
         setConnect(true);
       });
 
       // to listen any event
-      socket.onAny((event, ...args) => {
+      socket.onAny((event:any, ...args:any) => {
         console.log(event, args);
       });
 
       console.log("users from server", users);
     });
-    
-    
+ 
   }, []);
+
+  //For Listning user Disconnected
+
+  // socket.on("user Disconnected",()=>{
+  //   setDisconnect(true);
+  // })
 
   // useEffect(()=>{
   //   socket.on("connect", () => {
@@ -87,20 +103,19 @@ const Chat = () => {
   //       }
   //     }
   //   });
-  
+
   //   socket.on("disconnect", () => {
-  
+
   //     for (let i in users) {
-  //       if (users[i].self) {         
+  //       if (users[i].self) {
   //         users[i].connected = false;
   //       }
   //     }
   //   });
   // },[users])
-  
 
   useEffect(() => {
-    socket.on("private message", ({ message, from }) => {
+    socket.on("private message", ({ message, from }:any) => {
       setMessageEvent(true);
       // console.log(message, from);
 
@@ -123,7 +138,7 @@ const Chat = () => {
 
             break;
           }
-          console.log("for loop of users in index.tsx");
+          // console.log("for loop of users in index.tsx");
         }
         console.log("users after updating message", users);
       }
@@ -144,7 +159,8 @@ const Chat = () => {
             setMessageEvent={setMessageEvent}
             connect={connect}
             setConnect={setConnect}
-
+            disconnect={disconnect}
+            setDisconnect={setDisconnect}
           />
         </ChatLeft>
 
