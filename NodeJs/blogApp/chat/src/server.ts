@@ -2,7 +2,10 @@ import express, { Request, Response } from "express";
 import { createServer } from "http";
 import { Server } from "socket.io";
 import cors from "cors";
-import { middlewareController } from "./controller/middlewareCont";
+import {
+  middlewareController,
+  sessionStore,
+} from "./controller/middlewareCont";
 
 const app = express();
 
@@ -22,22 +25,64 @@ io.use(middlewareController);
 // On Connection
 io.on("connection", (socket: any) => {
   console.log(`🌪: ${socket.id} user just connected!`);
+  console.log("Current Session on server Before", sessionStore.sessions);
+  // persist session
+  sessionStore.saveSession(socket.sessionID, {
+    userID: socket.userID,
+    userName: socket.userName,
+    connected: true,
+  });
+  console.log(
+    "Current Session on server After new user",
+    sessionStore.sessions
+  );
+  // emit session details
   socket.emit("session", {
     sessionID: socket.sessionID,
     userID: socket.userID,
   });
+  socket.join(socket.userID);
   const users: any = {};
-  for (let [id, socket] of io.of("/").sockets as any) {
-    console.log("for loop in server", socket.id);
-    const user = socket.userName;
-    users[user] = {
-      userID: id,
-      userName: socket.userName,
-      messages: [],
-      connected: false,
-      hasNewMessages: false,
-    };
+  const UsersOnServer=sessionStore.sessions;
+  // console.log("UsersOnServer",UsersOnServer);
+
+  
+UsersOnServer?.forEach((session:any)=>{
+  const user=session.userName;
+  // console.log(user);
+  users[user]={
+    userID:session.userID,
+    userName:session.userName,
+    connected:session.connected
   }
+  // users[(session.userName).trim()]={
+  //   userID:socket.userID,
+  //   // userName:socket.userName,
+  //   // messages:[],
+  //   // connected:false,
+  //   // hasNewMessages: false
+  // }
+  // users[session.userName]={
+  //   userID:socket.userID,
+  //   userName:socket.userName,
+  //   messages:[],
+  //   connected:false,
+  //   hasNewMessages: false,
+  // };
+})
+console.log("users on Server",users);
+
+  // for (let [id, socket] of io.of("/").sockets as any) {
+  //   console.log("for loop in server", socket.sessionID);
+  //   const user = socket.userName;
+  //   users[user] = {
+  //     userID: id,
+  //     userName: socket.userName,
+  //     messages: [],
+  //     connected: false,
+  //     hasNewMessages: false,
+  //   };
+  // }
   // console.log(users);
 
   socket.emit("users", users);
@@ -49,19 +94,20 @@ io.on("connection", (socket: any) => {
   });
   // Private message send to perticular message
   socket.on("private message", ({ message, to }: any) => {
-    console.log("to ", to);
-    const fromId = socket.id;
-
-    socket.to(to).emit("private message", {
+    const fromId = socket.userID;
+    console.log("fromID======", fromId, "to======", to);
+    socket.to(to).to(socket.userID).emit("private message", {
       message,
       from: fromId,
+      to,
     });
     console.log("message send by", socket.id);
   });
 
-  socket.on("disconnect", () => {
+  socket.on("disconnect", async() => {
+    const matchingSockets=await io.in(socket.userID).allSockets()
     console.log("🔥: A user disconnected");
-    socket.disconnect();
+    
   });
 });
 

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import io, { Socket } from "socket.io-client";
 import { ChatLeft, ChatRight, ChatWrapper } from "style/components/ChatStyle";
 import getUser from "utils/getUser";
-import useGetData from "hooks";
 import ChatBar from "components/Chat/ChatBar";
 import ChatBody from "components/Chat/ChatBody";
 import jwt_decode from "jwt-decode";
@@ -41,15 +40,24 @@ const Chat = () => {
   useEffect(() => {
     if (userName) {
       const sessionID = localStorage.getItem("sessionID");
+      // console.log("Session ID get form Local Storage",sessionID)
 
       if (sessionID) {
         // usernameAlreadySelected = true;
         socket.auth = { sessionID };
+        console.log("socket.auth=============",socket.auth);
+        
+        // console.log("Session ID alredy Existed");
+        
         socket.connect();
+      }else{
+         socket.auth = { userName };
+      socket.connect();
       }
+     
     }
     socket.on("session", ({ sessionID, userID }: any) => {
-      console.log("user session ",{sessionID,userID});
+      console.log("user session who just connected ",{sessionID,userID});
       
       // attach the session ID to the next reconnection attempts
       socket.auth = { sessionID };
@@ -134,7 +142,7 @@ const Chat = () => {
   // },[users])
 
   useEffect(() => {
-    socket.on("private message", ({ message, from }: any) => {
+    socket.on("private message", ({ message, from ,to}: any) => {
       setMessageEvent(true);
       // console.log(message, from);
 
@@ -145,11 +153,11 @@ const Chat = () => {
         for (let i in users) {
           // console.log("users in private for loop", users[i]);
           // console.log("users ID", users[i].userName, "from ID", from);
-
-          if (users[i].userID === from) {
+          const formSelf=socket.userID===from;
+          if (users[i].userID === (formSelf?to:from)) {
             users[i].messages.push({
               message,
-              fromSelf: false,
+              formSelf
             });
             if (users[i].userName !== userSelected) {
               users[i].hasNewMessages = true;
