@@ -2,7 +2,7 @@ import express, { Request, Response } from "express";
 import { createServer } from "http";
 import { Server } from "socket.io";
 import cors from "cors";
-import {middlewareController} from "./controller/middlewareCont"
+import { middlewareController } from "./controller/middlewareCont";
 
 const app = express();
 
@@ -22,7 +22,10 @@ io.use(middlewareController);
 // On Connection
 io.on("connection", (socket: any) => {
   console.log(`🌪: ${socket.id} user just connected!`);
-
+  socket.emit("session", {
+    sessionID: socket.sessionID,
+    userID: socket.userID,
+  });
   const users: any = {};
   for (let [id, socket] of io.of("/").sockets as any) {
     console.log("for loop in server", socket.id);

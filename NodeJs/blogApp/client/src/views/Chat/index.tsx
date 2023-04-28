@@ -40,10 +40,24 @@ const Chat = () => {
   // console.log(userName);
   useEffect(() => {
     if (userName) {
-      socket.auth = { userName };
-      socket.connect();
-    }
+      const sessionID = localStorage.getItem("sessionID");
 
+      if (sessionID) {
+        // usernameAlreadySelected = true;
+        socket.auth = { sessionID };
+        socket.connect();
+      }
+    }
+    socket.on("session", ({ sessionID, userID }: any) => {
+      console.log("user session ",{sessionID,userID});
+      
+      // attach the session ID to the next reconnection attempts
+      socket.auth = { sessionID };
+      // store it in the localStorage
+      localStorage.setItem("sessionID", sessionID);
+      // save the ID of the user
+      socket.userID = userID;
+    });
   }, [userName]);
 
   // socket.on("connect_error", (err) => {
@@ -57,18 +71,23 @@ const Chat = () => {
     user.hasNewMessages = false;
   };
   useEffect(() => {
-    socket.on("users", (users:any) => {
+    socket.on("users", (users: any) => {
       // console.log('users.length emited by server', users)
       for (let i in users) {
-        users[i].self = users[i].userID === socket.id;
+        users[i].self = users[i].userID === socket.userID;
         initReactiveProperties(users[i]);
       }
       setUsers(users);
 
-      socket.on("user connected", (user:any) => {
+      socket.on("user connected", (user: any) => {
+        for (let i in users) {
+          const existingUser = users[i];
+          if (existingUser.userID === user.userID) {
+            existingUser.connected = true;
+            return;
+          }
+        }
         initReactiveProperties(user);
-        // console.log('User On Connect', user)
-
         users[user.userName] = user;
         //   userID: user.userID,
         //   userName: user.userName,
@@ -76,17 +95,17 @@ const Chat = () => {
         //   connected: true,
         //   hasNewMessages: false,
         // };
+
         setConnect(true);
       });
 
       // to listen any event
-      socket.onAny((event:any, ...args:any) => {
+      socket.onAny((event: any, ...args: any) => {
         console.log(event, args);
       });
 
       console.log("users from server", users);
     });
- 
   }, []);
 
   //For Listning user Disconnected
@@ -115,7 +134,7 @@ const Chat = () => {
   // },[users])
 
   useEffect(() => {
-    socket.on("private message", ({ message, from }:any) => {
+    socket.on("private message", ({ message, from }: any) => {
       setMessageEvent(true);
       // console.log(message, from);
 

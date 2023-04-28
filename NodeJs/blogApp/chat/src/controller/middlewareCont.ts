@@ -1,12 +1,17 @@
 import crypto from "crypto"
-import { findSession } from "../session";
+import { InMemorySessionStore } from "../session";
 const randomId = () => crypto.randomBytes(8).toString("hex");
 
+const sessionStore = new InMemorySessionStore();
 
 const middlewareController=(socket: any, next:any) => {
     const sessionID = socket.handshake.auth.sessionID;
+    console.log("sessionID of user connected==",sessionID);
+    
     if (sessionID) {
-      const session = findSession(sessionID);
+      const session = sessionStore.findSession(sessionID);
+      console.log(!session===undefined);
+      
       if (session) {
         socket.sessionID = sessionID;
         socket.userID = session.userID;

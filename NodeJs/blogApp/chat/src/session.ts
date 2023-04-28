@@ -1,15 +1,27 @@
-
-const sessions=new Map();
-
-const findSession=(id:any)=>{
-    return sessions.get(id);
+/* abstract */ class SessionStore {
+  findSession(id:string) {}
+  saveSession(id:string, session:string) {}
+  findAllSessions() {}
+  sessions:any
 }
-const saveSession=(id:any, session:any)=> {
-    sessions.set(id, session);
+
+class InMemorySessionStore extends SessionStore {
+  constructor() {
+    super();
+    this.sessions = new Map();
   }
 
-const findAllSessions=()=>{
-    return [...sessions.values()];
+  findSession(id:string) {
+    return this.sessions.get(id);
   }
 
-  export{findAllSessions,findSession,saveSession}
+  saveSession(id:string, session:string) {
+    this.sessions.set(id, session);
+  }
+
+  findAllSessions() {
+    return [...this.sessions.values()];
+  }
+}
+
+export {InMemorySessionStore}
