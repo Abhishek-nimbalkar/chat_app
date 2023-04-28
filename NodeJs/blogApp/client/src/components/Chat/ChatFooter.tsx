@@ -2,7 +2,19 @@ import { IChatUser, ISocket } from "interfaces";
 import React, { useState } from "react";
 import { Socket } from "socket.io-client";
 
-const ChatFooter = ({ socket, users, userSelected,messageEvent,setMessageEvent }: { socket:Socket, users:any, userSelected:any,messageEvent:any,setMessageEvent:any }) => {
+const ChatFooter = ({
+  socket,
+  users,
+  userSelected,
+  messageEvent,
+  setMessageEvent,
+}: {
+  socket: Socket;
+  users: any;
+  userSelected: any;
+  messageEvent: any;
+  setMessageEvent: any;
+}) => {
   const [message, setMessage] = useState("");
 
   // console.log("userSelected", userSelected);
@@ -30,9 +42,9 @@ const ChatFooter = ({ socket, users, userSelected,messageEvent,setMessageEvent }
       // });
 
       const toUser = users[userSelected.trim()];
-      // console.log("toUser=====",toUser);
-      
-      console.log("toUser id===", toUser?.userID.trim());
+      console.log("toUser=====",toUser);
+
+      console.log("toUser id===", toUser?.userID.trim().userID);
       socket.emit("private message", {
         message,
         to: toUser.userID,
@@ -42,7 +54,7 @@ const ChatFooter = ({ socket, users, userSelected,messageEvent,setMessageEvent }
         fromSelf: true,
       });
     }
-    setMessageEvent(true)
+    setMessageEvent(true);
     setMessage("");
   };
   return (

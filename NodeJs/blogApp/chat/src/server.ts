@@ -89,7 +89,7 @@ console.log("users on Server",users);
 
   // notify existing users
   socket.broadcast.emit("user connected", {
-    userID: socket.id,
+    userID: socket.userID,
     userName: socket.userName,
   });
   // Private message send to perticular message
@@ -101,11 +101,27 @@ console.log("users on Server",users);
       from: fromId,
       to,
     });
-    console.log("message send by", socket.id);
+    // console.log("message send by", socket.id);
   });
 
   socket.on("disconnect", async() => {
-    const matchingSockets=await io.in(socket.userID).allSockets()
+    const matchingSockets=await io.in(socket.userID).allSockets();
+    const isDisconnected = matchingSockets.size === 0;
+    if (isDisconnected) {
+      // notify other users
+      socket.broadcast.emit("user disconnected", socket.userID);
+      console.log("user discoonected === ",socket.userID);
+      
+      // update the connection status of the session
+      sessionStore.saveSession(socket.sessionID, {
+        userID: socket.userID,
+        userName: socket.userName,
+        connected: false,
+      });
+      
+    }
+    // socket.emit("users", users);
+    console.log("users on Server after disconnected",sessionStore.sessions);
     console.log("🔥: A user disconnected");
     
   });

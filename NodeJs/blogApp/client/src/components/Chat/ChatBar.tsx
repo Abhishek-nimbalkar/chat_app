@@ -8,7 +8,8 @@ const ChatBar = ({
   onlineUsers,
   connect,
   setConnect,
-
+  disconnect,
+  setDisconnect
 }: any) => {
   const [users, setUser] = useState<Array<any>>([]);
 
@@ -17,12 +18,11 @@ const ChatBar = ({
       setUser(data);
     });
     console.log("Api callled in ChatBar");
-    setConnect(false)
+    setConnect(false);
+    setDisconnect(false)
+  }, [connect,disconnect]);
 
-  }, [connect, setConnect]);
-
-console.log("current online Users",onlineUsers);
-
+  console.log("current online Users", onlineUsers);
 
   // console.log(users);
   const handleClick = (e: any) => {
@@ -52,16 +52,18 @@ console.log("current online Users",onlineUsers);
                 // (OnlineUsers[user.userName])? <i className="fa-solid fa-globe"></i>:null
                 onlineUsers ? (
                   onlineUsers[user.userName.trim()] !== undefined ? (
-                    <i
-                      key={Math.random() * 1000}
-                      className="fa-solid fa-globe"
-                    ></i>
-                  ) : (
-                    <i
-                      key={Math.random() * 1000}
-                      className="fa-regular fa-square-xmark"
-                    ></i>
-                  )
+                    onlineUsers[user.userName.trim()].connected === true ? (
+                      <i
+                        key={Math.random() * 1000}
+                        className="fa-solid fa-globe"
+                      ></i>
+                    ) : (
+                      <i
+                        key={Math.random() * 1000}
+                        className="fa-regular fa-square-xmark"
+                      ></i>
+                    )
+                  ) : null
                 ) : null
               }
             </>

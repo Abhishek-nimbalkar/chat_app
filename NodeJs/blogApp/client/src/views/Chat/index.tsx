@@ -45,20 +45,19 @@ const Chat = () => {
       if (sessionID) {
         // usernameAlreadySelected = true;
         socket.auth = { sessionID };
-        console.log("socket.auth=============",socket.auth);
-        
+        console.log("socket.auth=============", socket.auth);
+
         // console.log("Session ID alredy Existed");
-        
+
         socket.connect();
-      }else{
-         socket.auth = { userName };
-      socket.connect();
+      } else {
+        socket.auth = { userName };
+        socket.connect();
       }
-     
     }
     socket.on("session", ({ sessionID, userID }: any) => {
-      console.log("user session who just connected ",{sessionID,userID});
-      
+      console.log("user session who just connected ", { sessionID, userID });
+
       // attach the session ID to the next reconnection attempts
       socket.auth = { sessionID };
       // store it in the localStorage
@@ -88,10 +87,13 @@ const Chat = () => {
       setUsers(users);
 
       socket.on("user connected", (user: any) => {
+        console.log('users on connecting if existed', users)
         for (let i in users) {
           const existingUser = users[i];
           if (existingUser.userID === user.userID) {
+            console.log('users on connecting if existed', users)
             existingUser.connected = true;
+            setConnect(true);
             return;
           }
         }
@@ -103,8 +105,21 @@ const Chat = () => {
         //   connected: true,
         //   hasNewMessages: false,
         // };
-
+        // console.log("for return , usere dont exist");
+        
         setConnect(true);
+      });
+
+      // For Listning user Disconnected
+
+      socket.on("user disconnected", (user:any) => {
+        for (let i in users) {
+          if (users[i].userID===user) {
+            users[i].connected = false;
+          }
+        }
+        console.log("users after disconnected from server", users);
+        setDisconnect(true);
       });
 
       // to listen any event
@@ -112,15 +127,9 @@ const Chat = () => {
         console.log(event, args);
       });
 
-      console.log("users from server", users);
+      // console.log("users from server", users);
     });
   }, []);
-
-  //For Listning user Disconnected
-
-  // socket.on("user Disconnected",()=>{
-  //   setDisconnect(true);
-  // })
 
   // useEffect(()=>{
   //   socket.on("connect", () => {
@@ -139,10 +148,11 @@ const Chat = () => {
   //       }
   //     }
   //   });
-  // },[users])
+
+  // },[])
 
   useEffect(() => {
-    socket.on("private message", ({ message, from ,to}: any) => {
+    socket.on("private message", ({ message, from, to }: any) => {
       setMessageEvent(true);
       // console.log(message, from);
 
@@ -153,16 +163,15 @@ const Chat = () => {
         for (let i in users) {
           // console.log("users in private for loop", users[i]);
           // console.log("users ID", users[i].userName, "from ID", from);
-          const formSelf=socket.userID===from;
-          if (users[i].userID === (formSelf?to:from)) {
+          const formSelf = socket.userID === from;
+          if (users[i].userID === (formSelf ? to : from)) {
             users[i].messages.push({
               message,
-              formSelf
+              formSelf,
             });
             if (users[i].userName !== userSelected) {
               users[i].hasNewMessages = true;
             }
-
             break;
           }
           // console.log("for loop of users in index.tsx");
