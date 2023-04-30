@@ -8,12 +8,14 @@ const ChatFooter = ({
   userSelected,
   messageEvent,
   setMessageEvent,
+
 }: {
   socket: Socket;
   users: any;
   userSelected: any;
   messageEvent: any;
   setMessageEvent: any;
+
 }) => {
   const [message, setMessage] = useState("");
 

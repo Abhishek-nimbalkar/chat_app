@@ -1,8 +1,10 @@
 import crypto from "crypto";
-import { InMemorySessionStore } from "../session";
+import { InMemorySessionStore } from "../store/session";
+import { InMemoryMessageStore } from "../store/message";
 const randomId = () => crypto.randomBytes(8).toString("hex");
 
 export const sessionStore = new InMemorySessionStore();
+export const messageStore = new InMemoryMessageStore();
 
 const middlewareController = (socket: any, next: any) => {
   const sessionID = socket.handshake.auth.sessionID;

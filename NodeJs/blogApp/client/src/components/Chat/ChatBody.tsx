@@ -23,7 +23,7 @@ const ChatBody = ({ socket, userSelected, users,messageEvent,setMessageEvent}: a
     <>
       {/*This shows messages sent from you*/}
       <div className="message__container">
-        <h3>{userSelected}</h3>
+        <h3 style={{position:"fixed",background:"white",width:"60%"}}>{userSelected}</h3>
         {messages?.map((message: any,key:number) =>
           message.fromSelf ? (
             <div className="message__chats" key={key}>

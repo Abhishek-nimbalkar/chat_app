@@ -1,15 +1,19 @@
+import { log } from "console";
 import { ISocket } from "interfaces";
 import React, { useEffect, useState } from "react";
 import getUser from "utils/getUser";
 
 const ChatBar = ({
   socket,
+  userSelected,
   setSelectUser,
   onlineUsers,
   connect,
   setConnect,
   disconnect,
-  setDisconnect
+  setDisconnect,
+  newMessage,
+  setNewMessage,
 }: any) => {
   const [users, setUser] = useState<Array<any>>([]);
 
@@ -19,15 +23,21 @@ const ChatBar = ({
     });
     console.log("Api callled in ChatBar");
     setConnect(false);
-    setDisconnect(false)
-  }, [connect,disconnect]);
+    setDisconnect(false);
+    setNewMessage(false);
+  }, [connect, disconnect, newMessage]);
 
   console.log("current online Users", onlineUsers);
 
   // console.log(users);
   const handleClick = (e: any) => {
-    setSelectUser(e.target.textContent);
     // console.log(e.target.textContent);
+
+    setSelectUser(e.target.textContent);
+    const user = e.target.textContent;
+    if (onlineUsers[user.trim()]) {
+      onlineUsers[user.trim()].hasNewMessages = false;
+    }
   };
 
   // if(onlineUsers){
@@ -66,6 +76,21 @@ const ChatBar = ({
                   ) : null
                 ) : null
               }
+              {onlineUsers ? (
+                onlineUsers[user.userName.trim()] !== undefined ? (
+                  onlineUsers[user.userName.trim()].hasNewMessages === true &&
+                  onlineUsers[user.userName.trim()].userName  !== userSelected ? (
+                    // console.log(
+                    //   "userSelceted========================== ",
+                    //   onlineUsers[user.userName.trim()].userName  !== userSelected
+                    // ),
+                    // <i  key={Math.random() * 1000} className="fa-solid fa-message-exclamation"></i>
+                    <p>📫 </p>
+                  ) : null
+                ) : null
+              ) : null}
+              <br />
+              <hr />
             </>
           ))}
         </div>

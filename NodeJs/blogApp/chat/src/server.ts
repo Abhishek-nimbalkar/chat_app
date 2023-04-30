@@ -5,6 +5,7 @@ import cors from "cors";
 import {
   middlewareController,
   sessionStore,
+  messageStore,
 } from "./controller/middlewareCont";
 
 const app = express();
@@ -25,7 +26,7 @@ io.use(middlewareController);
 // On Connection
 io.on("connection", (socket: any) => {
   console.log(`🌪: ${socket.id} user just connected!`);
-  console.log("Current Session on server Before", sessionStore.sessions);
+  // console.log("Current Session on server Before", sessionStore.sessions);
   // persist session
   sessionStore.saveSession(socket.sessionID, {
     userID: socket.userID,
@@ -42,7 +43,19 @@ io.on("connection", (socket: any) => {
     userID: socket.userID,
   });
   socket.join(socket.userID);
+  //fetching existing users on server
   const users: any = {};
+  const messagesPerUser = new Map();
+  messageStore.findMessagesForUser(socket.userID).forEach((message:any) => {
+    const { from, to } = message;
+    const otherUser = socket.userID === from ? to : from;
+    if (messagesPerUser.has(otherUser)) {
+      messagesPerUser.get(otherUser).push(message);
+    } else {
+      messagesPerUser.set(otherUser, [message]);
+    }
+  });
+
   const UsersOnServer=sessionStore.sessions;
   // console.log("UsersOnServer",UsersOnServer);
 
@@ -53,7 +66,8 @@ UsersOnServer?.forEach((session:any)=>{
   users[user]={
     userID:session.userID,
     userName:session.userName,
-    connected:session.connected
+    connected:session.connected,
+    messages: messagesPerUser.get(session.userID) || [],
   }
   // users[(session.userName).trim()]={
   //   userID:socket.userID,
@@ -71,6 +85,7 @@ UsersOnServer?.forEach((session:any)=>{
   // };
 })
 console.log("users on Server",users);
+
 
   // for (let [id, socket] of io.of("/").sockets as any) {
   //   console.log("for loop in server", socket.sessionID);
@@ -91,16 +106,20 @@ console.log("users on Server",users);
   socket.broadcast.emit("user connected", {
     userID: socket.userID,
     userName: socket.userName,
+    messages: [],
   });
   // Private message send to perticular message
   socket.on("private message", ({ message, to }: any) => {
     const fromId = socket.userID;
     console.log("fromID======", fromId, "to======", to);
-    socket.to(to).to(socket.userID).emit("private message", {
+    const newMessage = {
       message,
-      from: fromId,
+      from: socket.userID,
       to,
-    });
+    };
+    socket.to(to).to(socket.userID).emit("private message", newMessage);
+    messageStore.saveMessage(newMessage);
+    // console.log("users message on server",messageStore.messages)
     // console.log("message send by", socket.id);
   });
 
@@ -121,7 +140,7 @@ console.log("users on Server",users);
       
     }
     // socket.emit("users", users);
-    console.log("users on Server after disconnected",sessionStore.sessions);
+    // console.log("users on Server after disconnected",sessionStore.sessions);
     console.log("🔥: A user disconnected");
     
   });
