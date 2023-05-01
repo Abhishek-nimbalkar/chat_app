@@ -1,4 +1,5 @@
 import express, { Request, Response } from "express";
+import path from "path";
 import { createServer } from "http";
 import { Server } from "socket.io";
 import cors from "cors";
@@ -7,16 +8,24 @@ import {
   sessionStore,
   messageStore,
 } from "./controller/middlewareCont";
+import dotenv from "dotenv";
+import {Redis} from "ioredis"
+// import { createClient } from 'redis';
+import { setupWorker } from "@socket.io/sticky";
+dotenv.config({path: path.resolve(process.cwd(), `../.env`) });
 
 const app = express();
 
 app.use(cors());
 const httpServer = createServer(app);
-const io = new Server(httpServer, {
+// Redis Client 
+// const RedisClient=new Redis();
+const io:Server = new Server(httpServer, {
   cors: {
     origin: "*",
     methods: ["GET", "POST"],
   },
+
 });
 
 //MiddleWare
@@ -46,7 +55,7 @@ io.on("connection", (socket: any) => {
   //fetching existing users on server
   const users: any = {};
   const messagesPerUser = new Map();
-  messageStore.findMessagesForUser(socket.userID).forEach((message:any) => {
+  messageStore.findMessagesForUser(socket.userID).forEach((message: any) => {
     const { from, to } = message;
     const otherUser = socket.userID === from ? to : from;
     if (messagesPerUser.has(otherUser)) {
@@ -56,36 +65,34 @@ io.on("connection", (socket: any) => {
     }
   });
 
-  const UsersOnServer=sessionStore.sessions;
+  const UsersOnServer = sessionStore.sessions;
   // console.log("UsersOnServer",UsersOnServer);
 
-  
-UsersOnServer?.forEach((session:any)=>{
-  const user=session.userName;
-  // console.log(user);
-  users[user]={
-    userID:session.userID,
-    userName:session.userName,
-    connected:session.connected,
-    messages: messagesPerUser.get(session.userID) || [],
-  }
-  // users[(session.userName).trim()]={
-  //   userID:socket.userID,
-  //   // userName:socket.userName,
-  //   // messages:[],
-  //   // connected:false,
-  //   // hasNewMessages: false
-  // }
-  // users[session.userName]={
-  //   userID:socket.userID,
-  //   userName:socket.userName,
-  //   messages:[],
-  //   connected:false,
-  //   hasNewMessages: false,
-  // };
-})
-console.log("users on Server",users);
-
+  UsersOnServer?.forEach((session: any) => {
+    const user = session.userName;
+    // console.log(user);
+    users[user] = {
+      userID: session.userID,
+      userName: session.userName,
+      connected: session.connected,
+      messages: messagesPerUser.get(session.userID) || [],
+    };
+    // users[(session.userName).trim()]={
+    //   userID:socket.userID,
+    //   // userName:socket.userName,
+    //   // messages:[],
+    //   // connected:false,
+    //   // hasNewMessages: false
+    // }
+    // users[session.userName]={
+    //   userID:socket.userID,
+    //   userName:socket.userName,
+    //   messages:[],
+    //   connected:false,
+    //   hasNewMessages: false,
+    // };
+  });
+  console.log("users on Server", users);
 
   // for (let [id, socket] of io.of("/").sockets as any) {
   //   console.log("for loop in server", socket.sessionID);
@@ -123,26 +130,24 @@ console.log("users on Server",users);
     // console.log("message send by", socket.id);
   });
 
-  socket.on("disconnect", async() => {
-    const matchingSockets=await io.in(socket.userID).allSockets();
+  socket.on("disconnect", async () => {
+    const matchingSockets = await io.in(socket.userID).allSockets();
     const isDisconnected = matchingSockets.size === 0;
     if (isDisconnected) {
       // notify other users
       socket.broadcast.emit("user disconnected", socket.userID);
-      console.log("user discoonected === ",socket.userID);
-      
+      console.log("user discoonected === ", socket.userID);
+
       // update the connection status of the session
       sessionStore.saveSession(socket.sessionID, {
         userID: socket.userID,
         userName: socket.userName,
         connected: false,
       });
-      
     }
     // socket.emit("users", users);
     // console.log("users on Server after disconnected",sessionStore.sessions);
     console.log("🔥: A user disconnected");
-    
   });
 });
 
@@ -150,6 +155,7 @@ app.get("/", (req: Request, res: Response) => {
   res.send("Server is Live");
 });
 
-httpServer.listen(5001, () => {
-  console.log("Server has started on http://localhost:5001");
-});
+// httpServer.listen(process.env.CHAT_APP_PORT, () => {
+//   console.log("Server has started on http://localhost:5001");
+// });
+setupWorker(io)

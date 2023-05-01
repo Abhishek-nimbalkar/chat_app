@@ -1,9 +1,9 @@
 import { Response,Request,NextFunction} from "express";
 import { IJwtPayload } from "interfaces/jwtInterface";
 import jwt, { Jwt } from "jsonwebtoken";
-import dotenv from "dotenv";
+// import dotenv from "dotenv";
 
-dotenv.config();
+// dotenv.config();
 
 const jwtKey: any = process.env.JWT_KEY;
 const JWT_EXPIRATION_TIME = "1h";

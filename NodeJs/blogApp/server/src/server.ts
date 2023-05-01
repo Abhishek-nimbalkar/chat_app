@@ -1,4 +1,5 @@
 import express, { Express, Request, Response } from 'express';
+import path from 'path';
 import { connect } from "./db/db";
 import users from "./routes/users";
 import posts from "./routes/posts";
@@ -8,9 +9,15 @@ import addImg from "./routes/image";
 import { cloudinaryConfig } from './config/cloudinaryConfig';
 import cors from "cors"
 
+import dotenv from "dotenv";
+// dotenv configuration are done here
+// console.log( {path: __dirname});
+
+dotenv.config({path: path.resolve(process.cwd(), `../.env`) });
+
 
 export const app: Express = express();
-const port = 5000;
+const port = 5002;
 
 //Config Coudinary 
 cloudinaryConfig();
@@ -29,6 +36,6 @@ app.use("/addImg",addImg);
 //   res.send('New Express Server with TypeScript');
 // });
 
-app.listen(port, () => {
-  console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
+app.listen(process.env.BLOG_APP_PORT || port, () => {
+  console.log(`⚡️[server]: Server is running at http://localhost:${process.env.BLOG_APP_PORT || port}`);
 });

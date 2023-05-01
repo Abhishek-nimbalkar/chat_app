@@ -4,6 +4,11 @@ import ReactDOM from "react-dom/client";
 import App from "./App";
 import { ToastContainer } from "react-toastify";
 
+// import dotenv from "dotenv"
+// dotenv.config()
+// console.log('path.resolve(process.cwd(), `../.env`)', path.resolve(__dirname, `../.env`))
+
+
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );

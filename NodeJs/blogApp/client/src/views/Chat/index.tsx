@@ -6,8 +6,9 @@ import ChatBar from "components/Chat/ChatBar";
 import ChatBody from "components/Chat/ChatBody";
 import jwt_decode from "jwt-decode";
 import ChatFooter from "components/Chat/ChatFooter";
+// console.log(process.env.REACT_APP_BASE_URL_CHAT_SERVER);
 
-const socket: any = io("http://localhost:5001", { autoConnect: false });
+const socket: any = io(`${process.env.REACT_APP_BASE_URL_CHAT_SERVER}`, { autoConnect: false });
 
 const Chat = () => {
   // const [usernameAlreadySelected, setAlredy] = useState(true);
