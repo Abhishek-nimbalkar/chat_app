@@ -10,7 +10,6 @@ import {
 } from "./controller/middlewareCont";
 import dotenv from "dotenv";
 import {Redis} from "ioredis"
-// import { createClient } from 'redis';
 import { setupWorker } from "@socket.io/sticky";
 dotenv.config({path: path.resolve(process.cwd(), `../.env`) });
 
@@ -19,7 +18,7 @@ const app = express();
 app.use(cors());
 const httpServer = createServer(app);
 // Redis Client 
-// const RedisClient=new Redis();
+const RedisClient=new Redis();
 const io:Server = new Server(httpServer, {
   cors: {
     origin: "*",

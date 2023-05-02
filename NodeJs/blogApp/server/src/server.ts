@@ -8,12 +8,13 @@ import addImg from "./routes/image";
 // import UserRouter from './routes/UserRouter';
 import { cloudinaryConfig } from './config/cloudinaryConfig';
 import cors from "cors"
-
 import dotenv from "dotenv";
+// {path: path.resolve(process.cwd(), `../.env`) }
+dotenv.config();
+
 // dotenv configuration are done here
 // console.log( {path: __dirname});
 
-dotenv.config({path: path.resolve(process.cwd(), `../.env`) });
 
 
 export const app: Express = express();

@@ -1,8 +1,9 @@
 /* abstract */ class SessionStore {
-  findSession(id:string) {}
-  saveSession(id:string, session:string) {}
+  findSession(id: string) {}
+  saveSession(id: string, session: string) {}
   findAllSessions() {}
-  sessions:any
+  sessions: any;
+  redisClient: any;
 }
 
 class InMemorySessionStore extends SessionStore {
@@ -11,11 +12,11 @@ class InMemorySessionStore extends SessionStore {
     this.sessions = new Map();
   }
 
-  findSession(id:string) {
+  findSession(id: string) {
     return this.sessions.get(id);
   }
 
-  saveSession(id:string, session:any) {
+  saveSession(id: string, session: any) {
     this.sessions.set(id, session);
   }
 
@@ -23,5 +24,65 @@ class InMemorySessionStore extends SessionStore {
     return [...this.sessions.values()];
   }
 }
+const SESSION_TTL = 24 * 60 * 60;
+const mapSession = ([userID, username, connected]: any) =>
+  userID ? { userID, username, connected: connected === "true" } : undefined;
 
-export {InMemorySessionStore}
+class RedisSessionStore extends SessionStore {
+  constructor(redisClient: any) {
+    super();
+    this.redisClient = redisClient;
+  }
+
+  findSession(id: any) {
+    return this.redisClient
+      .hmget(`session:${id}`, "userID", "username", "connected")
+      .then(mapSession);
+  }
+
+  saveSession(id: any, { userID, username, connected }: any) {
+    this.redisClient
+      .multi()
+      .hset(
+        `session:${id}`,
+        "userID",
+        userID,
+        "username",
+        username,
+        "connected",
+        connected
+      )
+      .expire(`session:${id}`, SESSION_TTL)
+      .exec();
+  }
+
+  async findAllSessions() {
+    const keys = new Set();
+    let nextIndex = 0;
+    do {
+      const [nextIndexAsStr, results] = await this.redisClient.scan(
+        nextIndex,
+        "MATCH",
+        "session:*",
+        "COUNT",
+        "100"
+      );
+      nextIndex = parseInt(nextIndexAsStr, 10);
+      results.forEach((s: any) => keys.add(s));
+    } while (nextIndex !== 0);
+    const commands: any = [];
+    keys.forEach((key) => {
+      commands.push(["hmget", key, "userID", "username", "connected"]);
+    });
+    return this.redisClient
+      .multi(commands)
+      .exec()
+      .then((results: any) => {
+        return results
+          .map(([err, session]: any) => (err ? undefined : mapSession(session)))
+          .filter((v: any) => !!v);
+      });
+  }
+}
+
+export { InMemorySessionStore, RedisSessionStore };

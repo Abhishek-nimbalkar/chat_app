@@ -3,7 +3,7 @@ import http from "http"
 
 import {setupMaster} from "@socket.io/sticky"
 
-const WORKERS_COUNT = 3;
+const WORKERS_COUNT = 2;
 
 if(cluster.isPrimary){
     console.log(`Primary ${process.pid} is running`); 
