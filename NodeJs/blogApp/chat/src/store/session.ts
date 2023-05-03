@@ -25,8 +25,8 @@ class InMemorySessionStore extends SessionStore {
   }
 }
 const SESSION_TTL = 24 * 60 * 60;
-const mapSession = ([userID, username, connected]: any) =>
-  userID ? { userID, username, connected: connected === "true" } : undefined;
+const mapSession = ([userID, userName, connected]: any) =>
+  userID ? { userID, userName, connected: connected === "true" } : undefined;
 
 class RedisSessionStore extends SessionStore {
   constructor(redisClient: any) {
@@ -36,31 +36,31 @@ class RedisSessionStore extends SessionStore {
 
   findSession(id: any) {
     return this.redisClient
-      .hmget(`session:${id}`, "userID", "username", "connected")
-      .then(mapSession);
+      ?.hmget(`session:${id}`, "userID", "userName", "connected")
+      ?.then(mapSession);
   }
 
-  saveSession(id: any, { userID, username, connected }: any) {
+  saveSession(id: any, { userID, userName, connected }: any) {
     this.redisClient
-      .multi()
-      .hset(
+      ?.multi()
+      ?.hset(
         `session:${id}`,
         "userID",
         userID,
-        "username",
-        username,
+        "userName",
+        userName,
         "connected",
         connected
       )
-      .expire(`session:${id}`, SESSION_TTL)
-      .exec();
+      ?.expire(`session:${id}`, SESSION_TTL)
+      ?.exec();
   }
 
   async findAllSessions() {
     const keys = new Set();
     let nextIndex = 0;
     do {
-      const [nextIndexAsStr, results] = await this.redisClient.scan(
+      const [nextIndexAsStr, results] = await this.redisClient?.scan(
         nextIndex,
         "MATCH",
         "session:*",
@@ -68,19 +68,19 @@ class RedisSessionStore extends SessionStore {
         "100"
       );
       nextIndex = parseInt(nextIndexAsStr, 10);
-      results.forEach((s: any) => keys.add(s));
+      results?.forEach((s: any) => keys?.add(s));
     } while (nextIndex !== 0);
     const commands: any = [];
-    keys.forEach((key) => {
-      commands.push(["hmget", key, "userID", "username", "connected"]);
+    keys?.forEach((key) => {
+      commands?.push(["hmget", key, "userID", "userName", "connected"]);
     });
     return this.redisClient
-      .multi(commands)
-      .exec()
-      .then((results: any) => {
+      ?.multi(commands)
+      ?.exec()
+      ?.then((results: any) => {
         return results
-          .map(([err, session]: any) => (err ? undefined : mapSession(session)))
-          .filter((v: any) => !!v);
+          ?.map(([err, session]: any) => (err ? undefined : mapSession(session)))
+          ?.filter((v: any) => !!v);
       });
   }
 }

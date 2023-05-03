@@ -7,32 +7,37 @@ import {
   middlewareController,
   sessionStore,
   messageStore,
+  subClient,
+  pubClient,
 } from "./controller/middlewareCont";
 import dotenv from "dotenv";
-import {Redis} from "ioredis"
+import { Redis } from "ioredis";
 import { setupWorker } from "@socket.io/sticky";
-dotenv.config({path: path.resolve(process.cwd(), `../.env`) });
+import { createAdapter } from "@socket.io/redis-adapter";
+
+dotenv.config({ path: path.resolve(process.cwd(), `../.env`) });
 
 const app = express();
 
 app.use(cors());
 const httpServer = createServer(app);
-// Redis Client 
-const RedisClient=new Redis();
-const io:Server = new Server(httpServer, {
+// Redis Client
+// console.log('redisClient', redisClient)
+const io: Server = new Server(httpServer, {
   cors: {
     origin: "*",
     methods: ["GET", "POST"],
   },
-
 });
 
+io.adapter(createAdapter(pubClient,subClient));
+
 //MiddleWare
-//On the server-side, we register a middleware which checks the username and allows the connection
+//On the server-side, we register a middleware which checks the userName and allows the connection
 io.use(middlewareController);
 
 // On Connection
-io.on("connection", (socket: any) => {
+io.on("connection", async (socket: any) => {
   console.log(`🌪: ${socket.id} user just connected!`);
   // console.log("Current Session on server Before", sessionStore.sessions);
   // persist session
@@ -41,10 +46,10 @@ io.on("connection", (socket: any) => {
     userName: socket.userName,
     connected: true,
   });
-  console.log(
-    "Current Session on server After new user",
-    sessionStore.sessions
-  );
+  // console.log(
+  //   "Current Session on server After new user",
+  //   sessionStore.sessions
+  // );
   // emit session details
   socket.emit("session", {
     sessionID: socket.sessionID,
@@ -53,8 +58,12 @@ io.on("connection", (socket: any) => {
   socket.join(socket.userID);
   //fetching existing users on server
   const users: any = {};
+  const [messages, sessions] = await Promise.all([
+    messageStore.findMessagesForUser(socket.userID),
+    sessionStore.findAllSessions(),
+  ]);
   const messagesPerUser = new Map();
-  messageStore.findMessagesForUser(socket.userID).forEach((message: any) => {
+  messages.forEach((message: any) => {
     const { from, to } = message;
     const otherUser = socket.userID === from ? to : from;
     if (messagesPerUser.has(otherUser)) {
@@ -64,10 +73,11 @@ io.on("connection", (socket: any) => {
     }
   });
 
-  const UsersOnServer = sessionStore.sessions;
+  // const UsersOnServer = sessionStore.sessions;
   // console.log("UsersOnServer",UsersOnServer);
-
-  UsersOnServer?.forEach((session: any) => {
+  console.log('messages stored on redis are ', messages)
+  console.log('sessions stord on redis are ', sessions)
+  sessions?.forEach((session: any) => {
     const user = session.userName;
     // console.log(user);
     users[user] = {
@@ -157,4 +167,4 @@ app.get("/", (req: Request, res: Response) => {
 // httpServer.listen(process.env.CHAT_APP_PORT, () => {
 //   console.log("Server has started on http://localhost:5001");
 // });
-setupWorker(io)
+setupWorker(io);
