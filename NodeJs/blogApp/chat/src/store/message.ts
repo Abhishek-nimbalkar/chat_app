@@ -45,8 +45,10 @@ class RedisMessageStore extends MessageStore{
     return this.redisClient
     ?.lrange(`messages:${userID}`,0,-1)
     ?.then((results:any)=>{
+      // console.log('results==========', results)
       return results.map((result:any)=>{
         JSON.parse(result);
+        // console.log('JSON.parse(result)====', JSON.parse(result))
       })
     })
   }

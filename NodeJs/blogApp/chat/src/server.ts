@@ -15,6 +15,7 @@ import { Redis } from "ioredis";
 import { setupWorker } from "@socket.io/sticky";
 import { createAdapter } from "@socket.io/redis-adapter";
 
+
 dotenv.config({ path: path.resolve(process.cwd(), `../.env`) });
 
 const app = express();
@@ -30,7 +31,7 @@ const io: Server = new Server(httpServer, {
   },
 });
 
-io.adapter(createAdapter(pubClient,subClient));
+io.adapter(createAdapter(pubClient, subClient));
 
 //MiddleWare
 //On the server-side, we register a middleware which checks the userName and allows the connection
@@ -56,27 +57,37 @@ io.on("connection", async (socket: any) => {
     userID: socket.userID,
   });
   socket.join(socket.userID);
+  // console.log('socket.userID======', socket.userID)
   //fetching existing users on server
   const users: any = {};
   const [messages, sessions] = await Promise.all([
     messageStore.findMessagesForUser(socket.userID),
     sessionStore.findAllSessions(),
   ]);
+  const [messagesNew]=await Promise.all([messageStore.findMessagesForUser(socket.userID)])
+  if(messagesNew){
+    console.log('messagesNew', messagesNew)
+  }
   const messagesPerUser = new Map();
-  messages.forEach((message: any) => {
-    const { from, to } = message;
-    const otherUser = socket.userID === from ? to : from;
-    if (messagesPerUser.has(otherUser)) {
-      messagesPerUser.get(otherUser).push(message);
-    } else {
-      messagesPerUser.set(otherUser, [message]);
-    }
-  });
+  // console.log("messages", messages);
+  // console.log('sessions', sessions);
+  if (messages!==undefined) {
+    messages?.forEach((message: any) => {
+      console.log("messages after ", messages.length);
+      const { from, to } = message;
+      const otherUser = socket.userID === from ? to : from;
+      if (messagesPerUser.has(otherUser)) {
+        messagesPerUser.get(otherUser).push(message);
+      } else {
+        messagesPerUser.set(otherUser, [message]);
+      }
+    });
+  }
 
   // const UsersOnServer = sessionStore.sessions;
   // console.log("UsersOnServer",UsersOnServer);
-  console.log('messages stored on redis are ', messages)
-  console.log('sessions stord on redis are ', sessions)
+  console.log("messages stored on redis are ", messages);
+  console.log("sessions stord on redis are ", sessions);
   sessions?.forEach((session: any) => {
     const user = session.userName;
     // console.log(user);
