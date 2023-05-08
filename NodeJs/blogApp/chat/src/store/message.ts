@@ -47,7 +47,7 @@ class RedisMessageStore extends MessageStore{
     ?.then((results:any)=>{
       // console.log('results==========', results)
       return results.map((result:any)=>{
-        JSON.parse(result);
+        return JSON.parse(result);
         // console.log('JSON.parse(result)====', JSON.parse(result))
       })
     })
