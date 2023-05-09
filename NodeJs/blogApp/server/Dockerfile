@@ -1,7 +1,7 @@
 FROM node:alpine 
-WORKDIR /chat-server
+WORKDIR /blog-server
 COPY ./package.json /blog-server
 RUN npm install 
 COPY . . 
 CMD npm run dev
-EXPOSE 5001
+# EXPOSE 5000
