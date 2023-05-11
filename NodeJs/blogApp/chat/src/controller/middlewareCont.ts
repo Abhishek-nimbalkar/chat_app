@@ -2,9 +2,15 @@ import crypto from "crypto";
 import { RedisSessionStore } from "../store/session";
 import { RedisMessageStore } from "../store/message";
 import Redis from "ioredis";
+import dotenv from "dotenv"
+dotenv.config();
 
 const randomId = () => crypto.randomBytes(8).toString("hex");
-const redisClient = new Redis();
+// const hostName=process.env.REDIS_HOST_NAME;
+const redisClient = new Redis({
+  port:6379,
+  host:process.env.REDIS_HOST_NAME
+});
 export const sessionStore = new RedisSessionStore(redisClient);
 export const messageStore = new RedisMessageStore(redisClient);
 

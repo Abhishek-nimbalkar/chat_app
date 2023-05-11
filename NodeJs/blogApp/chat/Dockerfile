@@ -1,7 +1,9 @@
 FROM node:alpine 
-WORKDIR /blog-server
-COPY ./package.json /blog-server
-RUN npm install 
+WORKDIR /chat
+COPY ./package.json /chat
+RUN npm install
+ENV REDIS_HOST_NAME=${REDIS_HOST_NAME}
+ENV CHAT_APP_PORT=${CHAT_APP_PORT}
 COPY . . 
 CMD npm run dev
-EXPOSE 3000
+# EXPOSE 5001

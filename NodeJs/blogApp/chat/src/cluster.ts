@@ -1,5 +1,8 @@
 import cluster from "cluster";
 import http from "http"
+import dotenv from "dotenv"
+
+dotenv.config();
 
 import {setupMaster} from "@socket.io/sticky"
 
@@ -20,10 +23,10 @@ setupMaster(httpServer,{
     loadBalancingMethod:"least-connection",
 });
 
-const PORT=process.env.CHAT_APP_PORT || 5001;
+const PORT=process.env.CHAT_APP_PORT;
 
 httpServer.listen(PORT,()=>{
-    console.log("Server has started on http://localhost:5001");
+    console.log(`Server has started on http://localhost:${PORT}`);
 });
 }else{
     console.log(`Worker ${process.pid} started`);
