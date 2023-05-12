@@ -1,4 +1,4 @@
 FROM redis:latest
 WORKDIR /app
 CMD ["redis-server"]
-# EXPOSE 6379
+EXPOSE 6379

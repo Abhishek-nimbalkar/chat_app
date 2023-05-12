@@ -13,4 +13,4 @@ ENV MongoAtlas_Password=${MongoAtlas_Password}
 ENV BLOG_APP_PORT=${BLOG_APP_PORT} 
 COPY . . 
 CMD npm run dev
-# EXPOSE 5000
+EXPOSE 5000

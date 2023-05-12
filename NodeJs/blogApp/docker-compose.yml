@@ -1,10 +1,21 @@
 version: '3'
 
 services:
+
+  nginx-back:
+    build: ./nginx_back
+    container_name: nginx_back
+    depends_on:
+      - blog-server
+      - chat-server
+    ports:
+      - 8080:80
+
   blog-server:
     build: ./server
-    ports:
-      - 5000:5000
+    container_name: blog-server
+    # ports:
+    #   - 5000:5000
     environment:
       - JWT_KEY=${JWT_KEY}
       - SmtpEmail=${SmtpEmail}
@@ -16,34 +27,38 @@ services:
       - MongoAtlas_Password=${MongoAtlas_Password}
       - BLOG_APP_PORT=${BLOG_APP_PORT}
 
-  # chat-server:
-  #   build: 
-  #     context: chat
-  #     dockerfile: Dockerfile
-  #   ports:
-  #     - 5001:5001
-  #   environment:
-  #     - CHAT_APP_PORT=5001
-  #     - REDIS_HOST_NAME=${REDIS_HOST_NAME}
+  chat-server:
+    build: 
+      context: chat
+      dockerfile: Dockerfile
+    container_name: chat-server
+    # ports:
+    #   - 5001:5001
+    environment:
+      - CHAT_APP_PORT=5001
+      - REDIS_HOST_NAME=${REDIS_HOST_NAME}
 
-  # redis-server:
-  #   build: 
-  #     context: redisServer
-  #     dockerfile: Dockerfile
-  #   ports:
-  #     - 6379:6379
-  #   volumes:
-  #     - redis_volume:/data
+  redis-server:
+    build: 
+      context: redisServer
+      dockerfile: Dockerfile
+    container_name: redis-server
+    # ports:
+    #   - 6379:6379
+    volumes:
+      - redis_volume:/data
 
-  # react-app:
-  #   build:
-  #     context: client
-  #     dockerfile: Dockerfile
-  #     args:
-  #       - REACT_APP_BASE_URL_BLOG_SERVER=${REACT_APP_BASE_URL_BLOG_SERVER}
-  #   ports:
-  #     - 8000:80
-  #   # environment:
-  #   #   - REACT_APP_BASE_URL_BLOG_SERVER=${REACT_APP_BASE_URL_BLOG_SERVER}
+  react-app:
+    build:
+      context: client
+      dockerfile: Dockerfile
+      args:
+        - REACT_APP_BASE_URL_BLOG_SERVER=${REACT_APP_BASE_URL_BLOG_SERVER}
+        - REACT_APP_BASE_URL_CHAT_SERVER=${REACT_APP_BASE_URL_CHAT_SERVER}
+    container_name: react-app
+    ports:
+      - 8000:80
+    environment:
+      - REACT_APP_BASE_URL_BLOG_SERVER=${REACT_APP_BASE_URL_BLOG_SERVER}
 volumes:
   redis_volume:
