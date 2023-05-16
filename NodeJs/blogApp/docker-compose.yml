@@ -16,6 +16,14 @@ services:
     container_name: blog-server
     # ports:
     #   - 5000:5000
+    # deploy:
+    #   replicas: 5
+    #   restart_policy: 
+    #     max_attempts: 2
+    #     condition: on-faliure
+    #   update_config:
+    #     parallelism: 3
+    #     delay: 10s
     environment:
       - JWT_KEY=${JWT_KEY}
       - SmtpEmail=${SmtpEmail}

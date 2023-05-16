@@ -1,4 +1,5 @@
 import express, { Express, Request, Response } from 'express';
+import os from "os"
 import path from 'path';
 import { connect } from "./db/db";
 import users from "./routes/users";
@@ -36,7 +37,9 @@ app.use("/addImg",addImg);
 // app.get('/', (req: Request, res: Response) => {
 //   res.send('New Express Server with TypeScript');
 // });
-
+app.get("/",async(req:Request,res:Response)=>{
+  res.status(200).send({succes:true,message:`response by ${os.hostname()}`})
+})
 app.listen(process.env.BLOG_APP_PORT || port, () => {
-  console.log(`⚡️[server]: Server is running at http://localhost:${process.env.BLOG_APP_PORT || port}`);
+  console.log(`⚡️[server]: Server is running at http://localhost:${process.env.BLOG_APP_PORT || port} ....., HostName:${os.hostname()}`);
 });
